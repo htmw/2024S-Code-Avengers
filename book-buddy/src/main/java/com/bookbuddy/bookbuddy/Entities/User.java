@@ -4,11 +4,11 @@ import lombok.Data;
 
 public @Data class User {
 
-    private final int id;
-    private final String firstName;
-    private final String lastName;
-    private final String email;
-    private final String dateOfBirth;
-    private final String pathToProfilePicture;
+    private int id;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String dateOfBirth;
+    private String pathToProfilePicture;
 
 }
