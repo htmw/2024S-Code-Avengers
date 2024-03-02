@@ -2,9 +2,14 @@ package com.bookbuddy.bookbuddy.Entities;
 
 import java.math.BigDecimal;
 
+import org.springframework.data.annotation.Id;
+
+import jakarta.persistence.Entity;
 import lombok.Data;
 
+@Entity
 public @Data class Book {
+    private @Id long id;
     private String title;
     private String author;
     private String ISBN;
