@@ -1,5 +1,6 @@
 package com.bookbuddy.bookbuddy.Entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -15,11 +16,18 @@ public @Data class BookCollection {
     private String collectionName;
 
     @ManyToOne
-    private User user;
+    private Long userId;
 
     @ManyToMany
     private List<Book> books;
 
+
+    public BookCollection(Long userId, String name){
+        this.id = 0l; //Fix this, pick a strategy to generate IDs
+        this.userId = userId;
+        this.collectionName = name;
+        this.books = new ArrayList<>();
+    }
 
 
 }
