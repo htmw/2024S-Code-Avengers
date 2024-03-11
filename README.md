@@ -3,4 +3,4 @@ Code Avengers CRN 23915
 
 # Machine Learning Branch for Book Buddy
 
-This branch of the repository is dedicated to the development and deployment of "BookBuddy," a book ecommerce platform.
+This branch of the repository is dedicated for the development and deployment of "BookBuddy," a book ecommerce platform.
