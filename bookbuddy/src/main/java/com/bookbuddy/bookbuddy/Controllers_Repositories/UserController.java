@@ -1,9 +1,7 @@
 package com.bookbuddy.bookbuddy.Controllers_Repositories;
 
 import java.util.List;
-import java.util.Optional;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bookbuddy.bookbuddy.CreatedExceptions.UserNotFoundException;
-import com.bookbuddy.bookbuddy.Entities.BookCollection;
 import com.bookbuddy.bookbuddy.Entities.User;
 import com.bookbuddy.bookbuddy.Service_Classes.UserService;
 
@@ -65,27 +62,6 @@ public class UserController {
         repository.deleteById(id);
     }
 
-    @GetMapping("/{userId}/collections/{collectionId}")
-    public BookCollection getCollection(Long userId, Long collectionId) {
-        Optional<User> userOptional = repository.findById(userId);
-        if(userOptional.isPresent()){
-            User user = userOptional.get();
-            return user.findCollectionById(collectionId);
-        }
-        else throw new UserNotFoundException(userId);
-    }
-
-    @DeleteMapping("/{userId}/collections/{collectionId}")
-    public ResponseEntity<Void> deleteCollection(
-            @PathVariable Long userId,
-            @PathVariable Long collectionId) {
-        boolean deleted = service.deleteCollection(userId, collectionId);
-        if (deleted) {
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
 }
 
 

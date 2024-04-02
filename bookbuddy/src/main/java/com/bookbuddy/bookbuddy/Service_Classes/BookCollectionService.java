@@ -1,0 +1,77 @@
+package com.bookbuddy.bookbuddy.Service_Classes;
+
+import java.util.List;
+import java.util.Optional;
+
+import com.bookbuddy.bookbuddy.Controllers_Repositories.BookCollectionRepository;
+import com.bookbuddy.bookbuddy.Controllers_Repositories.BookRepository;
+import com.bookbuddy.bookbuddy.Controllers_Repositories.UserRepository;
+import com.bookbuddy.bookbuddy.CreatedExceptions.CollectionNotFoundException;
+import com.bookbuddy.bookbuddy.CreatedExceptions.UserNotAuthorizedException;
+import com.bookbuddy.bookbuddy.CreatedExceptions.UserNotFoundException;
+import com.bookbuddy.bookbuddy.Entities.BookCollection;
+import com.bookbuddy.bookbuddy.Entities.User;
+
+public class BookCollectionService {
+    
+    private final BookRepository bRepository;
+    private final BookCollectionRepository bCRepository;
+    private final UserRepository uRepository;
+
+    public BookCollectionService(UserRepository uRepository, BookRepository bRepository, BookCollectionRepository bCRepository){
+        this.bRepository = bRepository;
+        this.uRepository = uRepository;
+        this.bCRepository = bCRepository;
+    }
+
+    public boolean deleteCollection(Long userId, Long collectionId) {
+        Optional<User> userOptional = uRepository.findById(userId);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            List<BookCollection> collections = user.getBookCollections();
+            collections.removeIf(collection -> collection.getId().equals(collectionId));
+            uRepository.save(user);
+            return true;
+        }
+        return false;
+    }
+
+    public BookCollection createCollection(Long userId, String name){
+        Optional<User> userOptional = uRepository.findById(userId);
+        if(userOptional.isPresent()){
+            User user = userOptional.get();
+            BookCollection books = new BookCollection(user, name);
+            return bCRepository.save(books);
+        }
+        else {
+            throw new UserNotFoundException(userId);
+        }
+
+    }
+
+    public BookCollection renameCollection(Long userId, Long collectionId, String newName) {
+        Optional<User> userOptional = uRepository.findById(userId);
+        Optional<BookCollection> collectionOptional = bCRepository.findById(collectionId);
+    
+        if (!userOptional.isPresent()) {
+            throw new UserNotFoundException(userId);
+        }
+    
+        User user = userOptional.get();
+    
+        if (!collectionOptional.isPresent()) {
+            throw new CollectionNotFoundException(collectionId);
+        }
+    
+        BookCollection collection = collectionOptional.get();
+    
+        if (!collection.getUser().equals(user)) {
+            throw new UserNotAuthorizedException(userId);
+        }
+    
+        collection.setCollectionName(newName);
+        return bCRepository.save(collection);
+    }
+
+    
+}
