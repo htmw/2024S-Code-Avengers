@@ -1,7 +1,10 @@
 package com.bookbuddy.bookbuddy.Controllers_Repositories;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,57 +12,53 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bookbuddy.bookbuddy.CreatedExceptions.UserNotFoundException;
 import com.bookbuddy.bookbuddy.Entities.User;
 import com.bookbuddy.bookbuddy.Service_Classes.UserService;
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
-    private final UserRepository repository;
-    private final UserService service;
+    private final UserRepository uRepository;
+    private final UserService uService;
 
-    UserController(UserRepository repository, UserService service){
-        this.repository = repository;
-        this.service = service;
+    UserController(UserRepository uRepository, UserService uService){
+        this.uRepository = uRepository;
+        this.uService = uService;
     }
 
     @GetMapping()
     List<User> all(){
-        return repository.findAll();
+        return uRepository.findAll();
     }
 
     @PostMapping("/addNew")
-    User newUser(@RequestBody User newUser) {
-        return repository.save(newUser);
+    User newUser(@RequestParam Long firebaseUID, @RequestParam String firstName, @RequestParam String lastName, @RequestParam String email, @RequestParam String dateOfBirth ) {
+        return uService.addNewUser(firebaseUID, firstName, lastName, email, dateOfBirth);
     }
 
-    @GetMapping("/{id}")
-    User findUser(@PathVariable Long userId) {
-        return repository.findById(userId)
-            .orElseThrow(() -> new UserNotFoundException(userId));
+    @GetMapping("/{userId}")
+    HashMap<String, Object> findUser(@PathVariable Long userId) {
+        return uService.getUserDetails(userId);
     }
 
-    @PutMapping("/{id}")
-    User updateUser(@PathVariable Long id, @RequestBody User newUser) {
-        return repository.findById(id)
-            .map(user -> {
-                user.setLastName(newUser.getLastName());
-                user.setFirstName(newUser.getFirstName());
-                return repository.save(user);
-            })
-            .orElseGet(() -> {
-                newUser.setId(id);
-                return repository.save(newUser);
-            });
-        
+    @PutMapping("/{userId}")
+    public ResponseEntity<User> updateUser(@PathVariable Long userId, @RequestBody User updatedUserDetails) {
+        User updatedUser = uService.updateUser(userId, updatedUserDetails);
+        return ResponseEntity.ok(updatedUser);
     }
 
     @DeleteMapping("/{id}")
-    void deleteUser(@PathVariable Long id){
-        repository.deleteById(id);
+    public ResponseEntity deleteUser(@PathVariable Long id){
+        Optional<User> userOptional = uRepository.findById(id);
+        if (userOptional.isPresent()) {
+            uRepository.deleteById(id);
+            return ResponseEntity.ok(id);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 }

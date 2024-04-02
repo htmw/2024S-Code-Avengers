@@ -1,5 +1,6 @@
 package com.bookbuddy.bookbuddy.Entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -37,7 +38,6 @@ public class BookCollection {
 
 
     public BookCollection(User user, String name){
-        this.id = 0l; //Fix this, pick a strategy to generate IDs
         this.user = user;
         this.collectionName = name;
     }
@@ -69,6 +69,20 @@ public class BookCollection {
     public void setBooks(List<Book> books) {
         this.books = books;
     }
+
+    public void addBook(Book book) {
+        if (books == null) {
+            books = new ArrayList<>();
+        }
+        books.add(book);
+    }
+
+    public void removeBook(Book book) {
+        if (books != null) {
+            books.remove(book);
+        }
+    }
+
 
 
 }

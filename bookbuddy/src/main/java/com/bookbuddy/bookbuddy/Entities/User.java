@@ -3,8 +3,10 @@ package com.bookbuddy.bookbuddy.Entities;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -12,24 +14,42 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "users")
 public class User {
-    private @Id @GeneratedValue Long id;
+    @Id 
+    @GeneratedValue(strategy = GenerationType.IDENTITY) 
+    private Long id;
+    @Column(name="firebaseUID")
     private Long firebaseUID;
+    @Column(name="first_name")
     private String firstName;
+    @Column(name="last_name")
     private String lastName;
+    @Column(name="email")
     private String email;
+    @Column(name="date_of_birth")
     private String dateOfBirth;
-    //Favorite Author??
-    //
+
     @OneToMany(mappedBy="user", cascade= CascadeType.ALL)
     private List<BookCollection> bookCollections;
 
+    public User(Long firebaseUID, String firstName, String lastName, String email, String dateOfBirth){
+        this.firebaseUID = firebaseUID;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.dateOfBirth = dateOfBirth;
+    }
 
+    public User(){
+        
+    }
+    
     public BookCollection findCollectionById(Long collectionId) {
         return this.bookCollections.stream()
                 .filter(collection -> collection.getId().equals(collectionId))
                 .findFirst()
                 .orElse(null);
     }
+
 
     public Long getId() {
         return id;

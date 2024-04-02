@@ -3,8 +3,8 @@ package com.bookbuddy.bookbuddy.Controllers_Repositories;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bookbuddy.bookbuddy.CreatedExceptions.BookNotFoundException;
@@ -27,10 +27,12 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    Book findBook(@RequestParam Long id) {
+    Book findBook(@PathVariable Long id) {
         return repository.findById(id)
             .orElseThrow(() -> new BookNotFoundException(id));
     }
+
+    
     
     
     
