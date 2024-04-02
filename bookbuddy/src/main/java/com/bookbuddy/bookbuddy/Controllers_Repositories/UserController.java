@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bookbuddy.bookbuddy.Entities.User;
@@ -24,7 +23,7 @@ public class UserController {
     private final UserRepository uRepository;
     private final UserService uService;
 
-    UserController(UserRepository uRepository, UserService uService){
+    public UserController(UserRepository uRepository, UserService uService){
         this.uRepository = uRepository;
         this.uService = uService;
     }
@@ -35,8 +34,8 @@ public class UserController {
     }
 
     @PostMapping("/addNew")
-    User newUser(@RequestParam Long firebaseUID, @RequestParam String firstName, @RequestParam String lastName, @RequestParam String email, @RequestParam String dateOfBirth ) {
-        return uService.addNewUser(firebaseUID, firstName, lastName, email, dateOfBirth);
+    User newUser(@RequestBody User newUser) {
+        return uService.addNewUser(newUser);
     }
 
     @GetMapping("/{userId}")

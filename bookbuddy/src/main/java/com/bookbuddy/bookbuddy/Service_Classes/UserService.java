@@ -70,8 +70,8 @@ public class UserService {
         return uRepository.save(existingUser);
     }
 
-    public User addNewUser(Long firebaseUID, String firstName, String lastName, String email, String dateOfBirth){
-        User user = new User(firebaseUID, firstName, lastName, email, dateOfBirth);
+    public User addNewUser(User newUserDetails) {
+        User user = new User(newUserDetails.getFirebaseUID(), newUserDetails.getFirstName(), newUserDetails.getLastName(), newUserDetails.getEmail(), newUserDetails.getDateOfBirth());
         return uRepository.save(user);
     }
 
