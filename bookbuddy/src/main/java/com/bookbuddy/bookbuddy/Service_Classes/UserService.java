@@ -1,7 +1,6 @@
 package com.bookbuddy.bookbuddy.Service_Classes;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +13,7 @@ import com.bookbuddy.bookbuddy.CreatedExceptions.UserNotFoundException;
 import com.bookbuddy.bookbuddy.Entities.Book;
 import com.bookbuddy.bookbuddy.Entities.BookCollection;
 import com.bookbuddy.bookbuddy.Entities.User;
+import com.bookbuddy.bookbuddy.Entities.UserDTO;
 
 @Service
 public class UserService {
@@ -43,16 +43,10 @@ public class UserService {
         return bCRepository.save(books);
     }
 
-    public HashMap<String, Object> getUserDetails(Long userId){
+    public UserDTO getUserDetails(Long userId){
         User user = uRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
-        HashMap<String, Object> userDetails = new HashMap<>();
-
-        userDetails.put("firstName", user.getFirstName());
-        userDetails.put("lastName", user.getLastName());
-        userDetails.put("email", user.getEmail());
-        userDetails.put("dateOfBirth", user.getDateOfBirth());
-
-        return userDetails;
+        
+        return new UserDTO(user.getFirstName(), user.getLastName(), user.getEmail(), user.getDateOfBirth());
     }
 
     public User updateUser(Long userId, User updatedUser){

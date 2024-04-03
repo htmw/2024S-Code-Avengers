@@ -22,12 +22,12 @@ public class BookController {
     }
 
     @GetMapping()
-    List<Book> getAll() {
+    public List<Book> getAll() {
         return repository.findAll();
     }
 
     @GetMapping("/{id}")
-    Book findBook(@PathVariable Long id) {
+    public Book findBook(@PathVariable Long id) {
         return repository.findById(id)
             .orElseThrow(() -> new BookNotFoundException(id));
     }

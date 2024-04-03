@@ -1,6 +1,5 @@
 package com.bookbuddy.bookbuddy.Controllers_Repositories;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bookbuddy.bookbuddy.Entities.User;
+import com.bookbuddy.bookbuddy.Entities.UserDTO;
 import com.bookbuddy.bookbuddy.Service_Classes.UserService;
 
 @RestController
@@ -29,17 +29,17 @@ public class UserController {
     }
 
     @GetMapping()
-    List<User> all(){
+    public List<User> all(){
         return uRepository.findAll();
     }
 
     @PostMapping("/addNew")
-    User newUser(@RequestBody User newUser) {
+    public User newUser(@RequestBody User newUser) {
         return uService.addNewUser(newUser);
     }
 
     @GetMapping("/{userId}")
-    HashMap<String, Object> findUser(@PathVariable Long userId) {
+    public UserDTO findUser(@PathVariable Long userId) {
         return uService.getUserDetails(userId);
     }
 
