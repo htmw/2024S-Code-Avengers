@@ -83,6 +83,15 @@ public class BookCollection {
         }
     }
 
+    public void changeBookOrder(int currentIndex, int newIndex) {
+        if (currentIndex < 0 || currentIndex >= books.size() || newIndex < 0 || newIndex >= books.size()) {
+            throw new IllegalArgumentException("Invalid index");
+        }
+        
+        Book bookToMove = books.remove(currentIndex);
+        books.add(newIndex, bookToMove);
+    }
+
 
 
 }
