@@ -1,10 +1,13 @@
 package com.bookbuddy.bookbuddy.Entities;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -15,8 +18,10 @@ public class Book {
     private Long id;
     @Column(name="title")
     private String title;
-    @Column(name="author")
+    @Column(name="author")   
     private String author;
+    @Column(name="price")
+    private float price;
     @Column(name="isbn")
     private String isbn;
     @Column(name="publication_date")
@@ -25,7 +30,48 @@ public class Book {
     private String genre;
     @Column(name="description")
     private String description;
+    
+////    @OneToMany(mappedBy = "book"  , cascade= CascadeType.ALL)
+//    private OrderItem orderitem;
+//    
+////    @OneToMany(mappedBy = "book"  , cascade= CascadeType.ALL)
+//    private CartItem cartItem;
+    
+    
+    
+    public String getIsbn() {
+		return isbn;
+	}
 
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
+	}
+
+//	public OrderItem getOrderitem() {
+//		return orderitem;
+//	}
+//
+//	public void setOrderitem(OrderItem orderitem) {
+//		this.orderitem = orderitem;
+//	}
+//
+//	public CartItem getCartItem() {
+//		return cartItem;
+//	}
+//
+//	public void setCartItem(CartItem cartItem) {
+//		this.cartItem = cartItem;
+//	}
+
+	public float getPrice() {
+    	return price;
+    }
+    
+    public void setPrice(float price) {
+    	 this.price = price;
+    }
+    
+    
     public Long getId() {
         return id;
     }

@@ -8,7 +8,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -30,8 +32,23 @@ public class User {
 
     @OneToMany(mappedBy="user", cascade= CascadeType.ALL)
     private List<BookCollection> bookCollections;
+    
+    
+    @OneToOne(mappedBy = "user"  , cascade= CascadeType.ALL)
+    private Cart cart;
+    
+    @OneToOne(mappedBy = "user"  , cascade= CascadeType.ALL)
+    private Orders order;
 
-    public User(Long firebaseUID, String firstName, String lastName, String email, String dateOfBirth){
+    public Cart getCart() {
+		return cart;
+	}
+
+	public void setCart(Cart cart) {
+		this.cart = cart;
+	}
+
+	public User(Long firebaseUID, String firstName, String lastName, String email, String dateOfBirth){
         this.firebaseUID = firebaseUID;
         this.firstName = firstName;
         this.lastName = lastName;
