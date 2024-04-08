@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.bookbuddy.bookbuddy.Controllers_Repositories.BookCollectionRepository;
 import com.bookbuddy.bookbuddy.Controllers_Repositories.BookRepository;
 import com.bookbuddy.bookbuddy.Controllers_Repositories.UserRepository;
+import com.bookbuddy.bookbuddy.CreatedExceptions.BookNotFoundException;
 import com.bookbuddy.bookbuddy.CreatedExceptions.CollectionNotFoundException;
 import com.bookbuddy.bookbuddy.CreatedExceptions.UserNotAuthorizedException;
 import com.bookbuddy.bookbuddy.CreatedExceptions.UserNotFoundException;
@@ -77,9 +78,10 @@ public class BookCollectionService {
         return bCRepository.save(collection);
     }
 
-    public BookCollection addBook(Long userId, Long collectionId, Book book){
+    public BookCollection addBook(Long userId, Long collectionId, Long bookId){
         Optional<User> userOptional = uRepository.findById(userId);
         Optional<BookCollection> collectionOptional = bCRepository.findById(collectionId);
+        Optional<Book> bookOptional = bRepository.findById(bookId);
     
         if (!userOptional.isPresent()) {
             throw new UserNotFoundException(userId);
@@ -90,21 +92,27 @@ public class BookCollectionService {
         if (!collectionOptional.isPresent()) {
             throw new CollectionNotFoundException(collectionId);
         }
+
+        if(!bookOptional.isPresent()){
+            throw new BookNotFoundException(bookId);
+        }
     
         BookCollection collection = collectionOptional.get();
     
         if (!collection.getUser().equals(user)) {
             throw new UserNotAuthorizedException(userId);
         }
+        Book book = bookOptional.get();
 
         collection.addBook(book);
         
         return bCRepository.save(collection);
     }
 
-    public BookCollection removeBook(Long userId, Long collectionId, Book book){
+    public BookCollection removeBook(Long userId, Long collectionId, Long bookId){
         Optional<User> userOptional = uRepository.findById(userId);
         Optional<BookCollection> collectionOptional = bCRepository.findById(collectionId);
+        Optional<Book> bookOptional = bRepository.findById(bookId);
     
         if (!userOptional.isPresent()) {
             throw new UserNotFoundException(userId);
@@ -122,6 +130,11 @@ public class BookCollectionService {
             throw new UserNotAuthorizedException(userId);
         }
 
+        if(!bookOptional.isPresent()){
+            throw new BookNotFoundException(bookId);
+        }
+        Book book = bookOptional.get();
+        
         collection.removeBook(book);
         
         return bCRepository.save(collection);
