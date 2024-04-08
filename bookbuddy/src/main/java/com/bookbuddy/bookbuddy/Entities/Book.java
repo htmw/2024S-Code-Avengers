@@ -1,13 +1,10 @@
 package com.bookbuddy.bookbuddy.Entities;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -36,16 +33,6 @@ public class Book {
 //    
 ////    @OneToMany(mappedBy = "book"  , cascade= CascadeType.ALL)
 //    private CartItem cartItem;
-    
-    
-    
-    public String getIsbn() {
-		return isbn;
-	}
-
-	public void setIsbn(String isbn) {
-		this.isbn = isbn;
-	}
 
 //	public OrderItem getOrderitem() {
 //		return orderitem;

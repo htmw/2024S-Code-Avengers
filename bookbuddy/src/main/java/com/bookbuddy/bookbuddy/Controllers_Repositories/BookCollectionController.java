@@ -55,7 +55,7 @@ public class BookCollectionController {
         return bCService.createCollection(userId, name);
     }
 
-    @PutMapping("{userId}/{collectionId}/rename/{name}")
+    @PutMapping("{userId}/{collectionId}/rename/{newName}")
     public BookCollection updateCollection(@PathVariable Long userId, @PathVariable Long collectionId, @PathVariable String newName){
             return bCService.renameCollection(userId, collectionId, newName);
     }
