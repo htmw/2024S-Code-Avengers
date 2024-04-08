@@ -7,12 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bookbuddy.bookbuddy.CreatedExceptions.UserNotFoundException;
-import com.bookbuddy.bookbuddy.Entities.Book;
 import com.bookbuddy.bookbuddy.Entities.BookCollection;
 import com.bookbuddy.bookbuddy.Entities.User;
 import com.bookbuddy.bookbuddy.Service_Classes.BookCollectionService;
@@ -33,7 +31,7 @@ public class BookCollectionController {
     }
 
     @GetMapping("/{userId}/{collectionId}")
-    public BookCollection getCollection(Long userId, Long collectionId) {
+    public BookCollection getCollection(@PathVariable Long userId, @PathVariable Long collectionId) {
         Optional<User> userOptional = uRepository.findById(userId);
         if(userOptional.isPresent()){
             User user = userOptional.get();
@@ -60,14 +58,14 @@ public class BookCollectionController {
             return bCService.renameCollection(userId, collectionId, newName);
     }
 
-    @PutMapping("{userId}/{collectionId}/addBook")
-    public BookCollection addBook(@PathVariable Long userId, @PathVariable Long collectionId, @RequestBody Book book){
-        return bCService.addBook(userId, collectionId, book);
+    @PutMapping("{userId}/{collectionId}/addBook/{bookId}")
+    public BookCollection addBook(@PathVariable Long userId, @PathVariable Long collectionId, @PathVariable Long bookId){
+        return bCService.addBook(userId, collectionId, bookId);
     }
 
-    @PutMapping("{userId}/{collectionId}/removeBook")
-    public BookCollection removeBook(@PathVariable Long userId, @PathVariable Long collectionId, @RequestBody Book book){
-        return bCService.removeBook(userId, collectionId, book);
+    @PutMapping("{userId}/{collectionId}/removeBook/{bookId}")
+    public BookCollection removeBook(@PathVariable Long userId, @PathVariable Long collectionId, @PathVariable Long bookId){
+        return bCService.removeBook(userId, collectionId, bookId);
     }
 
 
