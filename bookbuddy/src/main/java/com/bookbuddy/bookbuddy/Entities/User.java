@@ -34,19 +34,29 @@ public class User {
     private List<BookCollection> bookCollections;
     
     
-    @OneToOne(mappedBy = "user"  , cascade= CascadeType.ALL)
+    @OneToOne(mappedBy = "user" )
     private Cart cart;
     
-    @OneToOne(mappedBy = "user"  , cascade= CascadeType.ALL)
+    public Orders getOrder() {
+		return order;
+	}
+
+	public void setOrder(Orders order) {
+		this.order = order;
+	}
+
+	@OneToOne(mappedBy = "user"  )
     private Orders order;
 
     public Cart getCart() {
 		return cart;
 	}
 
-	public void setCart(Cart cart) {
-		this.cart = cart;
-	}
+    public void setCart(Cart cart) {
+        this.cart = cart;
+        if (cart != null) {
+            cart.setUser(this) ;
+        }}
 
 	public User(Long firebaseUID, String firstName, String lastName, String email, String dateOfBirth){
         this.firebaseUID = firebaseUID;
@@ -122,5 +132,12 @@ public class User {
     public void setBookCollections(List<BookCollection> bookCollections) {
         this.bookCollections = bookCollections;
     }
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", firebaseUID=" + firebaseUID + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", email=" + email + ", dateOfBirth=" + dateOfBirth + ", bookCollections=" + bookCollections
+				+ ", cart=" + cart + ", order=" + order + "]";
+	}
 
 }

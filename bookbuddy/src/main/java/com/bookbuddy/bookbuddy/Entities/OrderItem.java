@@ -13,6 +13,12 @@ import jakarta.persistence.Table;
 @Table(name = "order_items")
 public class OrderItem {
 
+	@Override
+	public String toString() {
+		return "OrderItem [orderItemId=" + orderItemId + ", order=" + order + ", book=" + book + ", quantity="
+				+ quantity + ", itemPrice=" + itemPrice + "]";
+	}
+
 	@Id
 	@Column(name = "order_item_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +27,10 @@ public class OrderItem {
 	@ManyToOne
 	@JoinColumn(name = "order_id")
 	private Orders order;
+	
+
+
+	
 
 	@ManyToOne
 	@JoinColumn(name = "book_id")

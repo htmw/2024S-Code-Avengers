@@ -1,4 +1,4 @@
-package com.bookbuddy.bookbuddy.Service_Classes;
+package com.bookbuddy.bookbuddy.ServiceClasses;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,14 +6,14 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.bookbuddy.bookbuddy.Controllers_Repositories.BookCollectionRepository;
-import com.bookbuddy.bookbuddy.Controllers_Repositories.BookRepository;
-import com.bookbuddy.bookbuddy.Controllers_Repositories.UserRepository;
 import com.bookbuddy.bookbuddy.CreatedExceptions.UserNotFoundException;
 import com.bookbuddy.bookbuddy.Entities.Book;
 import com.bookbuddy.bookbuddy.Entities.BookCollection;
 import com.bookbuddy.bookbuddy.Entities.User;
 import com.bookbuddy.bookbuddy.Entities.UserDTO;
+import com.bookbuddy.bookbuddy.Repository.BookCollectionRepository;
+import com.bookbuddy.bookbuddy.Repository.BookRepository;
+import com.bookbuddy.bookbuddy.Repository.UserRepository;
 
 @Service
 public class UserService {
