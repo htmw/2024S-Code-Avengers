@@ -26,18 +26,18 @@ public class OrderController {
 	}
 	
 	 @PostMapping("/save-order")
-	    public String newUser(@RequestBody Order order) {
+	    public String saveOrder(@RequestBody Order order) {
 	        return orderService.saveOrder(order);
 	    }
 
 	 @PostMapping("/save-order-item")
-	    public String newUser(@RequestBody OrderItem order) {
+	    public String saveOrderItem(@RequestBody OrderItem order) {
 		 System.out.println(order.toString());
 	        return orderService.saveOrderItem(order);
 	    }
 	 
 	   @GetMapping("fetch-order/{orderId}")
-	    public Order findUser(@PathVariable Long orderId) {
+	    public Order findOrder(@PathVariable Long orderId) {
 	        return orderService.fetchOrders(orderId);
 	    }
 
