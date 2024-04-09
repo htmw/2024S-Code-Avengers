@@ -7,14 +7,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bookbuddy.bookbuddy.CreatedExceptions.UserNotFoundException;
+import com.bookbuddy.bookbuddy.Entities.Book;
 import com.bookbuddy.bookbuddy.Entities.BookCollection;
 import com.bookbuddy.bookbuddy.Entities.User;
-
-
 import com.bookbuddy.bookbuddy.Repository.BookCollectionRepository;
 import com.bookbuddy.bookbuddy.Repository.UserRepository;
 import com.bookbuddy.bookbuddy.ServiceClasses.BookCollectionService;
@@ -63,13 +63,13 @@ public class BookCollectionController {
     }
 
     @PutMapping("{userId}/{collectionId}/addBook/{bookId}")
-    public BookCollection addBook(@PathVariable Long userId, @PathVariable Long collectionId, @PathVariable Long bookId){
-        return bCService.addBook(userId, collectionId, bookId);
+    public BookCollection addBook(@PathVariable Long userId, @PathVariable Long collectionId, @RequestBody Book book){
+        return bCService.addBook(userId, collectionId, book);
     }
 
     @PutMapping("{userId}/{collectionId}/removeBook/{bookId}")
-    public BookCollection removeBook(@PathVariable Long userId, @PathVariable Long collectionId, @PathVariable Long bookId){
-        return bCService.removeBook(userId, collectionId, bookId);
+    public BookCollection removeBook(@PathVariable Long userId, @PathVariable Long collectionId, @RequestBody Book book){
+        return bCService.removeBook(userId, collectionId, book);
     }
 
 

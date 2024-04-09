@@ -1,5 +1,8 @@
 package com.bookbuddy.bookbuddy.ServiceClasses;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,9 +11,6 @@ import com.bookbuddy.bookbuddy.Entities.CartItem;
 import com.bookbuddy.bookbuddy.Repository.CartItemRepository;
 import com.bookbuddy.bookbuddy.Repository.CartRepository;
 import com.bookbuddy.bookbuddy.Repository.UserRepository;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class CartServices {
@@ -38,8 +38,8 @@ public class CartServices {
 			cartItemRepository.save(item);
 			response = "Cart Item saved Successfully";
 		} catch (Exception e) {
-			System.out.print("Exception occured " + e.getMessage());
-			response = "Exception occured " + e.getMessage();
+			System.out.print("Exception occurred " + e.getMessage());
+			response = "Exception occurred " + e.getMessage();
 		}
 		return response;
 	}
@@ -51,19 +51,19 @@ public class CartServices {
 			cartRepository.save(item);
 			response = "Cart saved Successfully";
 		} catch (Exception e) {
-			System.out.print("Exception occured " + e.getMessage());
-			response = "Exception occured " + e.getMessage();
+			System.out.print("Exception occurred " + e.getMessage());
+			response = "Exception occurred " + e.getMessage();
 		}
 		return response;
 	}
 
 	public List<CartItem> fetchCartItems(long cartId) {
-		List<CartItem> cartItems = new ArrayList<CartItem>();
+		List<CartItem> cartItems = new ArrayList<>();
 
 		try {
 			cartItems = cartItemRepository.findByCart_CartId(cartId);
 		} catch (Exception e) {
-			System.out.print("Exception occured " + e.getMessage());
+			System.out.print("Exception occurred " + e.getMessage());
 		}
 		return cartItems;
 	}
@@ -79,7 +79,7 @@ public class CartServices {
 				throw new Exception("Invalid Cart Id");
 			}
 		} catch (Exception e) {
-			System.out.print("Exception occured " + e.getMessage());
+			System.out.print("Exception occurred " + e.getMessage());
 		}
 		return c;
 	}
@@ -95,7 +95,7 @@ public class CartServices {
 				c.setUser(null);
 				System.out.println("cart is not null");
 				List<CartItem> cartItems = fetchCartItems(cartId);
-				if (cartItems.size() > 0) {
+				if (!cartItems.isEmpty()) {
 		
 					double totalPrice = 1.0;
 					for (CartItem item : cartItems) {
@@ -112,7 +112,7 @@ public class CartServices {
 			}
 
 		} catch (Exception e) {
-			System.out.print("Exception occured " + e.getMessage());
+			System.out.print("Exception occurred " + e.getMessage());
 		}
 		return c;
 

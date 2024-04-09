@@ -17,23 +17,12 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "orders")
-public class Orders {
-
-	public Orders() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+public class Order {
 
 	@Id
 	@Column(name = "order_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long orderId;
-
-	@Override
-	public String toString() {
-		return "Orders [orderId=" + orderId + ", user=" + user + ", totalPrice=" + totalPrice + ", orderDate="
-				+ orderDate + ", paymentType=" + paymentType + ", orderItems=" + orderItems + "]";
-	}
 
 	@OneToOne
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
@@ -47,14 +36,16 @@ public class Orders {
 	
 	@Column(name = "payment_type")
 	private String paymentType;
-
-	 
-	 @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-	 private List<OrderItem> orderItems = new ArrayList<>();
-
+ 
+	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+	private List<OrderItem> orderItems = new ArrayList<>();
 
 
-	public Long getOrderId() {
+
+	 public Order() {
+	}
+	
+	 public Long getOrderId() {
 		return orderId;
 	}
 
@@ -102,7 +93,7 @@ public class Orders {
 		this.orderItems = orderItems;
 	}
 
-	public Orders(Long orderId, User user, double totalPrice, Date orderDate, String paymentType,
+	public Order(Long orderId, User user, double totalPrice, Date orderDate, String paymentType,
 			List<OrderItem> orderItems) {
 		super();
 		this.orderId = orderId;
@@ -111,6 +102,12 @@ public class Orders {
 		this.orderDate = orderDate;
 		this.paymentType = paymentType;
 		this.orderItems = orderItems;
+	}
+
+	@Override
+	public String toString() {
+		return "Orders [orderId=" + orderId + ", user=" + user + ", totalPrice=" + totalPrice + ", orderDate="
+				+ orderDate + ", paymentType=" + paymentType + ", orderItems=" + orderItems + "]";
 	}
 
 

@@ -10,37 +10,35 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bookbuddy.bookbuddy.Entities.Cart;
-import com.bookbuddy.bookbuddy.Entities.CartItem;
+import com.bookbuddy.bookbuddy.Entities.Order;
 import com.bookbuddy.bookbuddy.Entities.OrderItem;
-import com.bookbuddy.bookbuddy.Entities.Orders;
-import com.bookbuddy.bookbuddy.ServiceClasses.OrdersService;
+import com.bookbuddy.bookbuddy.ServiceClasses.OrderService;
 
 @RestController
 @RequestMapping("/orders")
-public class OrdersController {
+public class OrderController {
 
 	   @Autowired
-    private final OrdersService ordersService ;
+    private final OrderService orderService ;
     
-	public OrdersController( OrdersService ordersService) {
-		this.ordersService = ordersService;
+	public OrderController( OrderService orderService) {
+		this.orderService = orderService;
 	}
 	
 	 @PostMapping("/save-order")
-	    public String newUser(@RequestBody Orders order) {
-	        return ordersService.saveOrder(order);
+	    public String newUser(@RequestBody Order order) {
+	        return orderService.saveOrder(order);
 	    }
 
 	 @PostMapping("/save-order-item")
 	    public String newUser(@RequestBody OrderItem order) {
 		 System.out.println(order.toString());
-	        return ordersService.saveOrderItem(order);
+	        return orderService.saveOrderItem(order);
 	    }
 	 
 	   @GetMapping("fetch-order/{orderId}")
-	    public Orders findUser(@PathVariable Long orderId) {
-	        return ordersService.fetchOrders(orderId);
+	    public Order findUser(@PathVariable Long orderId) {
+	        return orderService.fetchOrders(orderId);
 	    }
 
 

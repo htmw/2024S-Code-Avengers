@@ -10,11 +10,6 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "books")
 public class Book {
-    @Override
-	public String toString() {
-		return "Book [id=" + id + ", title=" + title + ", author=" + author + ", price=" + price + ", isbn=" + isbn
-				+ ", publicationDate=" + publicationDate + ", genre=" + genre + ", description=" + description + "]";
-	}
 
 	@Id 
     @GeneratedValue(strategy = GenerationType.IDENTITY) 
@@ -39,16 +34,6 @@ public class Book {
 //    
 ////    @OneToMany(mappedBy = "book"  , cascade= CascadeType.ALL)
 //    private CartItem cartItem;
-    
-    
-    
-//    public String getIsbn() {
-//		return isbn;
-//	}
-//
-//	public void setIsbn(String isbn) {
-//		this.isbn = isbn;
-//	}
 
 //	public OrderItem getOrderitem() {
 //		return orderitem;
@@ -99,14 +84,6 @@ public class Book {
         this.author = author;
     }
 
-//    public String getISBN() {
-//        return isbn;
-//    }
-//
-//    public void setISBN(String isbn) {
-//        this.isbn = isbn;
-//    }
-
     public String getPublicationDate() {
         return publicationDate;
     }
@@ -130,5 +107,11 @@ public class Book {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+	public String toString() {
+		return "Book [id=" + id + ", title=" + title + ", author=" + author + ", price=" + price + ", isbn=" + isbn
+				+ ", publicationDate=" + publicationDate + ", genre=" + genre + ", description=" + description + "]";
+	}
 
 }

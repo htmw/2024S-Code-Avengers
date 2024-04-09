@@ -35,20 +35,12 @@ public class User {
     @OneToMany(mappedBy="user", cascade= CascadeType.ALL)
     private List<BookCollection> bookCollections;
     
-    
+    @JsonIgnore
     @OneToOne(mappedBy = "user" )
     private Cart cart;
-    
-    public Orders getOrder() {
-		return order;
-	}
 
-	public void setOrder(Orders order) {
-		this.order = order;
-	}
-
-	@OneToOne(mappedBy = "user"  )
-    private Orders order;
+	@OneToMany(mappedBy = "user"  )
+    private List<Order> orders;
 
     public Cart getCart() {
 		return cart;
@@ -139,7 +131,15 @@ public class User {
 	public String toString() {
 		return "User [id=" + id + ", firebaseUID=" + firebaseUID + ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", email=" + email + ", dateOfBirth=" + dateOfBirth + ", bookCollections=" + bookCollections
-				+ ", cart=" + cart + ", order=" + order + "]";
+				+ ", cart=" + cart + "]";
 	}
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
 
 }

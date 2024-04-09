@@ -2,21 +2,20 @@
 
 package com.bookbuddy.bookbuddy.ServiceClasses;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
+import com.bookbuddy.bookbuddy.Entities.Order;
 import com.bookbuddy.bookbuddy.Entities.OrderItem;
-import com.bookbuddy.bookbuddy.Entities.Orders;
 import com.bookbuddy.bookbuddy.Repository.OrderItemRepository;
 import com.bookbuddy.bookbuddy.Repository.OrdersRepository;
 import com.bookbuddy.bookbuddy.Repository.UserRepository;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Service
-public class OrdersService {
+public class OrderService {
 	   @Autowired
 	private OrderItemRepository orderItemRepository;
 	   @Autowired
@@ -25,7 +24,7 @@ public class OrdersService {
 	private UserRepository userRepository;
 	
 
-	public OrdersService(OrderItemRepository orderItemRepository, OrdersRepository orderRepository,
+	public OrderService(OrderItemRepository orderItemRepository, OrdersRepository orderRepository,
 			UserRepository userRepository) {
 		this.orderItemRepository = orderItemRepository;
 		this.orderRepository = orderRepository;
@@ -39,37 +38,37 @@ public class OrdersService {
 			orderItemRepository.save(item);
 			response = "Order Item saved Successfully";
 		} catch (Exception e) {
-			System.out.print("Exception occured " + e.getMessage());
-			response = "Exception occured " + e.getMessage();
+			System.out.print("Exception occurred " + e.getMessage());
+			response = "Exception occurred " + e.getMessage();
 		}
 		return response;
 	}
 
-	public String saveOrder(Orders order) {
+	public String saveOrder(Order order) {
 		String response;
 		try {
 			orderRepository.save(order);
 			response = "Order saved Successfully";
 		} catch (Exception e) {
-			System.out.print("Exception occured " + e.getMessage());
-			response = "Exception occured " + e.getMessage();
+			System.out.print("Exception occurred " + e.getMessage());
+			response = "Exception occurred " + e.getMessage();
 		}
 		return response;
 	}
 
 	public List<OrderItem> fetchOrderItems(long orderId) {
-		List<OrderItem> orderItems = new ArrayList<OrderItem>();
+		List<OrderItem> orderItems = new ArrayList<>();
 
 		try {
 			orderItems = orderItemRepository.findByOrder_OrderId(orderId);
 		} catch (Exception e) {
-			System.out.print("Exception occured " + e.getMessage());
+			System.out.print("Exception occurred " + e.getMessage());
 		}
 		return orderItems;
 	}
 
-	public Orders validateOrder(long orderId) {
-		Orders c = new Orders();
+	public Order validateOrder(long orderId) {
+		Order c = new Order();
 
 		try {
 			c = orderRepository.findById(orderId);
@@ -79,14 +78,14 @@ public class OrdersService {
 				throw new Exception("Invalid Order Id");
 			}
 		} catch (Exception e) {
-			System.out.print("Exception occured " + e.getMessage());
+			System.out.print("Exception occurred " + e.getMessage());
 		}
 		return c;
 	}
 
-	public Orders fetchOrders(long orderId) {
+	public Order fetchOrders(long orderId) {
 
-		Orders c = new Orders();
+		Order c = new Order();
 
 		try {
 			c = validateOrder(orderId);
@@ -94,11 +93,11 @@ public class OrdersService {
 			if (c != null) {
 				c.setUser(null);
 				List<OrderItem> orderItems = fetchOrderItems(orderId);
-				if (orderItems.size() > 0) {
+				if (!orderItems.isEmpty()) {
 					c.setOrderItems(orderItems);
 					double totalPrice = 0.0;
 					for (OrderItem item : orderItems) {
-						item.setOrders(null);
+						item.setOrder(null);
 						totalPrice = totalPrice + item.getQuantity() * item.getBook().getPrice();
 
 					}
@@ -111,7 +110,7 @@ public class OrdersService {
 			}
 
 		} catch (Exception e) {
-			System.out.print("Exception occured " + e.getMessage());
+			System.out.print("Exception occurred " + e.getMessage());
 		}
 		return c;
 
