@@ -36,7 +36,9 @@ public class BookCollection {
     )
     private List<Book> books;
 
-
+    public BookCollection(){
+        
+    }
     public BookCollection(User user, String name){
         this.user = user;
         this.collectionName = name;
