@@ -1,4 +1,4 @@
-package com.bookbuddy.bookbuddy.Controllers_Repositories;
+package com.bookbuddy.bookbuddy.Repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

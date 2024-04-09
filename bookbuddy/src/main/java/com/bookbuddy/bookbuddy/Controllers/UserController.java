@@ -1,4 +1,4 @@
-package com.bookbuddy.bookbuddy.Controllers_Repositories;
+package com.bookbuddy.bookbuddy.Controllers;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,12 +13,23 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.bookbuddy.bookbuddy.Entities.User;
 import com.bookbuddy.bookbuddy.Entities.UserDTO;
-import com.bookbuddy.bookbuddy.Service_Classes.UserService;
+import com.bookbuddy.bookbuddy.Repository.UserRepository;
+import com.bookbuddy.bookbuddy.ServiceClasses.UserService;
 
 @RestController
 @RequestMapping("/users")
+@CrossOrigin("*")
+
 public class UserController {
     private final UserRepository uRepository;
     private final UserService uService;
@@ -28,13 +39,16 @@ public class UserController {
         this.uService = uService;
     }
 
-    @GetMapping()
+    @GetMapping("/all")
     public List<User> all(){
         return uRepository.findAll();
     }
 
-    @PostMapping("/addNew")
+   
+    
+    @RequestMapping(value = "/addNew", method = RequestMethod.POST)
     public User newUser(@RequestBody User newUser) {
+    	System.out.println(newUser);
         return uService.addNewUser(newUser);
     }
 

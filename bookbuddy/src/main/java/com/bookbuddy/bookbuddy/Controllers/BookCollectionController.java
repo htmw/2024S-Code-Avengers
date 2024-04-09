@@ -1,4 +1,4 @@
-package com.bookbuddy.bookbuddy.Controllers_Repositories;
+package com.bookbuddy.bookbuddy.Controllers;
 
 import java.util.Optional;
 
@@ -13,7 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bookbuddy.bookbuddy.CreatedExceptions.UserNotFoundException;
 import com.bookbuddy.bookbuddy.Entities.BookCollection;
 import com.bookbuddy.bookbuddy.Entities.User;
-import com.bookbuddy.bookbuddy.Service_Classes.BookCollectionService;
+
+
+import com.bookbuddy.bookbuddy.Repository.BookCollectionRepository;
+import com.bookbuddy.bookbuddy.Repository.UserRepository;
+import com.bookbuddy.bookbuddy.ServiceClasses.BookCollectionService;
 
 
 @RestController

@@ -19,12 +19,23 @@ import jakarta.persistence.Table;
 @Table(name = "orders")
 public class Orders {
 
+	public Orders() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	@Id
 	@Column(name = "order_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long orderId;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@Override
+	public String toString() {
+		return "Orders [orderId=" + orderId + ", user=" + user + ", totalPrice=" + totalPrice + ", orderDate="
+				+ orderDate + ", paymentType=" + paymentType + ", orderItems=" + orderItems + "]";
+	}
+
+	@OneToOne
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	private User user;
 

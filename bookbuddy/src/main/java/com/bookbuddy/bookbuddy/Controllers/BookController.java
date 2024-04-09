@@ -1,4 +1,4 @@
-package com.bookbuddy.bookbuddy.Controllers_Repositories;
+package com.bookbuddy.bookbuddy.Controllers;
 
 import java.util.List;
 
@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bookbuddy.bookbuddy.CreatedExceptions.BookNotFoundException;
 import com.bookbuddy.bookbuddy.Entities.Book;
+import com.bookbuddy.bookbuddy.Repository.BookRepository;
 
 
 
