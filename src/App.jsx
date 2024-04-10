@@ -10,12 +10,17 @@ import LoginRegister from "./LoginRegister";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import Onboarding from "./Onboarding";
+import GenreSelection from "./GenreSelection";
+import SearchScreen from "./SearchScreen";
+import HomeScreen from "./HomeScreen";
 
 const Header = () => {
   const location = useLocation();
   const isSignInPage = location.pathname === "/signin";
   const isSignUpPage = location.pathname === "/signup";
   const isOnboardingPage = location.pathname === "/onboarding";
+  const isGenreSelectionPage = location.pathname === "/genre-selection";
+  const isSearchScreenPage = location.pathname === "/search-screen";
 
   return (
     <header className="bg-white shadow">
@@ -23,20 +28,24 @@ const Header = () => {
         <Link to="/">
           <h1 className="text-3xl font-bold text-gray-900">Book Buddy</h1>
         </Link>
-        {!isSignInPage && !isSignUpPage && !isOnboardingPage && (
-          <div>
-            <Link to="/signin">
-              <button className="mr-4 rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                Sign In
-              </button>
-            </Link>
-            <Link to="/signup">
-              <button className="rounded-md bg-green-500 px-4 py-2 text-white hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">
-                Sign Up
-              </button>
-            </Link>
-          </div>
-        )}
+        {!isSignInPage &&
+          !isSignUpPage &&
+          !isOnboardingPage &&
+          !isGenreSelectionPage &&
+          !isSearchScreenPage && (
+            <div>
+              <Link to="/signin">
+                <button className="mr-4 rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                  Sign In
+                </button>
+              </Link>
+              <Link to="/signup">
+                <button className="rounded-md bg-green-500 px-4 py-2 text-white hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">
+                  Sign Up
+                </button>
+              </Link>
+            </div>
+          )}
       </div>
     </header>
   );
@@ -54,6 +63,9 @@ export default function App() {
               <Route path="/signin" element={<SignIn />} />
               <Route path="/signup" element={<SignUp />} />
               <Route path="/onboarding" element={<Onboarding />} />
+              <Route path="/genre-selection" element={<GenreSelection />} />
+              <Route path="/search-screen" element={<SearchScreen />} />
+              <Route path="/home" element={<HomeScreen />} />
             </Routes>
           </div>
         </main>

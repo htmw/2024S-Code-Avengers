@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { FaFacebook, FaGoogle } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
+import { auth } from "./firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -8,15 +10,15 @@ const SignIn = () => {
   const [keepSignedIn, setKeepSignedIn] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Perform pseudo login logic here
-    if (email === "admin@admin.com" && password === "admin") {
-      // Redirect to the onboarding page after successful login
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      console.log("User logged in successfully");
       navigate("/onboarding");
-    } else {
+    } catch (error) {
+      console.error("Error logging in user:", error);
       // Display an error message or perform any other necessary actions
-      console.log("Invalid email or password");
     }
   };
 

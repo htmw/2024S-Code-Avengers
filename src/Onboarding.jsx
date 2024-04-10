@@ -1,10 +1,15 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Onboarding = () => {
+  const navigate = useNavigate();
+
   const handleOptionClick = (option) => {
-    // Handle the selected option here
-    console.log("Selected option:", option);
-    // Redirect to the appropriate page or perform any other necessary actions
+    if (option === "newReader") {
+      navigate("/genre-selection");
+    } else if (option === "experiencedReader") {
+      navigate("/search-screen");
+    }
   };
 
   return (

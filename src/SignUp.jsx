@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { FaFacebook, FaGoogle } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { auth, db } from "./firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const SignUp = () => {
   const [profileName, setProfileName] = useState("");
@@ -11,16 +16,29 @@ const SignUp = () => {
   const [birthDate, setBirthDate] = useState("");
   const [birthYear, setBirthYear] = useState("");
   const [shareRegistrationData, setShareRegistrationData] = useState(false);
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Perform sign-up logic here
-    console.log("Profile Name:", profileName);
-    console.log("Email:", email);
-    console.log("Password:", password);
-    console.log("Gender:", gender);
-    console.log("Date of Birth:", `${birthMonth}/${birthDate}/${birthYear}`);
-    console.log("Share Registration Data:", shareRegistrationData);
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+      await setDoc(doc(db, "users", user.uid), {
+        profileName,
+        email,
+        gender,
+        dateOfBirth: `${birthMonth}/${birthDate}/${birthYear}`,
+        shareRegistrationData,
+      });
+      console.log("User registered successfully");
+      navigate("/onboarding");
+    } catch (error) {
+      console.error("Error registering user:", error);
+    }
   };
 
   return (
@@ -114,36 +132,22 @@ const SignUp = () => {
             </div>
           </div>
           <div className="mb-6">
-            <p className="mb-4 text-sm text-gray-600">
-              What's your date of birth?
-            </p>
-            <div className="flex items-center space-x-6">
-              <select
-                value={birthMonth}
-                onChange={(e) => setBirthMonth(e.target.value)}
-                className="w-1/3 rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                <option value="">Month</option>
-                {/* Add month options */}
-              </select>
-              <select
-                value={birthDate}
-                onChange={(e) => setBirthDate(e.target.value)}
-                className="w-1/3 rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                <option value="">Date</option>
-                {/* Add date options */}
-              </select>
-              <select
-                value={birthYear}
-                onChange={(e) => setBirthYear(e.target.value)}
-                className="w-1/3 rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                <option value="">Year</option>
-                {/* Add year options */}
-              </select>
-            </div>
-          </div>
+  <p className="mb-4 text-sm text-gray-600">What's your date of birth?</p>
+  <DatePicker
+    selected={
+      birthYear && birthMonth && birthDate
+        ? new Date(birthYear, birthMonth - 1, birthDate)
+        : null
+    }
+    onChange={(date) => {
+      setBirthYear(date.getFullYear());
+      setBirthMonth(date.getMonth() + 1);
+      setBirthDate(date.getDate());
+    }}
+    dateFormat="yyyy-MM-dd"
+    className="w-full rounded-md border border-gray-300 px-4 py-2 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+  />
+</div>
           <div className="mb-8">
             <label className="flex items-center">
               <input
