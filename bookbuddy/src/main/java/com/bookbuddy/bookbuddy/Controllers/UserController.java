@@ -37,8 +37,6 @@ public class UserController {
         return uRepository.findAll();
     }
 
-   
-    
     @PostMapping("/addNew")
     public User newUser(@RequestBody User newUser) {
     	System.out.println(newUser);
