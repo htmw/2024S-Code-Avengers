@@ -1,7 +1,6 @@
 package com.bookbuddy.bookbuddy.Controllers;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -33,19 +32,21 @@ public class UserController {
     }
 
     @GetMapping("/all")
-    public List<User> all(){
-        return uRepository.findAll();
+    public ResponseEntity<List<User>> all(){
+        List<User> users = uRepository.findAll();
+        return ResponseEntity.ok(users);
     }
 
     @PostMapping("/addNew")
-    public User newUser(@RequestBody User newUser) {
-    	System.out.println(newUser);
-        return uService.addNewUser(newUser);
+    public ResponseEntity<User> newUser(@RequestBody User newUser) {
+    	uService.addNewUser(newUser);
+        return ResponseEntity.ok(newUser);
     }
 
     @GetMapping("/{userId}")
-    public UserDTO findUser(@PathVariable Long userId) {
-        return uService.getUserDetails(userId);
+    public ResponseEntity<UserDTO> findUser(@PathVariable Long userId) {
+        UserDTO user = uService.getUserDetails(userId);
+        return ResponseEntity.ok(user);
     }
 
     @PutMapping("/{userId}")
@@ -55,14 +56,11 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Long> deleteUser(@PathVariable Long id){
-        Optional<User> userOptional = uRepository.findById(id);
-        if (userOptional.isPresent()) {
-            uRepository.deleteById(id);
-            return ResponseEntity.ok(id);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<String> deleteUser(@PathVariable Long id){
+        boolean deleted = uService.deleteUser(id);
+        if(deleted) return ResponseEntity.ok("User successfully deleted");
+        else return ResponseEntity.notFound().build();
+
     }
 
 }

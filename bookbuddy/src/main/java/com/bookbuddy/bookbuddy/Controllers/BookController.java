@@ -2,6 +2,7 @@ package com.bookbuddy.bookbuddy.Controllers;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,14 +24,17 @@ public class BookController {
     }
 
     @GetMapping()
-    public List<Book> getAll() {
-        return repository.findAll();
+    public ResponseEntity<List<Book>> getAll() {
+        List<Book> books = repository.findAll();
+        return ResponseEntity.ok(books);
     }
 
     @GetMapping("/{id}")
-    public Book findBook(@PathVariable Long id) {
-        return repository.findById(id)
+    public ResponseEntity<Book> findBook(@PathVariable Long id) {
+        Book book = repository.findById(id)
             .orElseThrow(() -> new BookNotFoundException(id));
+        
+        return ResponseEntity.ok(book);
     }
 
     
