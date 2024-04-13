@@ -7,7 +7,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-
 import jakarta.persistence.Table;
 
 @Entity
@@ -87,8 +86,7 @@ public class CartItem {
 	}
 
 	public CartItem() {
-		super();
-		// TODO Auto-generated constructor stub
+
 	}
 	
 	
