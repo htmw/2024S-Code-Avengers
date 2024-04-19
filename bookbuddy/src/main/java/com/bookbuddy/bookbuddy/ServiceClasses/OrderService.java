@@ -2,6 +2,7 @@
 
 package com.bookbuddy.bookbuddy.ServiceClasses;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,11 +18,11 @@ import com.bookbuddy.bookbuddy.Repository.UserRepository;
 @Service
 public class OrderService {
 	   @Autowired
-	private OrderItemRepository orderItemRepository;
+	private final OrderItemRepository orderItemRepository;
 	   @Autowired
-	private OrdersRepository orderRepository;
+	private final OrdersRepository orderRepository;
 	   @Autowired
-	private UserRepository userRepository;
+	private final UserRepository userRepository;
 	
 
 	public OrderService(OrderItemRepository orderItemRepository, OrdersRepository orderRepository,
@@ -95,10 +96,10 @@ public class OrderService {
 				List<OrderItem> orderItems = fetchOrderItems(orderId);
 				if (!orderItems.isEmpty()) {
 					c.setOrderItems(orderItems);
-					double totalPrice = 0.0;
+					BigDecimal totalPrice = BigDecimal.ZERO;
 					for (OrderItem item : orderItems) {
 						item.setOrder(null);
-						totalPrice = totalPrice + item.getQuantity() * item.getBook().getPrice();
+						totalPrice = totalPrice.add(item.getBook().getPrice().multiply(BigDecimal.valueOf(item.getQuantity())));
 
 					}
 					c.setTotalPrice(totalPrice);

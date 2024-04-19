@@ -1,5 +1,9 @@
 package com.bookbuddy.bookbuddy.Entities;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,9 +14,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "shopping_cart")
@@ -34,7 +35,7 @@ public class Cart {
 
 	
 	@Column(name = "total_price")
-	private double totalPrice;
+	private BigDecimal totalPrice;
 
 
 	public Long getCartId() {
@@ -67,12 +68,12 @@ public class Cart {
 	}
 
 
-	public double getTotalPrice() {
+	public BigDecimal getTotalPrice() {
 		return totalPrice;
 	}
 
 
-	public void setTotalPrice(double totalPrice) {
+	public void setTotalPrice(BigDecimal totalPrice) {
 		this.totalPrice = totalPrice;
 	}
 

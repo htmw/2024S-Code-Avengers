@@ -1,5 +1,7 @@
 package com.bookbuddy.bookbuddy.Entities;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -33,7 +35,7 @@ public class CartItem {
 	private int quantity;
 
 	@Column(name = "item_price")
-	private double itemPrice;
+	private BigDecimal itemPrice;
 	
 
 	public Long getCartItemId() {
@@ -68,15 +70,15 @@ public class CartItem {
 		this.quantity = quantity;
 	}
 
-	public double getItemPrice() {
+	public BigDecimal getItemPrice() {
 		return itemPrice;
 	}
 
-	public void setItemPrice(double itemPrice) {
+	public void setItemPrice(BigDecimal itemPrice) {
 		this.itemPrice = itemPrice;
 	}
 
-	public CartItem(Long cartItemId, Cart cart, Book book, int quantity, double itemPrice) {
+	public CartItem(Long cartItemId, Cart cart, Book book, int quantity, BigDecimal itemPrice) {
 		super();
 		this.cartItemId = cartItemId;
 		this.cart = cart;
