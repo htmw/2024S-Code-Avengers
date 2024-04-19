@@ -1,19 +1,16 @@
 package com.bookbuddy.bookbuddy.Controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bookbuddy.bookbuddy.Entities.Book;
 import com.bookbuddy.bookbuddy.Entities.BookCollection;
-import com.bookbuddy.bookbuddy.Repository.BookCollectionRepository;
-import com.bookbuddy.bookbuddy.Repository.UserRepository;
 import com.bookbuddy.bookbuddy.ServiceClasses.BookCollectionService;
 
 
@@ -21,26 +18,12 @@ import com.bookbuddy.bookbuddy.ServiceClasses.BookCollectionService;
 @RequestMapping("/collections")
 public class BookCollectionController {
 
-    private final BookCollectionRepository bCRepository;
-    private final UserRepository uRepository;
+    @Autowired
     private final BookCollectionService bCService;
 
-    BookCollectionController(BookCollectionRepository bCRepository, UserRepository uRepository, BookCollectionService bCService){
-        this.bCRepository = bCRepository;
-        this.uRepository = uRepository;
+    BookCollectionController(BookCollectionService bCService){
         this.bCService = bCService;
     }
-
-    // @GetMapping("/{userId}/{collectionId}")
-    // public ResponseEntity<BookCollection> getCollection(@PathVariable Long userId, @PathVariable Long collectionId) {
-    //     Optional<User> userOptional = uRepository.findById(userId);
-    //     if(userOptional.isPresent()){
-    //         User user = userOptional.get();
-    //         BookCollection collection = user.findCollectionById(collectionId);
-    //         return ResponseEntity.ok(collection);
-    //     }
-    //     else throw new UserNotFoundException(userId);
-    // }
 
     @GetMapping("/{collectionId}")
     public ResponseEntity<BookCollection> getCollection(@PathVariable Long collectionId) {

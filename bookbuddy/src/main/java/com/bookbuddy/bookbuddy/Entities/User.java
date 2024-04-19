@@ -1,5 +1,6 @@
 package com.bookbuddy.bookbuddy.Entities;
 
+import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -17,19 +18,25 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "users")
 public class User {
+
     @Id 
     @GeneratedValue(strategy = GenerationType.IDENTITY) 
     private Long id;
+
     @Column(name="firebaseUID")
     private Long firebaseUID;
+
     @Column(name="first_name")
     private String firstName;
+
     @Column(name="last_name")
     private String lastName;
+
     @Column(name="email")
     private String email;
+    
     @Column(name="date_of_birth")
-    private String dateOfBirth;
+    private Date dateOfBirth;
 
     @JsonIgnore
     @OneToMany(mappedBy="user", cascade= CascadeType.ALL)
@@ -52,7 +59,7 @@ public class User {
             cart.setUser(this) ;
         }}
 
-	public User(Long firebaseUID, String firstName, String lastName, String email, String dateOfBirth){
+	public User(Long firebaseUID, String firstName, String lastName, String email, Date dateOfBirth){
         this.firebaseUID = firebaseUID;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -111,14 +118,6 @@ public class User {
         this.email = email;
     }
 
-    public String getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(String dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
     public List<BookCollection> getBookCollections() {
         return bookCollections;
     }
@@ -127,12 +126,12 @@ public class User {
         this.bookCollections = bookCollections;
     }
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", firebaseUID=" + firebaseUID + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", email=" + email + ", dateOfBirth=" + dateOfBirth + ", bookCollections=" + bookCollections
-				+ ", cart=" + cart + "]";
-	}
+	// @Override
+	// public String toString() {
+	// 	return "User [id=" + id + ", firebaseUID=" + firebaseUID + ", firstName=" + firstName + ", lastName=" + lastName
+	// 			+ ", email=" + email + ", dateOfBirth=" + dateOfBirth + ", bookCollections=" + bookCollections
+	// 			+ ", cart=" + cart + "]";
+	// }
 
     public List<Order> getOrders() {
         return orders;
@@ -140,6 +139,14 @@ public class User {
 
     public void setOrders(List<Order> orders) {
         this.orders = orders;
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
 }

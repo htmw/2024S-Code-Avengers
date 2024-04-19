@@ -1,12 +1,14 @@
 package com.bookbuddy.bookbuddy.Entities;
 
+import java.util.Date;
+
 public class UserDTO {
     private String firstName;
     private String lastName;
     private String email;
-    private String dateOfBirth;
+    private Date dateOfBirth;
 
-    public UserDTO(String firstName, String lastName, String email, String dateOfBirth) {
+    public UserDTO(String firstName, String lastName, String email, Date dateOfBirth) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -37,11 +39,11 @@ public class UserDTO {
         this.email = email;
     }
 
-    public String getDateOfBirth() {
+    public Date getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
+    public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 }

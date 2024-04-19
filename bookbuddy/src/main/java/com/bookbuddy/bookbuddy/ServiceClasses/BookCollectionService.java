@@ -2,6 +2,7 @@ package com.bookbuddy.bookbuddy.ServiceClasses;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bookbuddy.bookbuddy.CreatedExceptions.BookNotFoundException;
@@ -16,9 +17,11 @@ import com.bookbuddy.bookbuddy.Repository.UserRepository;
 
 @Service
 public class BookCollectionService {
-    
+    @Autowired
     private final BookRepository bRepository;
+    @Autowired
     private final BookCollectionRepository bCRepository;
+    @Autowired
     private final UserRepository uRepository;
 
     public BookCollectionService(UserRepository uRepository, BookRepository bRepository, BookCollectionRepository bCRepository){
