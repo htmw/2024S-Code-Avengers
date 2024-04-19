@@ -1,8 +1,5 @@
-# React + Vite
+# 2024S-Code-Avengers
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Project Description
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+We plan to create a website that can function as a book e-commerce site with a robust recommendation engine that can help users find new authors and books they otherwise would have trouble finding. The ML Model will take different diversity metrics into account and be able to find new authors, books, or genres of writing that they user will be interested in. The site itself will contain a modern UI with wish list features and full e-commerce functionality.
