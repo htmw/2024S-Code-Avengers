@@ -26,39 +26,18 @@ public class Book {
     @Column(name="price")
     private BigDecimal price;
 
-    @Column(name="isbn")
-    private String isbn;
+    // @Column(name="isbn")
+    // private String isbn;
 
-    @Column(name="publication_date")
-    private String publicationDate;
+    // @Column(name="publication_date")
+    // private String publicationDate;
 
-    @Column(name="genre")
-    private String genre;
+    // @Column(name="genre")
+    // private String genre;
 
     @Column(name="description")
     private String description;
-    
-////    @OneToMany(mappedBy = "book"  , cascade= CascadeType.ALL)
-//    private OrderItem orderitem;
-//    
-////    @OneToMany(mappedBy = "book"  , cascade= CascadeType.ALL)
-//    private CartItem cartItem;
 
-//	public OrderItem getOrderitem() {
-//		return orderitem;
-//	}
-//
-//	public void setOrderitem(OrderItem orderitem) {
-//		this.orderitem = orderitem;
-//	}
-//
-//	public CartItem getCartItem() {
-//		return cartItem;
-//	}
-//
-//	public void setCartItem(CartItem cartItem) {
-//		this.cartItem = cartItem;
-//	}
     
     
     public Long getId() {
@@ -93,21 +72,21 @@ public class Book {
         this.price = price;
     }
 
-    public String getPublicationDate() {
-        return publicationDate;
-    }
+    // public String getPublicationDate() {
+    //     return publicationDate;
+    // }
 
-    public void setPublicationDate(String publicationDate) {
-        this.publicationDate = publicationDate;
-    }
+    // public void setPublicationDate(String publicationDate) {
+    //     this.publicationDate = publicationDate;
+    // }
 
-    public String getGenre() {
-        return genre;
-    }
+    // public String getGenre() {
+    //     return genre;
+    // }
 
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
+    // public void setGenre(String genre) {
+    //     this.genre = genre;
+    // }
 
     public String getDescription() {
         return description;
@@ -119,8 +98,7 @@ public class Book {
 
     @Override
 	public String toString() {
-		return "Book [id=" + id + ", title=" + title + ", author=" + author + ", price=" + price + ", isbn=" + isbn
-				+ ", publicationDate=" + publicationDate + ", genre=" + genre + ", description=" + description + "]";
+		return "Book [id=" + id + ", title=" + title + ", author=" + author + ", price=" + price + ", description=" + description + "]";
 	}
 
 }
