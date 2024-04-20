@@ -1,5 +1,7 @@
 package com.bookbuddy.bookbuddy.Entities;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,18 +16,25 @@ public class Book {
 	@Id 
     @GeneratedValue(strategy = GenerationType.IDENTITY) 
     private Long id;
+
     @Column(name="title")
     private String title;
+
     @Column(name="author")   
     private String author;
+
     @Column(name="price")
-    private float price;
+    private BigDecimal price;
+
     @Column(name="isbn")
     private String isbn;
+
     @Column(name="publication_date")
     private String publicationDate;
+
     @Column(name="genre")
     private String genre;
+
     @Column(name="description")
     private String description;
     
@@ -50,14 +59,6 @@ public class Book {
 //	public void setCartItem(CartItem cartItem) {
 //		this.cartItem = cartItem;
 //	}
-
-	public float getPrice() {
-    	return price;
-    }
-    
-    public void setPrice(float price) {
-    	 this.price = price;
-    }
     
     
     public Long getId() {
@@ -82,6 +83,14 @@ public class Book {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public BigDecimal getPrice(){
+        return price;
+    }
+
+    public void setPrice(BigDecimal price){
+        this.price = price;
     }
 
     public String getPublicationDate() {

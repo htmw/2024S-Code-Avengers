@@ -1,22 +1,16 @@
 package com.bookbuddy.bookbuddy.Controllers;
 
-import java.util.Optional;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bookbuddy.bookbuddy.CreatedExceptions.UserNotFoundException;
-import com.bookbuddy.bookbuddy.Entities.Book;
 import com.bookbuddy.bookbuddy.Entities.BookCollection;
-import com.bookbuddy.bookbuddy.Entities.User;
-import com.bookbuddy.bookbuddy.Repository.BookCollectionRepository;
-import com.bookbuddy.bookbuddy.Repository.UserRepository;
 import com.bookbuddy.bookbuddy.ServiceClasses.BookCollectionService;
 
 
@@ -24,52 +18,50 @@ import com.bookbuddy.bookbuddy.ServiceClasses.BookCollectionService;
 @RequestMapping("/collections")
 public class BookCollectionController {
 
-    private final BookCollectionRepository bCRepository;
-    private final UserRepository uRepository;
+    @Autowired
     private final BookCollectionService bCService;
 
-    BookCollectionController(BookCollectionRepository bCRepository, UserRepository uRepository, BookCollectionService bCService){
-        this.bCRepository = bCRepository;
-        this.uRepository = uRepository;
+    BookCollectionController(BookCollectionService bCService){
         this.bCService = bCService;
     }
 
-    @GetMapping("/{userId}/{collectionId}")
-    public BookCollection getCollection(@PathVariable Long userId, @PathVariable Long collectionId) {
-        Optional<User> userOptional = uRepository.findById(userId);
-        if(userOptional.isPresent()){
-            User user = userOptional.get();
-            return user.findCollectionById(collectionId);
-        }
-        else throw new UserNotFoundException(userId);
+    @GetMapping("/{collectionId}")
+    public ResponseEntity<BookCollection> getCollection(@PathVariable Long collectionId) {
+        BookCollection collection = bCService.getCollectionById(collectionId);
+        return ResponseEntity.ok(collection);
     }
 
-    @DeleteMapping("/{userId}/{collectionId}")
-    public boolean deleteCollection(
+    @DeleteMapping("/{collectionId}")
+    public ResponseEntity<String> deleteCollection(
             @PathVariable Long userId,
             @PathVariable Long collectionId) {
-        boolean deleted = bCService.deleteCollection(userId, collectionId);
-        return deleted;
+        boolean deleted = bCService.deleteCollection(collectionId);
+        if(deleted) return ResponseEntity.ok("Collection successfully deleted");
+        else return ResponseEntity.notFound().build();
     }
 
     @PostMapping("{userId}/addCollection/{name}")
-    public BookCollection addCollection(@PathVariable Long userId, @PathVariable String name){
-        return bCService.createCollection(userId, name);
+    public ResponseEntity<BookCollection> addCollection(@PathVariable Long userId, @PathVariable String name){
+        BookCollection collection = bCService.createCollection(userId, name);
+        return ResponseEntity.ok(collection);
     }
 
-    @PutMapping("{userId}/{collectionId}/rename/{newName}")
-    public BookCollection updateCollection(@PathVariable Long userId, @PathVariable Long collectionId, @PathVariable String newName){
-            return bCService.renameCollection(userId, collectionId, newName);
+    @PutMapping("{collectionId}/rename/{newName}")
+    public ResponseEntity<BookCollection> renameCollection(@PathVariable Long collectionId, @PathVariable String newName){
+            BookCollection collection = bCService.renameCollection(collectionId, newName);
+            return ResponseEntity.ok(collection);
     }
 
-    @PutMapping("{userId}/{collectionId}/addBook/{bookId}")
-    public BookCollection addBook(@PathVariable Long userId, @PathVariable Long collectionId, @RequestBody Book book){
-        return bCService.addBook(userId, collectionId, book);
+    @PutMapping("{collectionId}/addBook/{bookId}")
+    public ResponseEntity<BookCollection> addBook(@PathVariable Long collectionId, @PathVariable Long bookId){
+        BookCollection collection = bCService.addBook(collectionId, bookId);
+        return ResponseEntity.ok(collection);
     }
 
-    @PutMapping("{userId}/{collectionId}/removeBook/{bookId}")
-    public BookCollection removeBook(@PathVariable Long userId, @PathVariable Long collectionId, @RequestBody Book book){
-        return bCService.removeBook(userId, collectionId, book);
+    @PutMapping("{collectionId}/removeBook/{bookId}")
+    public ResponseEntity<BookCollection> removeBook(@PathVariable Long collectionId, @PathVariable Long bookId){
+        BookCollection collection = bCService.removeBook(collectionId, bookId);
+        return ResponseEntity.ok(collection);
     }
 
 

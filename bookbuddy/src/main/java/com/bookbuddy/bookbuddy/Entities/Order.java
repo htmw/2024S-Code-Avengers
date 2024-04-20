@@ -1,5 +1,6 @@
 package com.bookbuddy.bookbuddy.Entities;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,7 +30,7 @@ public class Order {
 	private User user;
 
 	@Column(name = "total_price")
-	private double totalPrice;
+	private BigDecimal totalPrice;
 	
 	@Column(name = "order_date")
 	private Date orderDate;
@@ -61,11 +62,11 @@ public class Order {
 		this.user = user;
 	}
 
-	public double getTotalPrice() {
+	public BigDecimal getTotalPrice() {
 		return totalPrice;
 	}
 
-	public void setTotalPrice(double totalPrice) {
+	public void setTotalPrice(BigDecimal totalPrice) {
 		this.totalPrice = totalPrice;
 	}
 
@@ -93,7 +94,7 @@ public class Order {
 		this.orderItems = orderItems;
 	}
 
-	public Order(Long orderId, User user, double totalPrice, Date orderDate, String paymentType,
+	public Order(Long orderId, User user, BigDecimal totalPrice, Date orderDate, String paymentType,
 			List<OrderItem> orderItems) {
 		super();
 		this.orderId = orderId;

@@ -1,5 +1,6 @@
 package com.bookbuddy.bookbuddy.ServiceClasses;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,11 +16,11 @@ import com.bookbuddy.bookbuddy.Repository.UserRepository;
 @Service
 public class CartServices {
 	@Autowired
-	private CartItemRepository cartItemRepository;
+	private final CartItemRepository cartItemRepository;
 	@Autowired
-	private CartRepository cartRepository;
+	private final CartRepository cartRepository;
 	@Autowired
-	private UserRepository userRepository;
+	private final UserRepository userRepository;
 
 	public CartServices(CartItemRepository cartItemRepository, CartRepository cartRepository,
 			UserRepository userRepository) {
@@ -33,7 +34,7 @@ public class CartServices {
 		String response;
 		try {
 			// need to update book price by using book service
-			item.setItemPrice(item.getQuantity() * item.getBook().getPrice());
+			item.setItemPrice(item.getBook().getPrice().multiply(BigDecimal.valueOf(item.getQuantity())));
 			System.out.println(item.toString());
 			cartItemRepository.save(item);
 			response = "Cart Item saved Successfully";
@@ -92,15 +93,15 @@ public class CartServices {
 			c = validateCart(cartId);
 
 			if (c != null) {
-				c.setUser(null);
+				// c.setUser(null);
 				System.out.println("cart is not null");
 				List<CartItem> cartItems = fetchCartItems(cartId);
 				if (!cartItems.isEmpty()) {
 		
-					double totalPrice = 1.0;
+					BigDecimal totalPrice = BigDecimal.ONE;
 					for (CartItem item : cartItems) {
 						item.setCart(null);
-						totalPrice = totalPrice + item.getQuantity() * item.getBook().getPrice();
+						totalPrice = totalPrice.add(item.getBook().getPrice().multiply(BigDecimal.valueOf(item.getQuantity())));
 						
 					}
 					c.setTotalPrice(totalPrice);
