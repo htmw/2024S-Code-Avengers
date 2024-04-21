@@ -8,6 +8,7 @@ import com.bookbuddy.bookbuddy.CreatedExceptions.CollectionNotFoundException;
 import com.bookbuddy.bookbuddy.CreatedExceptions.UserNotFoundException;
 import com.bookbuddy.bookbuddy.Entities.Book;
 import com.bookbuddy.bookbuddy.Entities.BookCollection;
+import com.bookbuddy.bookbuddy.Entities.BookCollectionDTO;
 import com.bookbuddy.bookbuddy.Entities.User;
 import com.bookbuddy.bookbuddy.Repository.BookCollectionRepository;
 import com.bookbuddy.bookbuddy.Repository.BookRepository;
@@ -32,42 +33,48 @@ public class BookCollectionService {
         bookCollectionRepository.deleteById(collectionId);
     }
 
-    public BookCollection createCollection(Long userId, String name){
+    public BookCollectionDTO createCollection(Long userId, String name){
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
 
         BookCollection newCollection = new BookCollection(user, name);
-        return bookCollectionRepository.save(newCollection);
+        bookCollectionRepository.save(newCollection);
+        return new BookCollectionDTO(userId, name, newCollection.getBooks());
 
     }
 
-    public BookCollection renameCollection(Long collectionId, String newName) {
+    public BookCollectionDTO renameCollection(Long collectionId, String newName) {
         BookCollection bookCollection = bookCollectionRepository.findById(collectionId).orElseThrow(() -> new CollectionNotFoundException(collectionId));
     
         bookCollection.setCollectionName(newName);
-        return bookCollectionRepository.save(bookCollection);
+        bookCollectionRepository.save(bookCollection);
+
+        return new BookCollectionDTO(bookCollection.getId(), bookCollection.getCollectionName(), bookCollection.getBooks());
     }
 
-    public BookCollection addBook(Long collectionId, Long bookId){
+    public BookCollectionDTO addBook(Long collectionId, Long bookId){
         BookCollection bookCollection = bookCollectionRepository.findById(collectionId).orElseThrow(() -> new CollectionNotFoundException(collectionId));
         Book bookToAdd = bookRepository.findById(bookId).orElseThrow(() -> new BookNotFoundException(bookId));
 
         bookCollection.addBook(bookToAdd);
-        
-        return bookCollectionRepository.save(bookCollection);
+        bookCollectionRepository.save(bookCollection);
+
+        return new BookCollectionDTO(collectionId, bookCollection.getCollectionName(), bookCollection.getBooks());
     }
 
-    public BookCollection removeBook(Long collectionId, Long bookId){
+    public BookCollectionDTO removeBook(Long collectionId, Long bookId){
         BookCollection bookCollection = bookCollectionRepository.findById(collectionId).orElseThrow(() -> new CollectionNotFoundException(collectionId));
         Book bookToRemove = bookRepository.findById(bookId).orElseThrow(() -> new BookNotFoundException(bookId));
         
         bookCollection.removeBook(bookToRemove);
-        
-        return bookCollectionRepository.save(bookCollection);
+        bookCollectionRepository.save(bookCollection);
+
+        return new BookCollectionDTO(bookCollection.getId(), bookCollection.getCollectionName(), bookCollection.getBooks());
     }
 
-    public BookCollection getCollectionById(Long collectionId) {
+    public BookCollectionDTO getCollectionById(Long collectionId) {
         BookCollection collection = bookCollectionRepository.findById(collectionId).orElseThrow(() -> new CollectionNotFoundException(collectionId));
-        return collection;
+        BookCollectionDTO collectionDTO = new BookCollectionDTO(collectionId, collection.getCollectionName(), collection.getBooks());
+        return collectionDTO;
     }
 
     

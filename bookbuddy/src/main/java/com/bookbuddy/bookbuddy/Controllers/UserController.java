@@ -21,6 +21,8 @@ import com.bookbuddy.bookbuddy.Entities.UserDTO;
 import com.bookbuddy.bookbuddy.Repository.UserRepository;
 import com.bookbuddy.bookbuddy.ServiceClasses.UserService;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping("/users")
 @CrossOrigin("*")
@@ -44,6 +46,7 @@ public class UserController {
 
     @PostMapping("/addNew")
     @ResponseStatus(code = HttpStatus.CREATED)
+    @Operation(summary="Add a new user to the database")
     public ResponseEntity<User> newUser(@RequestBody User newUser) {
     	userService.addNewUser(newUser);
         return ResponseEntity.ok(newUser);
