@@ -2,11 +2,11 @@ package com.bookbuddy.bookbuddy.ServiceClasses;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bookbuddy.bookbuddy.CreatedExceptions.BookNotFoundException;
 import com.bookbuddy.bookbuddy.CreatedExceptions.UserNotFoundException;
 import com.bookbuddy.bookbuddy.Entities.Book;
 import com.bookbuddy.bookbuddy.Entities.BookCollection;
@@ -38,11 +38,11 @@ public class UserService {
     
     public BookCollection getAndSaveRecommendations(User user){
         //Call to ML API to get Recommendations
-        List<String> mlRecommendations = new ArrayList<>();
+        List<Long> mlRecommendations = new ArrayList<>();
         //Store Recommendations
         List<Book> recommendations = new ArrayList<>();
-        for(String isbn : mlRecommendations){
-            Book book = bookRepository.findByIsbn(isbn);
+        for(Long id : mlRecommendations){
+            Book book = bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException(id));
             if(book != null){
                 recommendations.add(book);
             }
@@ -59,11 +59,7 @@ public class UserService {
     }
 
     public User updateUser(Long userId, User updatedUser){
-        Optional<User> userOptional = userRepository.findById(userId);
-        if(!userOptional.isPresent()){
-            throw new UserNotFoundException(userId);
-        }
-        User existingUser = userOptional.get();
+        User existingUser = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
 
         if(updatedUser.getEmail() != null) existingUser.setEmail(updatedUser.getEmail());
         if(updatedUser.getFirstName() != null) existingUser.setFirstName(updatedUser.getFirstName());
@@ -82,13 +78,8 @@ public class UserService {
         return user;
     }
 
-    public boolean deleteUser(Long id){
-        Optional<User> userOptional = userRepository.findById(id);
-        if(userOptional.isPresent()){
-            userRepository.deleteById(id);
-            return true;
-        }
-        else return false;
+    public void deleteUser(Long userId){
+        userRepository.deleteById(userId);
     }
 
 

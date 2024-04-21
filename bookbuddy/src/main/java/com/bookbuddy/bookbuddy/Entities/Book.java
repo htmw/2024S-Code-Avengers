@@ -26,16 +26,7 @@ public class Book {
     @Column(name="price")
     private BigDecimal price;
 
-    // @Column(name="isbn")
-    // private String isbn;
-
-    // @Column(name="publication_date")
-    // private String publicationDate;
-
-    // @Column(name="genre")
-    // private String genre;
-
-    @Column(name="description")
+    @Column(name="description", columnDefinition="TEXT")
     private String description;
 
     
@@ -71,22 +62,6 @@ public class Book {
     public void setPrice(BigDecimal price){
         this.price = price;
     }
-
-    // public String getPublicationDate() {
-    //     return publicationDate;
-    // }
-
-    // public void setPublicationDate(String publicationDate) {
-    //     this.publicationDate = publicationDate;
-    // }
-
-    // public String getGenre() {
-    //     return genre;
-    // }
-
-    // public void setGenre(String genre) {
-    //     this.genre = genre;
-    // }
 
     public String getDescription() {
         return description;

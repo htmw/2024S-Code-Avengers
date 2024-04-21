@@ -29,11 +29,11 @@ public class UserController {
     @Autowired
     private final UserRepository uRepository;
     @Autowired
-    private final UserService uService;
+    private final UserService userService;
 
-    public UserController(UserRepository uRepository, UserService uService){
+    public UserController(UserRepository uRepository, UserService userService){
         this.uRepository = uRepository;
-        this.uService = uService;
+        this.userService = userService;
     }
 
     @GetMapping("/all")
@@ -45,28 +45,26 @@ public class UserController {
     @PostMapping("/addNew")
     @ResponseStatus(code = HttpStatus.CREATED)
     public ResponseEntity<User> newUser(@RequestBody User newUser) {
-    	uService.addNewUser(newUser);
+    	userService.addNewUser(newUser);
         return ResponseEntity.ok(newUser);
     }
 
     @GetMapping("/{userId}")
     public ResponseEntity<UserDTO> findUser(@PathVariable Long userId) {
-        UserDTO user = uService.getUserDetails(userId);
+        UserDTO user = userService.getUserDetails(userId);
         return ResponseEntity.ok(user);
     }
 
     @PutMapping("/{userId}")
     public ResponseEntity<User> updateUser(@PathVariable Long userId, @RequestBody User updatedUserDetails) {
-        User updatedUser = uService.updateUser(userId, updatedUserDetails);
+        User updatedUser = userService.updateUser(userId, updatedUserDetails);
         return ResponseEntity.ok(updatedUser);
     }
 
     @DeleteMapping("/{userId}")
     public ResponseEntity<String> deleteUser(@PathVariable Long userId){
-        boolean deleted = uService.deleteUser(userId);
-        if(deleted) return ResponseEntity.ok("User successfully deleted");
-        else return ResponseEntity.notFound().build();
-
+        userService.deleteUser(userId);
+        return ResponseEntity.ok("User with id: " + userId + " was deleted");
     }
 
 }

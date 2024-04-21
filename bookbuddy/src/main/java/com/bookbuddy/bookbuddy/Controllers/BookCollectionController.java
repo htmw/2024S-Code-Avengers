@@ -32,12 +32,9 @@ public class BookCollectionController {
     }
 
     @DeleteMapping("/{collectionId}")
-    public ResponseEntity<String> deleteCollection(
-            @PathVariable Long userId,
-            @PathVariable Long collectionId) {
-        boolean deleted = bCService.deleteCollection(collectionId);
-        if(deleted) return ResponseEntity.ok("Collection successfully deleted");
-        else return ResponseEntity.notFound().build();
+    public ResponseEntity<String> deleteCollection(@PathVariable Long collectionId) {
+        bCService.deleteCollection(collectionId);
+        return ResponseEntity.ok("Collection with id: " + collectionId + " was deleted");
     }
 
     @PostMapping("{userId}/addCollection/{name}")

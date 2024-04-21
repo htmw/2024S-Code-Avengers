@@ -1,7 +1,5 @@
 package com.bookbuddy.bookbuddy.ServiceClasses;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,93 +16,57 @@ import com.bookbuddy.bookbuddy.Repository.UserRepository;
 @Service
 public class BookCollectionService {
     @Autowired
-    private final BookRepository bRepository;
+    private final BookRepository bookRepository;
     @Autowired
-    private final BookCollectionRepository bCRepository;
+    private final BookCollectionRepository bookCollectionRepository;
     @Autowired
-    private final UserRepository uRepository;
+    private final UserRepository userRepository;
 
     public BookCollectionService(UserRepository uRepository, BookRepository bRepository, BookCollectionRepository bCRepository){
-        this.bRepository = bRepository;
-        this.uRepository = uRepository;
-        this.bCRepository = bCRepository;
+        this.bookRepository = bRepository;
+        this.userRepository = uRepository;
+        this.bookCollectionRepository = bCRepository;
     }
 
-    public boolean deleteCollection(Long collectionId) {
-        Optional<BookCollection> collectionOptional = bCRepository.findById(collectionId);
-        if (collectionOptional.isPresent()) {
-            bCRepository.deleteById(collectionId);
-            return true;
-        }
-        return false;
+    public void deleteCollection(Long collectionId){
+        bookCollectionRepository.deleteById(collectionId);
     }
 
     public BookCollection createCollection(Long userId, String name){
-        Optional<User> userOptional = uRepository.findById(userId);
-        if(userOptional.isPresent()){
-            User user = userOptional.get();
-            BookCollection books = new BookCollection(user, name);
-            return bCRepository.save(books);
-        }
-        else {
-            throw new UserNotFoundException(userId);
-        }
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
+
+        BookCollection newCollection = new BookCollection(user, name);
+        return bookCollectionRepository.save(newCollection);
 
     }
 
     public BookCollection renameCollection(Long collectionId, String newName) {
-
-        Optional<BookCollection> collectionOptional = bCRepository.findById(collectionId);
+        BookCollection bookCollection = bookCollectionRepository.findById(collectionId).orElseThrow(() -> new CollectionNotFoundException(collectionId));
     
-        if (!collectionOptional.isPresent()) {
-            throw new CollectionNotFoundException(collectionId);
-        }
-    
-        BookCollection collection = collectionOptional.get();
-    
-        collection.setCollectionName(newName);
-        return bCRepository.save(collection);
+        bookCollection.setCollectionName(newName);
+        return bookCollectionRepository.save(bookCollection);
     }
 
     public BookCollection addBook(Long collectionId, Long bookId){
-        Optional<BookCollection> collectionOptional = bCRepository.findById(collectionId);
-        Optional<Book> bookOptional = bRepository.findById(bookId);
-        if (!collectionOptional.isPresent()) {
-            throw new CollectionNotFoundException(collectionId);
-        }
-        if(!bookOptional.isPresent()){
-            throw new BookNotFoundException(bookId);
-        }
-    
-        BookCollection collection = collectionOptional.get();
-        Book book = bookOptional.get();
+        BookCollection bookCollection = bookCollectionRepository.findById(collectionId).orElseThrow(() -> new CollectionNotFoundException(collectionId));
+        Book bookToAdd = bookRepository.findById(bookId).orElseThrow(() -> new BookNotFoundException(bookId));
 
-        collection.addBook(book);
+        bookCollection.addBook(bookToAdd);
         
-        return bCRepository.save(collection);
+        return bookCollectionRepository.save(bookCollection);
     }
 
     public BookCollection removeBook(Long collectionId, Long bookId){
-        Optional<BookCollection> collectionOptional = bCRepository.findById(collectionId);
-        Optional<Book> bookOptional = bRepository.findById(bookId);
-
-        if (!collectionOptional.isPresent()) {
-            throw new CollectionNotFoundException(collectionId);
-        }
-        if(!bookOptional.isPresent()){
-            throw new BookNotFoundException(bookId);
-        }
-    
-        BookCollection collection = collectionOptional.get();
-        Book book = bookOptional.get();
+        BookCollection bookCollection = bookCollectionRepository.findById(collectionId).orElseThrow(() -> new CollectionNotFoundException(collectionId));
+        Book bookToRemove = bookRepository.findById(bookId).orElseThrow(() -> new BookNotFoundException(bookId));
         
-        collection.removeBook(book);
+        bookCollection.removeBook(bookToRemove);
         
-        return bCRepository.save(collection);
+        return bookCollectionRepository.save(bookCollection);
     }
 
     public BookCollection getCollectionById(Long collectionId) {
-        BookCollection collection = bCRepository.findById(collectionId).orElseThrow(() -> new CollectionNotFoundException(collectionId));
+        BookCollection collection = bookCollectionRepository.findById(collectionId).orElseThrow(() -> new CollectionNotFoundException(collectionId));
         return collection;
     }
 

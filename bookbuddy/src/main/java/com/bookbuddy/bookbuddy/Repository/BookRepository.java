@@ -6,5 +6,5 @@ import com.bookbuddy.bookbuddy.Entities.Book;
 
 
 public interface BookRepository extends JpaRepository<Book, Long>{
-    Book findByIsbn(String isbn);
+
 }
