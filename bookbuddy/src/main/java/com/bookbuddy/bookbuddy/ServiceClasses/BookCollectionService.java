@@ -35,10 +35,9 @@ public class BookCollectionService {
 
     public BookCollectionDTO createCollection(Long userId, String name){
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
-
         BookCollection newCollection = new BookCollection(user, name);
         bookCollectionRepository.save(newCollection);
-        return new BookCollectionDTO(userId, name, newCollection.getBooks());
+        return BookCollectionDTO.fromEntity(newCollection);
 
     }
 
@@ -48,7 +47,7 @@ public class BookCollectionService {
         bookCollection.setCollectionName(newName);
         bookCollectionRepository.save(bookCollection);
 
-        return new BookCollectionDTO(bookCollection.getId(), bookCollection.getCollectionName(), bookCollection.getBooks());
+        return BookCollectionDTO.fromEntity(bookCollection);
     }
 
     public BookCollectionDTO addBook(Long collectionId, Long bookId){
@@ -58,7 +57,7 @@ public class BookCollectionService {
         bookCollection.addBook(bookToAdd);
         bookCollectionRepository.save(bookCollection);
 
-        return new BookCollectionDTO(collectionId, bookCollection.getCollectionName(), bookCollection.getBooks());
+        return BookCollectionDTO.fromEntity(bookCollection);
     }
 
     public BookCollectionDTO removeBook(Long collectionId, Long bookId){
@@ -68,13 +67,12 @@ public class BookCollectionService {
         bookCollection.removeBook(bookToRemove);
         bookCollectionRepository.save(bookCollection);
 
-        return new BookCollectionDTO(bookCollection.getId(), bookCollection.getCollectionName(), bookCollection.getBooks());
+        return BookCollectionDTO.fromEntity(bookCollection);
     }
 
     public BookCollectionDTO getCollectionById(Long collectionId) {
         BookCollection collection = bookCollectionRepository.findById(collectionId).orElseThrow(() -> new CollectionNotFoundException(collectionId));
-        BookCollectionDTO collectionDTO = new BookCollectionDTO(collectionId, collection.getCollectionName(), collection.getBooks());
-        return collectionDTO;
+        return BookCollectionDTO.fromEntity(collection);
     }
 
     

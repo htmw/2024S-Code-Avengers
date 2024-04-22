@@ -55,27 +55,28 @@ public class UserService {
     public UserDTO getUserDetails(Long userId){
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
         
-        return new UserDTO(user.getFirstName(), user.getLastName(), user.getEmail(), user.getDateOfBirth());
+        return UserDTO.fromEntity(user);
     }
 
-    public User updateUser(Long userId, User updatedUser){
+    public UserDTO updateUser(Long userId, User updatedUser){
         User existingUser = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
 
         if(updatedUser.getEmail() != null) existingUser.setEmail(updatedUser.getEmail());
         if(updatedUser.getFirstName() != null) existingUser.setFirstName(updatedUser.getFirstName());
         if(updatedUser.getLastName() != null) existingUser.setLastName(updatedUser.getLastName());
         if(updatedUser.getDateOfBirth() != null) existingUser.setDateOfBirth(updatedUser.getDateOfBirth());
+        userRepository.save(existingUser);
 
-        return userRepository.save(existingUser);
+        return UserDTO.fromEntity(existingUser);
     }
 
-    public User addNewUser(User newUserDetails) {
+    public UserDTO addNewUser(User newUserDetails) {
         User user = new User(newUserDetails.getFirebaseUID(), newUserDetails.getFirstName(), newUserDetails.getLastName(), newUserDetails.getEmail(), newUserDetails.getDateOfBirth());
         userRepository.save(user);
         Cart newCart = new Cart();
 		newCart.setUser(user);
 		cartRepository.save(newCart);
-        return user;
+        return UserDTO.fromEntity(user);
     }
 
     public void deleteUser(Long userId){

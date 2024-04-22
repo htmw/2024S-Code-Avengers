@@ -3,16 +3,20 @@ package com.bookbuddy.bookbuddy.Entities;
 import java.util.Date;
 
 public class UserDTO {
+    private Long id;
     private String firstName;
     private String lastName;
     private String email;
     private Date dateOfBirth;
 
-    public UserDTO(String firstName, String lastName, String email, Date dateOfBirth) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.dateOfBirth = dateOfBirth;
+    public static UserDTO fromEntity(User user){
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(user.getId());
+        userDTO.setFirstName(user.getFirstName());
+        userDTO.setLastName(user.getLastName());
+        userDTO.setEmail(user.getEmail());
+        userDTO.setDateOfBirth(user.getDateOfBirth());
+        return userDTO;
     }
 
     public String getFirstName() {
@@ -45,5 +49,13 @@ public class UserDTO {
 
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

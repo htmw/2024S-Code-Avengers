@@ -7,10 +7,12 @@ public class BookCollectionDTO {
     private String collectionName;
     private List<Book> booksInCollection;
 
-    public BookCollectionDTO(Long id, String collectionName, List<Book> booksInCollection){
-        this.id = id;
-        this.collectionName = collectionName;
-        this.booksInCollection = booksInCollection;
+    public static BookCollectionDTO fromEntity(BookCollection collection){
+        BookCollectionDTO collectionDTO = new BookCollectionDTO();
+        collectionDTO.setId(collection.getId());
+        collectionDTO.setCollectionName(collection.getCollectionName());
+        collectionDTO.setBooksInCollection(collection.getBooks());
+        return collectionDTO;
     }
 
     public Long getId() {
