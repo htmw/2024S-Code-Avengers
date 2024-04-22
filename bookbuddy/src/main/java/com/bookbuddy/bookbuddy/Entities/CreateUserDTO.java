@@ -2,22 +2,12 @@ package com.bookbuddy.bookbuddy.Entities;
 
 import java.time.LocalDate;
 
-public class UserDTO {
-    private Long id;
+public class CreateUserDTO {
+
     private String firstName;
     private String lastName;
     private String email;
     private LocalDate dateOfBirth;
-
-    public static UserDTO fromEntity(User user){
-        UserDTO userDTO = new UserDTO();
-        userDTO.setId(user.getId());
-        userDTO.setFirstName(user.getFirstName());
-        userDTO.setLastName(user.getLastName());
-        userDTO.setEmail(user.getEmail());
-        userDTO.setDateOfBirth(user.getDateOfBirth());
-        return userDTO;
-    }
 
     public String getFirstName() {
         return firstName;
@@ -49,13 +39,5 @@ public class UserDTO {
 
     public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 }

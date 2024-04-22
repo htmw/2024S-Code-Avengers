@@ -11,6 +11,7 @@ import com.bookbuddy.bookbuddy.CreatedExceptions.UserNotFoundException;
 import com.bookbuddy.bookbuddy.Entities.Book;
 import com.bookbuddy.bookbuddy.Entities.BookCollection;
 import com.bookbuddy.bookbuddy.Entities.Cart;
+import com.bookbuddy.bookbuddy.Entities.CreateUserDTO;
 import com.bookbuddy.bookbuddy.Entities.User;
 import com.bookbuddy.bookbuddy.Entities.UserDTO;
 import com.bookbuddy.bookbuddy.Repository.BookCollectionRepository;
@@ -58,7 +59,7 @@ public class UserService {
         return UserDTO.fromEntity(user);
     }
 
-    public UserDTO updateUser(Long userId, User updatedUser){
+    public UserDTO updateUser(Long userId, UserDTO updatedUser){
         User existingUser = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
 
         if(updatedUser.getEmail() != null) existingUser.setEmail(updatedUser.getEmail());
@@ -70,8 +71,8 @@ public class UserService {
         return UserDTO.fromEntity(existingUser);
     }
 
-    public UserDTO addNewUser(User newUserDetails) {
-        User user = new User(newUserDetails.getFirebaseUID(), newUserDetails.getFirstName(), newUserDetails.getLastName(), newUserDetails.getEmail(), newUserDetails.getDateOfBirth());
+    public UserDTO addNewUser(CreateUserDTO newUserDetails) {
+        User user = new User(newUserDetails.getFirstName(), newUserDetails.getLastName(), newUserDetails.getEmail(), newUserDetails.getDateOfBirth());
         userRepository.save(user);
         Cart newCart = new Cart();
 		newCart.setUser(user);

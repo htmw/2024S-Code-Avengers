@@ -19,11 +19,7 @@ import com.bookbuddy.bookbuddy.ServiceClasses.BookCollectionService;
 public class BookCollectionController {
 
     @Autowired
-    private final BookCollectionService bCService;
-
-    BookCollectionController(BookCollectionService bCService){
-        this.bCService = bCService;
-    }
+    private final BookCollectionService bCService = null;
 
     @GetMapping("/{collectionId}")
     public ResponseEntity<BookCollectionDTO> getCollection(@PathVariable Long collectionId) {

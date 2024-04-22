@@ -18,12 +18,9 @@ import com.bookbuddy.bookbuddy.Repository.BookRepository;
 @RestController
 @RequestMapping("/books")
 public class BookController {
+    
     @Autowired
-    private final BookRepository bookRepository;
-
-    BookController(BookRepository bookRepository){
-        this.bookRepository = bookRepository;
-    }
+    private final BookRepository bookRepository = null;
 
     @GetMapping()
     public ResponseEntity<List<Book>> getAll() {

@@ -1,6 +1,6 @@
 package com.bookbuddy.bookbuddy.Entities;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -36,7 +36,7 @@ public class User {
     private String email;
     
     @Column(name="date_of_birth")
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
 
     @JsonIgnore
     @OneToMany(mappedBy="user", cascade= CascadeType.ALL)
@@ -59,8 +59,7 @@ public class User {
             cart.setUser(this) ;
         }}
 
-	public User(Long firebaseUID, String firstName, String lastName, String email, Date dateOfBirth){
-        this.firebaseUID = firebaseUID;
+	public User(String firstName, String lastName, String email, LocalDate dateOfBirth){
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -141,11 +140,11 @@ public class User {
         this.orders = orders;
     }
 
-    public Date getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
