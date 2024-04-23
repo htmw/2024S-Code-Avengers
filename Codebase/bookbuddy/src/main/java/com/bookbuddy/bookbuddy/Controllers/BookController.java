@@ -20,7 +20,7 @@ import com.bookbuddy.bookbuddy.Repository.BookRepository;
 public class BookController {
     
     @Autowired
-    private final BookRepository bookRepository = null;
+    BookRepository bookRepository;
 
     @GetMapping()
     public ResponseEntity<List<Book>> getAll() {

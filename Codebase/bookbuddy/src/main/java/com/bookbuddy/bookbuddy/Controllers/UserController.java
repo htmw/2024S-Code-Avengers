@@ -30,9 +30,9 @@ import io.swagger.v3.oas.annotations.Operation;
 
 public class UserController {
     @Autowired
-    private final UserRepository uRepository = null;
+    UserRepository uRepository;
     @Autowired
-    private final UserService userService = null;
+    UserService userService;
 
 
     @GetMapping("/all")
@@ -47,7 +47,7 @@ public class UserController {
     @Operation(summary="Add a new user to the database")
     public ResponseEntity<UserDTO> newUser(@RequestBody CreateUserDTO newUser) {
     	UserDTO newUserDTO = userService.addNewUser(newUser);
-        return ResponseEntity.ok(newUserDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newUserDTO);
     }
 
     @GetMapping("/{userId}")

@@ -1,6 +1,7 @@
 package com.bookbuddy.bookbuddy.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bookbuddy.bookbuddy.Entities.BookCollectionDTO;
@@ -19,7 +21,7 @@ import com.bookbuddy.bookbuddy.ServiceClasses.BookCollectionService;
 public class BookCollectionController {
 
     @Autowired
-    private final BookCollectionService bCService = null;
+    BookCollectionService bCService;
 
     @GetMapping("/{collectionId}")
     public ResponseEntity<BookCollectionDTO> getCollection(@PathVariable Long collectionId) {
@@ -34,9 +36,10 @@ public class BookCollectionController {
     }
 
     @PostMapping("{userId}/addCollection/{name}")
+    @ResponseStatus(code=HttpStatus.CREATED)
     public ResponseEntity<BookCollectionDTO> addCollection(@PathVariable Long userId, @PathVariable String name){
         BookCollectionDTO collection = bCService.createCollection(userId, name);
-        return ResponseEntity.ok(collection);
+        return ResponseEntity.status(HttpStatus.CREATED).body(collection);
     }
 
     @PutMapping("{collectionId}/rename/{newName}")

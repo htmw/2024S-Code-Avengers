@@ -17,17 +17,11 @@ import com.bookbuddy.bookbuddy.Repository.UserRepository;
 @Service
 public class BookCollectionService {
     @Autowired
-    private final BookRepository bookRepository;
+    BookRepository bookRepository;
     @Autowired
-    private final BookCollectionRepository bookCollectionRepository;
+    BookCollectionRepository bookCollectionRepository;
     @Autowired
-    private final UserRepository userRepository;
-
-    public BookCollectionService(UserRepository uRepository, BookRepository bRepository, BookCollectionRepository bCRepository){
-        this.bookRepository = bRepository;
-        this.userRepository = uRepository;
-        this.bookCollectionRepository = bCRepository;
-    }
+    UserRepository userRepository;
 
     public void deleteCollection(Long collectionId){
         bookCollectionRepository.deleteById(collectionId);
