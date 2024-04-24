@@ -11,6 +11,10 @@ import com.bookbuddy.bookbuddy.Entities.UserDTO;
 import com.bookbuddy.bookbuddy.Repository.CartRepository;
 import com.bookbuddy.bookbuddy.Repository.UserRepository;
 
+// This is the User Service. It is a service class that handles the business logic for users.
+// It has methods for getting user details, updating user details, adding a new user, and deleting a user.
+// Jimmy Karoly
+
 @Service
 public class UserService {
     @Autowired

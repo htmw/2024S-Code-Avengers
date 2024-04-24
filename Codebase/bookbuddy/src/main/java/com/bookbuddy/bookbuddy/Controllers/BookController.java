@@ -13,9 +13,16 @@ import com.bookbuddy.bookbuddy.CreatedExceptions.BookNotFoundException;
 import com.bookbuddy.bookbuddy.Entities.Book;
 import com.bookbuddy.bookbuddy.Repository.BookRepository;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
+// This is the Book Controller. It is a REST Controller that handles HTTP requests related to books.
+// It has endpoints for listing all books and getting book details by ID.
+// Jimmy Karoly
 
 @RestController
+@Tag(name = "Book Controller", description = "Endpoints for Books")
 @RequestMapping("/books")
 public class BookController {
     
@@ -23,15 +30,17 @@ public class BookController {
     BookRepository bookRepository;
 
     @GetMapping()
+    @Operation(summary="Get all books")
     public ResponseEntity<List<Book>> getAll() {
         List<Book> books = bookRepository.findAll();
         return ResponseEntity.ok(books);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Book> findBook(@PathVariable Long id) {
-        Book book = bookRepository.findById(id)
-            .orElseThrow(() -> new BookNotFoundException(id));
+    @GetMapping("/{bookId}")
+    @Operation(summary="Get book by id")
+    public ResponseEntity<Book> findBook(@Parameter(description="Unique ID corresponding to a book", example="1") @PathVariable Long bookId) {
+        Book book = bookRepository.findById(bookId)
+            .orElseThrow(() -> new BookNotFoundException(bookId));
         
         return ResponseEntity.ok(book);
     }

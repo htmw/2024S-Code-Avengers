@@ -23,11 +23,17 @@ import com.bookbuddy.bookbuddy.Repository.UserRepository;
 import com.bookbuddy.bookbuddy.ServiceClasses.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+// This is the User Controller. It is a REST Controller that handles HTTP requests related to users.
+// It has endpoints for listing all users, adding a new user, getting user details by ID, updating user details by ID, and deleting a user by ID.
+// Jimmy Karoly
 
 @RestController
 @RequestMapping("/users")
+@Tag(name = "User Controller", description = "Endpoints for Users")
 @CrossOrigin("*")
-
 public class UserController {
     @Autowired
     UserRepository uRepository;
@@ -51,19 +57,22 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<UserDTO> findUser(@PathVariable Long userId) {
+    @Operation(summary="Get user details by id")
+    public ResponseEntity<UserDTO> findUser(@Parameter(description="Unique ID corresponding to a user", example="1") @PathVariable Long userId) {
         UserDTO user = userService.getUserDetails(userId);
         return ResponseEntity.ok(user);
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<UserDTO> updateUser(@PathVariable Long userId, @RequestBody UserDTO updatedUserDetails) {
+    @Operation(summary="Update user details by id")
+    public ResponseEntity<UserDTO> updateUser(@Parameter(name="userId", description="Unique ID corresponding to a user", example="1") @PathVariable Long userId, @RequestBody UserDTO updatedUserDetails) {
         UserDTO updatedUser = userService.updateUser(userId, updatedUserDetails);
         return ResponseEntity.ok(updatedUser);
     }
 
     @DeleteMapping("/{userId}")
-    public ResponseEntity<String> deleteUser(@PathVariable Long userId){
+    @Operation(summary="Delete user by id")
+    public ResponseEntity<String> deleteUser(@Parameter(name="userId", description="Unique ID corresponding to a user", example="1") @PathVariable Long userId){
         userService.deleteUser(userId);
         return ResponseEntity.ok("User with id: " + userId + " was deleted");
     }
