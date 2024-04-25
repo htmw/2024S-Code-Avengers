@@ -54,7 +54,7 @@ const Header = () => {
 export default function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-gray-100">
+      <div className="min-h-screen bg-blue-100">
         <Header />
         <main>
           <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
