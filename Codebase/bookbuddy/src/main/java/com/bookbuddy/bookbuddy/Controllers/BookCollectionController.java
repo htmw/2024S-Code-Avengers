@@ -45,7 +45,7 @@ public class BookCollectionController {
         return ResponseEntity.ok("Collection with id: " + collectionId + " was deleted");
     }
 
-    @PostMapping("{userId}/add_collection/{name}")
+    @PostMapping("{userId}/new/{name}")
     @Operation(summary="Add a new collection to the database")
     @ResponseStatus(code=HttpStatus.CREATED)
     public ResponseEntity<BookCollectionDTO> addCollection(@Parameter(name="userId", description="Unique ID corresponding to a user", example="1") @PathVariable Long userId, @Parameter(name="name", description="What the user wants to name the new collection", example="Favorite Books") @PathVariable String name){
