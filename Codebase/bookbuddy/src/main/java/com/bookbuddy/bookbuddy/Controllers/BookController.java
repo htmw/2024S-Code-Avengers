@@ -29,7 +29,7 @@ public class BookController {
     @Autowired
     BookRepository bookRepository;
 
-    @GetMapping()
+    @GetMapping("/all")
     @Operation(summary="Get all books")
     public ResponseEntity<List<Book>> getAll() {
         List<Book> books = bookRepository.findAll();

@@ -45,7 +45,7 @@ public class BookCollectionController {
         return ResponseEntity.ok("Collection with id: " + collectionId + " was deleted");
     }
 
-    @PostMapping("{userId}/addCollection/{name}")
+    @PostMapping("{userId}/add_collection/{name}")
     @Operation(summary="Add a new collection to the database")
     @ResponseStatus(code=HttpStatus.CREATED)
     public ResponseEntity<BookCollectionDTO> addCollection(@Parameter(name="userId", description="Unique ID corresponding to a user", example="1") @PathVariable Long userId, @Parameter(name="name", description="What the user wants to name the new collection", example="Favorite Books") @PathVariable String name){
@@ -60,14 +60,14 @@ public class BookCollectionController {
             return ResponseEntity.ok(collection);
     }
 
-    @PutMapping("{collectionId}/addBook/{bookId}")
+    @PutMapping("{collectionId}/add_book/{bookId}")
     @Operation(summary="Add a book to a collection")
     public ResponseEntity<BookCollectionDTO> addBook(@Parameter(description="Unique ID corresponding to a collection", example="1") @PathVariable Long collectionId, @Parameter(description="Unique ID corresponding to a book", example="1") @PathVariable Long bookId){
         BookCollectionDTO collection = bCService.addBook(collectionId, bookId);
         return ResponseEntity.ok(collection);
     }
 
-    @PutMapping("{collectionId}/removeBook/{bookId}")
+    @PutMapping("{collectionId}/remove_book/{bookId}")
     @Operation(summary="Remove a book from a collection")
     public ResponseEntity<BookCollectionDTO> removeBook(@Parameter(description="Unique ID corresponding to a collection", example="1") @PathVariable Long collectionId, @Parameter(description="Unique ID corresponding to a book", example="1") @PathVariable Long bookId){
         BookCollectionDTO collection = bCService.removeBook(collectionId, bookId);

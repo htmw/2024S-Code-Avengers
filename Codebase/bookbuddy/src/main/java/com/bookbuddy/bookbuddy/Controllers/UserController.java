@@ -48,7 +48,7 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
-    @PostMapping("/addNew")
+    @PostMapping("/new")
     @ResponseStatus(code = HttpStatus.CREATED)
     @Operation(summary="Add a new user to the database")
     public ResponseEntity<UserDTO> newUser(@RequestBody CreateUserDTO newUser) {
