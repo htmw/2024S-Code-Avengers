@@ -23,10 +23,10 @@ const Header = () => {
   const isSearchScreenPage = location.pathname === "/search-screen";
 
   return (
-    <header className="bg-white shadow">
+    <header className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-6 sm:px-6 lg:px-8">
         <Link to="/">
-          <h1 className="text-3xl font-bold text-gray-900">Book Buddy</h1>
+          <h1 className="text-3xl font-bold text-white">Book Buddy</h1>
         </Link>
         {!isSignInPage &&
           !isSignUpPage &&
@@ -35,12 +35,12 @@ const Header = () => {
           !isSearchScreenPage && (
             <div>
               <Link to="/signin">
-                <button className="mr-4 rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <button className="mr-4 rounded-full bg-white/20 backdrop-blur-sm px-6 py-3 text-white font-semibold transition duration-300 ease-in-out hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-white/30">
                   Sign In
                 </button>
               </Link>
               <Link to="/signup">
-                <button className="rounded-md bg-green-500 px-4 py-2 text-white hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">
+                <button className="rounded-full bg-white/20 backdrop-blur-sm px-6 py-3 text-white font-semibold transition duration-300 ease-in-out hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-white/30">
                   Sign Up
                 </button>
               </Link>
@@ -54,7 +54,7 @@ const Header = () => {
 export default function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-blue-100">
+      <div className="min-h-screen bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
         <Header />
         <main>
           <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
@@ -69,9 +69,9 @@ export default function App() {
             </Routes>
           </div>
         </main>
-        <footer className="bg-white">
+        <footer className="bg-white/10 backdrop-blur-sm">
           <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
-            <p className="text-center text-gray-500">
+            <p className="text-center text-white/80">
               &copy; 2023 Book Buddy. All rights reserved.
             </p>
           </div>
