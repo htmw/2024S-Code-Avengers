@@ -15,7 +15,7 @@ import com.bookbuddy.bookbuddy.Repository.BookRepository;
 import com.bookbuddy.bookbuddy.Repository.UserRepository;
 
 // This is the Book Collection Service. It is a service class that handles the business logic for book collections.
-// It has methods for creating a collection, renaming a collection, adding a book to a collection, removing a book from a collection, and deleting a collection.
+// It has methods for creating a collection, renaming a collection, adding and removing a book from a collection, and deleting a collection.
 // Jimmy Karoly
 
 @Service

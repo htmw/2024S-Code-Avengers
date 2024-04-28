@@ -8,7 +8,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 // It has a first name, a last name, an email, and a date of birth. When this is sent to the server, a user is created with this information, and the database generates a unique ID for the user.
 // Jimmy Karoly
 
-@Schema(name = "Create User DTO", description = "A DTO for creating a user")
+@Schema(name = "CreateUserDTO", description = "A DTO for creating a user")
 public class CreateUserDTO {
 
     @Schema(description = "First name of the user", example = "John")
