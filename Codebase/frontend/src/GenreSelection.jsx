@@ -634,20 +634,22 @@ const GenreSelection = () => {
 
   return (
     <div className="min-h-screen bg-black flex flex-col items-center justify-center">
-      <div className="w-full max-w-md rounded-lg bg-white/10 backdrop-blur-md shadow-lg p-8">
+      <div className="w-full max-w-3xl rounded-lg bg-white/10 backdrop-blur-md shadow-lg p-8">
         <h2 className="mb-4 text-center text-2xl font-bold text-white">
           Select your preferred genres
         </h2>
-        <div className="grid grid-cols-6 gap-2">
+        <div className="flex flex-wrap justify-center">
           {genres.map((genre) => (
-            <div key={genre} className="flex items-center">
-              <input
-                type="checkbox"
-                checked={selectedGenres.includes(genre)}
-                onChange={() => handleGenreSelection(genre)}
-                className="mr-2 h-4 w-4 text-blue-500 focus:ring-blue-500"
-              />
-              <label className="text-white text-sm">{genre}</label>
+            <div key={genre} className="m-2">
+              <label className="flex items-center text-white">
+                <input
+                  type="checkbox"
+                  checked={selectedGenres.includes(genre)}
+                  onChange={() => handleGenreSelection(genre)}
+                  className="mr-2 h-4 w-4 text-blue-500 focus:ring-blue-500"
+                />
+                {genre}
+              </label>
             </div>
           ))}
         </div>
