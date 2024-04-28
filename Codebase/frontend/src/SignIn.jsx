@@ -22,9 +22,9 @@ const SignIn = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h2 className="text-3xl font-bold text-center mb-8">
+    <div className="min-h-screen bg-black flex items-center justify-center">
+      <div className="bg-white/10 backdrop-blur-md p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h2 className="text-3xl font-bold text-center mb-8 text-red-600">
           Log in to your account
         </h2>
         <div className="flex justify-center space-x-6 mb-8">
@@ -36,9 +36,9 @@ const SignIn = () => {
           </button>
         </div>
         <div className="flex items-center mb-8">
-          <hr className="w-full border-gray-300" />
+          <hr className="w-full border-gray-400" />
           <span className="mx-4 text-gray-400">OR</span>
-          <hr className="w-full border-gray-300" />
+          <hr className="w-full border-gray-400" />
         </div>
         <form onSubmit={handleSubmit}>
           <div className="mb-6">
@@ -47,7 +47,7 @@ const SignIn = () => {
               placeholder="Email address"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-4 py-2 border border-gray-400 rounded-md bg-white/20 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
           <div className="mb-6">
@@ -56,7 +56,7 @@ const SignIn = () => {
               placeholder="Your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-4 py-2 border border-gray-400 rounded-md bg-white/20 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
           <div className="flex items-center mb-8">
@@ -66,7 +66,7 @@ const SignIn = () => {
               onChange={(e) => setKeepSignedIn(e.target.checked)}
               className="mr-2 h-4 w-4 text-blue-500 focus:ring-blue-500"
             />
-            <label className="text-gray-600">
+            <label className="text-gray-400">
               Keep me signed in until I sign out
             </label>
           </div>
@@ -77,7 +77,7 @@ const SignIn = () => {
             Log In
           </button>
         </form>
-        <div className="text-center text-sm text-gray-600">
+        <div className="text-center text-sm text-gray-400">
           Don't have an account?{" "}
           <Link to="/signup">
             <button className="text-blue-500 font-bold hover:underline">
