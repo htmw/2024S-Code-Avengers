@@ -23,10 +23,10 @@ const Header = () => {
   const isSearchScreenPage = location.pathname === "/search-screen";
 
   return (
-    <header className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
+    <header className="bg-black">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-6 sm:px-6 lg:px-8">
         <Link to="/">
-          <h1 className="text-3xl font-bold text-white">Book Buddy</h1>
+          <h1 className="text-3xl font-bold text-red-600">Book Buddy</h1>
         </Link>
         {!isSignInPage &&
           !isSignUpPage &&
@@ -54,7 +54,7 @@ const Header = () => {
 export default function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
+      <div className="min-h-screen bg-black">
         <Header />
         <main>
           <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
@@ -69,7 +69,7 @@ export default function App() {
             </Routes>
           </div>
         </main>
-        <footer className="bg-white/10 backdrop-blur-sm">
+        <footer className="bg-black">
           <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
             <p className="text-center text-white/80">
               &copy; 2023 Book Buddy. All rights reserved.
