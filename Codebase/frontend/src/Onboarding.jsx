@@ -13,12 +13,12 @@ const Onboarding = () => {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100">
-      <div className="w-full max-w-md rounded-lg bg-white px-8 py-10 shadow-md">
-        <h2 className="mb-8 text-center text-3xl font-bold">
+    <div className="min-h-screen bg-black flex flex-col items-center justify-center">
+      <div className="w-full max-w-md rounded-lg bg-white/10 backdrop-blur-md px-8 py-10 shadow-lg">
+        <h2 className="mb-8 text-center text-3xl font-bold text-red-600">
           Continue here to get your first recommendations
         </h2>
-        <p className="mb-8 text-center text-lg text-gray-600">
+        <p className="mb-8 text-center text-lg text-gray-400">
           Choose the option that best describes you:
         </p>
         <div className="space-y-6">
