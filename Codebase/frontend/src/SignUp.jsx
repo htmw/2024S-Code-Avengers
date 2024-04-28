@@ -24,7 +24,7 @@ const SignUp = () => {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
-        password
+        password,
       );
       const user = userCredential.user;
       await setDoc(doc(db, "users", user.uid), {
@@ -42,9 +42,9 @@ const SignUp = () => {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100">
-      <div className="w-full max-w-md rounded-lg bg-white px-8 py-10 shadow-md">
-        <h2 className="mb-8 text-center text-3xl font-bold">
+    <div className="min-h-screen bg-black flex flex-col items-center justify-center">
+      <div className="w-full max-w-md rounded-lg bg-white/10 backdrop-blur-md shadow-lg px-8 py-10">
+        <h2 className="mb-8 text-center text-3xl font-bold text-red-600">
           Sign up for free to start getting book recommendations
         </h2>
         <div className="mb-8 flex justify-center space-x-6">
@@ -92,7 +92,7 @@ const SignUp = () => {
             </p>
           </div>
           <div className="mb-6">
-            <p className="mb-4 text-sm text-gray-600">
+            <p className="mb-4 text-sm text-gray-400">
               What's your gender? (optional)
             </p>
             <div className="flex items-center space-x-6">
@@ -105,7 +105,7 @@ const SignUp = () => {
                   onChange={(e) => setGender(e.target.value)}
                   className="mr-2 h-4 w-4 text-blue-500 focus:ring-blue-500"
                 />
-                <span className="text-gray-600">Female</span>
+                <span className="text-gray-400">Female</span>
               </label>
               <label className="flex items-center">
                 <input
@@ -116,7 +116,7 @@ const SignUp = () => {
                   onChange={(e) => setGender(e.target.value)}
                   className="mr-2 h-4 w-4 text-blue-500 focus:ring-blue-500"
                 />
-                <span className="text-gray-600">Male</span>
+                <span className="text-gray-400">Male</span>
               </label>
               <label className="flex items-center">
                 <input
@@ -127,27 +127,29 @@ const SignUp = () => {
                   onChange={(e) => setGender(e.target.value)}
                   className="mr-2 h-4 w-4 text-blue-500 focus:ring-blue-500"
                 />
-                <span className="text-gray-600">Non-binary</span>
+                <span className="text-gray-400">Non-binary</span>
               </label>
             </div>
           </div>
           <div className="mb-6">
-  <p className="mb-4 text-sm text-gray-600">What's your date of birth?</p>
-  <DatePicker
-    selected={
-      birthYear && birthMonth && birthDate
-        ? new Date(birthYear, birthMonth - 1, birthDate)
-        : null
-    }
-    onChange={(date) => {
-      setBirthYear(date.getFullYear());
-      setBirthMonth(date.getMonth() + 1);
-      setBirthDate(date.getDate());
-    }}
-    dateFormat="yyyy-MM-dd"
-    className="w-full rounded-md border border-gray-300 px-4 py-2 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
-  />
-</div>
+            <p className="mb-4 text-sm text-gray-400">
+              What's your date of birth?
+            </p>
+            <DatePicker
+              selected={
+                birthYear && birthMonth && birthDate
+                  ? new Date(birthYear, birthMonth - 1, birthDate)
+                  : null
+              }
+              onChange={(date) => {
+                setBirthYear(date.getFullYear());
+                setBirthMonth(date.getMonth() + 1);
+                setBirthDate(date.getDate());
+              }}
+              dateFormat="yyyy-MM-dd"
+              className="w-full rounded-md border border-gray-300 px-4 py-2 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
           <div className="mb-8">
             <label className="flex items-center">
               <input
@@ -156,7 +158,7 @@ const SignUp = () => {
                 onChange={(e) => setShareRegistrationData(e.target.checked)}
                 className="mr-2 h-4 w-4 text-blue-500 focus:ring-blue-500"
               />
-              <span className="text-gray-600">
+              <span className="text-gray-400">
                 Share my registration data with our content providers for
                 marketing purposes.
               </span>
@@ -169,7 +171,7 @@ const SignUp = () => {
             Sign Up
           </button>
         </form>
-        <div className="text-center text-sm text-gray-600">
+        <div className="text-center text-sm text-gray-400">
           Already have an account?{" "}
           <Link to="/signin">
             <button className="font-bold text-blue-500 hover:underline">
