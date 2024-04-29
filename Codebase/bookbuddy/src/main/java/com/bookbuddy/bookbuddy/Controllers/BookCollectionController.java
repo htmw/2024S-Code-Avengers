@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bookbuddy.bookbuddy.Entities.BookCollectionDTO;
@@ -17,6 +16,8 @@ import com.bookbuddy.bookbuddy.ServiceClasses.BookCollectionService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 // This is the Book Collection Controller. It is a REST Controller that handles HTTP requests related to book collections.
@@ -47,7 +48,9 @@ public class BookCollectionController {
 
     @PostMapping("{userId}/new/{name}")
     @Operation(summary="Add a new collection to the database")
-    @ResponseStatus(code=HttpStatus.CREATED)
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "User added successfully"),
+    })
     public ResponseEntity<BookCollectionDTO> addCollection(@Parameter(name="userId", description="Unique ID corresponding to a user", example="1") @PathVariable Long userId, @Parameter(name="name", description="What the user wants to name the new collection", example="Favorite Books") @PathVariable String name){
         BookCollectionDTO collection = bCService.createCollection(userId, name);
         return ResponseEntity.status(HttpStatus.CREATED).body(collection);
