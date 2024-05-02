@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bookbuddy.bookbuddy.Entities.Cart;
 import com.bookbuddy.bookbuddy.Entities.CartItem;
 import com.bookbuddy.bookbuddy.ServiceClasses.CartServices;
+import com.stripe.net.ApiResource.RequestMethod;
 
 @RestController
 @RequestMapping("/cart")
@@ -23,11 +24,11 @@ public class CartController {
 		this.cartService = cartService;
 	}
 	
-	// @RequestMapping(value = "/save-cart", method = RequestMethod.POST)
-	//     public String newUser(@RequestBody Cart cart) {
-	// 	System.out.println(cart.toString());
-	//         return cartService.saveCart(cart);
-	//     }
+	@PostMapping("/save-cart")
+	     public String newUser(@RequestBody Cart cart) {
+	 	System.out.println(cart.toString());
+	         return cartService.saveCart(cart);
+	     }
 
 	 @PostMapping("/save-cart-item")
 	    public String newUser(@RequestBody CartItem cart) {
