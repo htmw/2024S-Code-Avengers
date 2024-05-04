@@ -13,7 +13,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Schema(name = "cart_items", description = "items present in the cart")
+@Schema(name = "Cart_items", description = "items present in the cart")
 @Table(name = "cart_items")
 public class CartItem {
 
@@ -24,22 +24,22 @@ public class CartItem {
 	private Long cartItemId;
 
 	@ManyToOne
-	@Schema(name = "cart_id", description = "id of the cart")
+	@Schema(description = "id of the cart",example = "000056")
 	@JoinColumn(name = "cart_id")
 	private Cart cart;
 	
 
 	@ManyToOne
-	@Schema(name = "book_id", description = "id of the book")
+	@Schema(description = "id of the book",example = "00034")
 	@JoinColumn(name = "book_id")
 	private Book book;
 	
 	
-	@Schema(name = "quantity", description = "number of items present in the cart")
+	@Schema(description = "number of items present in the cart",example = "3")
 	@Column(name = "quantity")
 	private int quantity;
 
-	@Schema(name = "item_price", description = "price of the item")
+	@Schema(description = "price of the item",example = "$10")
 	@Column(name = "item_price")
 	private BigDecimal itemPrice;
 	
