@@ -6,6 +6,4 @@ import com.bookbuddy.bookbuddy.Entities.Cart;
 
 public interface CartRepository extends JpaRepository<Cart, Long>{
 
-	Cart findById(long cartId);
-
 }

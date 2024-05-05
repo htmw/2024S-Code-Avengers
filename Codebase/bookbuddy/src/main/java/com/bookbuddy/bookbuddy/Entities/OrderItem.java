@@ -17,10 +17,11 @@ import jakarta.persistence.Table;
 @Table(name = "order_items")
 public class OrderItem {
 
-	@Override
-	public String toString() {
-		return "OrderItem [orderItemId=" + orderItemId + ", order=" + order + ", book=" + book + ", quantity="
-				+ quantity + ", itemPrice=" + itemPrice + "]";
+	public OrderItem(Order order, Book book, int quantity, BigDecimal itemPrice){
+		this.order = order;
+		this.book = book;
+		this.quantity = quantity;
+		this.itemPrice = itemPrice;
 	}
 
 	@Id

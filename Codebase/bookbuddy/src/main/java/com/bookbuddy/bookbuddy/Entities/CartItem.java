@@ -93,6 +93,13 @@ public class CartItem {
 		this.itemPrice = itemPrice;
 	}
 
+	public CartItem(Cart cart, Book book, int quantity, BigDecimal itemPrice) {
+		this.cart = cart;
+		this.book = book;
+		this.quantity = quantity;
+		this.itemPrice = itemPrice;
+	}
+
 	public CartItem() {
 
 	}

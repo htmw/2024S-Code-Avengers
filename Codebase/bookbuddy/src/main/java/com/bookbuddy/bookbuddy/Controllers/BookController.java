@@ -31,14 +31,17 @@ public class BookController {
 
     @GetMapping("/all")
     @Operation(summary="Get all books")
-    public ResponseEntity<List<Book>> getAll() {
+    public ResponseEntity<List<Book>> getAll() 
+    {
         List<Book> books = bookRepository.findAll();
         return ResponseEntity.ok(books);
     }
 
     @GetMapping("/{bookId}")
     @Operation(summary="Get book by id")
-    public ResponseEntity<Book> findBook(@Parameter(description="Unique ID corresponding to a book", example="1") @PathVariable Long bookId) {
+    public ResponseEntity<Book> findBook(
+        @Parameter(description="Unique ID corresponding to a book", example="1") @PathVariable Long bookId) 
+    {
         Book book = bookRepository.findById(bookId)
             .orElseThrow(() -> new BookNotFoundException(bookId));
         

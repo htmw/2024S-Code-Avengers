@@ -4,8 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.bookbuddy.bookbuddy.Entities.Order;
 
-public interface OrdersRepository extends JpaRepository<Order, Long>{
-
-	Order findById(long orderId);
+public interface OrderRepository extends JpaRepository<Order, Long>{
 
 }
