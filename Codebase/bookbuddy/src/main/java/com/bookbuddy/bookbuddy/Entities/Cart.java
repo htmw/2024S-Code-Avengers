@@ -29,7 +29,7 @@ public class Cart {
 	
 	    
     @OneToOne
-    @Schema(name="user_id",description = "Id of the user")
+    @Schema(description = "Id of the user", example = "00001")
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
@@ -39,7 +39,7 @@ public class Cart {
 
 	
 	@Column(name = "total_price")
-	@Schema(name="totalPrice",description = "total price in the cart")
+	@Schema(description = "total price in the cart", example = "$30")
 	private BigDecimal totalPrice;
 
 

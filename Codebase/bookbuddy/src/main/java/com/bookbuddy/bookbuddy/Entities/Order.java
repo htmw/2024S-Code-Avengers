@@ -18,7 +18,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Schema(name = "orders", description = "order given by the user")
+@Schema(name = "order", description = "order given by the user")
 @Table(name = "orders")
 public class Order {
 
@@ -29,19 +29,19 @@ public class Order {
 	private Long orderId;
 
 	@OneToOne
-	@Schema(name = "user_id", description = "id of the user")
+	@Schema(description = "id of the user",example = "000034")
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	private User user;
 
-	@Schema(name = "total_price", description = "total price of the order")
+	@Schema(description = "total price of the order",example = "$30")
 	@Column(name = "total_price")
 	private BigDecimal totalPrice;
 	
-	@Schema(name = "order_date", description = "order given on a particular date")
+	@Schema(description = "order given on a particular date",example = "4/4/2024")
 	@Column(name = "order_date")
 	private Date orderDate;
 	
-	@Schema(name = "payment_type", description = "type of the payment")
+	@Schema(description = "type of the payment",example = "Online payment")
 	@Column(name = "payment_type")
 	private String paymentType;
  
