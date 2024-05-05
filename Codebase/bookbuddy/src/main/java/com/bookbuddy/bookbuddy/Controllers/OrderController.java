@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,9 +31,10 @@ public class OrderController {
 	@PostMapping("/create/{cartId}")
 	@Operation(summary="Create an order from a cart")
 	public ResponseEntity<OrderDTO> saveOrder(
-		@Parameter(description="Unique ID corresponding to a Cart", example="1") @PathVariable Long cartId) 
+		@Parameter(description="Unique ID corresponding to a Cart", example="1") @PathVariable Long cartId,
+		@Parameter(description="Payment token created by Frontend with payment information") @RequestBody String paymentToken) 
 	{
-		OrderDTO order = orderService.createOrder(cartId);
+		OrderDTO order = orderService.createOrder(cartId, paymentToken);
 		return ResponseEntity.ok(order);
 	}
 
