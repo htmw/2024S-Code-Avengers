@@ -19,7 +19,7 @@ import jakarta.annotation.PostConstruct;
 @Service
 public class StripeService {
 
-    @Value("${api.stripe.key}")
+    @Value("${api.key}")
     private String stripeApiKey;
 
     @PostConstruct
@@ -46,7 +46,7 @@ public class StripeService {
     }
 
     public boolean wasPaymentSuccessful(String paymentIntentId) {
-        Stripe.apiKey = stripeApiKey; // Use your Stripe secret key
+        Stripe.apiKey = stripeApiKey;
 
         try {
             PaymentIntent paymentIntent = PaymentIntent.retrieve(paymentIntentId);
@@ -68,15 +68,12 @@ public class StripeService {
         params.put("confirm", true);
         try {
             PaymentIntent paymentIntent = PaymentIntent.create(params);
-            // Check if the payment intent was successfully confirmed
             if ("succeeded".equals(paymentIntent.getStatus())) {
                 return new PaymentResult(true, null, paymentIntent.getId());
             } else {
-                // Payment failed: you can get more information from the paymentIntent object
                 return new PaymentResult(false, paymentIntent.getLastPaymentError().getMessage(), paymentIntent.getId());
             }
         } catch (StripeException e) {
-            // Handle the exception (e.g., logging, user-friendly error message)
             return new PaymentResult(false, e.getMessage(), null);
         }
     }
