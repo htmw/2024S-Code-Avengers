@@ -9,12 +9,14 @@ import org.springframework.stereotype.Service;
 
 import com.bookbuddy.bookbuddy.CreatedExceptions.CartNotFoundException;
 import com.bookbuddy.bookbuddy.CreatedExceptions.OrderNotFoundException;
+import com.bookbuddy.bookbuddy.CreatedExceptions.PaymentFailedException;
 import com.bookbuddy.bookbuddy.CreatedExceptions.UserNotFoundException;
 import com.bookbuddy.bookbuddy.Entities.Cart;
 import com.bookbuddy.bookbuddy.Entities.CartItem;
 import com.bookbuddy.bookbuddy.Entities.Order;
 import com.bookbuddy.bookbuddy.Entities.OrderDTO;
 import com.bookbuddy.bookbuddy.Entities.OrderItem;
+import com.bookbuddy.bookbuddy.Entities.PaymentResult;
 import com.bookbuddy.bookbuddy.Entities.User;
 import com.bookbuddy.bookbuddy.Repository.CartRepository;
 import com.bookbuddy.bookbuddy.Repository.OrderRepository;
@@ -28,6 +30,8 @@ public class OrderService {
 	OrderRepository orderRepository;
 	@Autowired
 	UserRepository userRepository;
+    @Autowired
+    StripeService stripeService;
 	
 
 	public OrderDTO getOrder(Long orderId) {
@@ -45,7 +49,7 @@ public class OrderService {
         return ordersDTOs;
     }
 
-	public OrderDTO createOrder(Long cartId) {
+	public OrderDTO createOrder(Long cartId, String paymentToken) {
 		Cart cart = cartRepository.findById(cartId).orElseThrow(() -> new CartNotFoundException(cartId));
 		
 		Order newOrder = new Order();
@@ -59,14 +63,19 @@ public class OrderService {
         }
         newOrder.setOrderItems(items);
         newOrder.setTotalPrice(totalPrice);
+        PaymentResult paymentResult = stripeService.processPayment(newOrder.getTotalPrice(), paymentToken);
 
-        orderRepository.save(newOrder);
+        if(paymentResult.isSuccessful()){
+            orderRepository.save(newOrder);
+            cart.setCartItems(new ArrayList<>());
+            cart.setTotalPrice(BigDecimal.ZERO);
+            cartRepository.save(cart);
 
-        cart.setCartItems(new ArrayList<>());
-        cart.setTotalPrice(BigDecimal.ZERO);
-        cartRepository.save(cart);
-
-        return OrderDTO.fromEntity(newOrder);
+            return OrderDTO.fromEntity(newOrder);
+        }
+        else{
+            throw new PaymentFailedException(paymentResult.getErrorMessage());
+        } 
 	}
 
 }
