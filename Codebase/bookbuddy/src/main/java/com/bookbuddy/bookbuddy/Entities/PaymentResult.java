@@ -22,6 +22,4 @@ public class PaymentResult {
     public String getPaymentIntentId() {
         return paymentIntentId;
     }
-
-    // You can add more fields and methods as needed, for example, to include more details about the payment.
 }
