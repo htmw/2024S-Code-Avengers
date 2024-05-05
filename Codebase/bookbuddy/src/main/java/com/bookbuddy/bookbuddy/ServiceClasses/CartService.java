@@ -21,10 +21,8 @@ public class CartService {
     
     @Autowired
     CartRepository cartRepository;
-
     @Autowired
     BookRepository bookRepository;
-
     @Autowired
     CartItemRepository cartItemRepository;
 

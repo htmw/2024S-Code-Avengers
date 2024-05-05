@@ -36,7 +36,7 @@ public class CartController {
 		return ResponseEntity.ok(updatedCart);
 	}
 
-	@PostMapping("/remove-item/{cartId}/{cartItemId}")
+	@PutMapping("/remove-item/{cartId}/{cartItemId}")
 	@Operation(summary="Remove an item from a cart")
 	public ResponseEntity<CartDTO> removeItemFromCart(
 		@Parameter(description="Unique ID corresponding to a Cart", example="1") @PathVariable Long cartId, 

@@ -13,7 +13,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Schema(name = "Cart_items", description = "items present in the cart")
+@Schema(name = "CartItem", description = "An item present in the cart")
 @Table(name = "cart_items")
 public class CartItem {
 

@@ -36,7 +36,7 @@ public class OrderController {
 		return ResponseEntity.ok(order);
 	}
 
-	@PostMapping("/user-orders/{userId}")
+	@GetMapping("/user-orders/{userId}")
 	@Operation(summary="Get all orders for a user")
 	public ResponseEntity<List<OrderDTO>> findOrdersForUser(
 		@Parameter(description="Unique ID corresponding to a User", example="1") @PathVariable Long userId) 

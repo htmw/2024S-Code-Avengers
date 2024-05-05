@@ -21,7 +21,7 @@ import jakarta.persistence.Table;
 // Jimmy Karoly
 
 @Entity
-@Schema(name = "Book Collection", description = "collection of books")
+@Schema(name = "BookCollection", description = "collection of books")
 @Table(name= "book_collections")
 public class BookCollection {
     @Id 

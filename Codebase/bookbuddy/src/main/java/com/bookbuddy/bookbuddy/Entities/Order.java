@@ -18,7 +18,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Schema(name = "order", description = "order given by the user")
+@Schema(name = "Order", description = "order given by the user")
 @Table(name = "orders")
 public class Order {
 

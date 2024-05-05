@@ -17,7 +17,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Schema(name = "Shopping_cart", description = "A Shopping_cart of the application")
+@Schema(name = "Cart", description = "A Shopping Cart of the application")
 @Table(name = "shopping_cart")
 public class Cart {
 	
