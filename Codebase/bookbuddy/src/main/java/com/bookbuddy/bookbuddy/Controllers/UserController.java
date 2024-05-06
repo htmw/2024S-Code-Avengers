@@ -54,28 +54,46 @@ public class UserController {
         @ApiResponse(responseCode = "201", description = "User added successfully"),
     })
     @Operation(summary="Add a new user to the database")
-    public ResponseEntity<UserDTO> newUser(@RequestBody CreateUserDTO newUser) {
+    public ResponseEntity<UserDTO> newUser(
+        @RequestBody CreateUserDTO newUser) 
+    {
     	UserDTO newUserDTO = userService.addNewUser(newUser);
         return ResponseEntity.status(HttpStatus.CREATED).body(newUserDTO);
     }
 
     @GetMapping("/{userId}")
     @Operation(summary="Get user details by id")
-    public ResponseEntity<UserDTO> findUser(@Parameter(description="Unique ID corresponding to a user", example="1") @PathVariable Long userId) {
+    public ResponseEntity<UserDTO> findUser(
+        @Parameter(description="Unique ID corresponding to a user", example="1") @PathVariable Long userId) 
+    {
         UserDTO user = userService.getUserDetails(userId);
+        return ResponseEntity.ok(user);
+    }
+
+    @GetMapping("/email")
+    @Operation(summary="Get user details by email")
+    public ResponseEntity<UserDTO> findUserByEmail(
+        @RequestBody String email) 
+    {
+        UserDTO user = userService.getUserDetailsWithEmail(email);
         return ResponseEntity.ok(user);
     }
 
     @PutMapping("/{userId}")
     @Operation(summary="Update user details by id")
-    public ResponseEntity<UserDTO> updateUser(@Parameter(name="userId", description="Unique ID corresponding to a user", example="1") @PathVariable Long userId, @RequestBody UserDTO updatedUserDetails) {
+    public ResponseEntity<UserDTO> updateUser(
+        @Parameter(name="userId", description="Unique ID corresponding to a user", example="1") @PathVariable Long userId, 
+        @RequestBody UserDTO updatedUserDetails) 
+    {
         UserDTO updatedUser = userService.updateUser(userId, updatedUserDetails);
         return ResponseEntity.ok(updatedUser);
     }
 
     @DeleteMapping("/{userId}")
     @Operation(summary="Delete user by id")
-    public ResponseEntity<String> deleteUser(@Parameter(name="userId", description="Unique ID corresponding to a user", example="1") @PathVariable Long userId){
+    public ResponseEntity<String> deleteUser(
+        @Parameter(name="userId", description="Unique ID corresponding to a user", example="1") @PathVariable Long userId)
+    {
         userService.deleteUser(userId);
         return ResponseEntity.ok("User with id: " + userId + " was deleted");
     }

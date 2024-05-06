@@ -53,5 +53,10 @@ public class UserService {
         userRepository.deleteById(userId);
     }
 
+    public UserDTO getUserDetailsWithEmail(String email) {
+        User user = userRepository.findByEmailIgnoreCase(email);
+        return UserDTO.fromEntity(user);
+    }
+
 
 }
