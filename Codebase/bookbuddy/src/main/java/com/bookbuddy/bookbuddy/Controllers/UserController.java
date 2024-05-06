@@ -54,7 +54,9 @@ public class UserController {
         @ApiResponse(responseCode = "201", description = "User added successfully"),
     })
     @Operation(summary="Add a new user to the database")
-    public ResponseEntity<UserDTO> newUser(@RequestBody CreateUserDTO newUser) {
+    public ResponseEntity<UserDTO> newUser(
+        @Parameter(description="CreateUserDTO sent as JSON") @RequestBody CreateUserDTO newUser) 
+    {
     	UserDTO newUserDTO = userService.addNewUser(newUser);
         return ResponseEntity.status(HttpStatus.CREATED).body(newUserDTO);
     }
@@ -68,10 +70,10 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
-    @GetMapping("/{userEmail}")
+    @GetMapping("/email/{userEmail}")
     @Operation(summary="Get user details by email")
     public ResponseEntity<UserDTO> findUserByEmail(
-        @Parameter(description="Unique ID corresponding to a user", example="1") @PathVariable String email) 
+        @Parameter(description="User's email", example="test@email.com") @RequestBody String email) 
     {
         UserDTO user = userService.getUserDetailsWithEmail(email);
         return ResponseEntity.ok(user);
