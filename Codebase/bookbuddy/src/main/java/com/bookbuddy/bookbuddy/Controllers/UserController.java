@@ -55,7 +55,7 @@ public class UserController {
     })
     @Operation(summary="Add a new user to the database")
     public ResponseEntity<UserDTO> newUser(
-        @Parameter(description="CreateUserDTO sent as JSON") @RequestBody CreateUserDTO newUser) 
+        @RequestBody CreateUserDTO newUser) 
     {
     	UserDTO newUserDTO = userService.addNewUser(newUser);
         return ResponseEntity.status(HttpStatus.CREATED).body(newUserDTO);
@@ -70,10 +70,10 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
-    @GetMapping("/email/{userEmail}")
+    @GetMapping("/email")
     @Operation(summary="Get user details by email")
     public ResponseEntity<UserDTO> findUserByEmail(
-        @Parameter(description="User's email", example="test@email.com") @RequestBody String email) 
+        @RequestBody String email) 
     {
         UserDTO user = userService.getUserDetailsWithEmail(email);
         return ResponseEntity.ok(user);
