@@ -37,13 +37,18 @@ public class BookCollectionController {
 
     @GetMapping("/{collectionId}")
     @Operation(summary="Get collection by id")
-    public ResponseEntity<BookCollectionDTO> getCollection(@Parameter(description="Unique ID corresponding to a collection", example="1") @PathVariable Long collectionId) {
+    public ResponseEntity<BookCollectionDTO> getCollection(
+        @Parameter(description="Unique ID corresponding to a collection", example="1") @PathVariable Long collectionId) 
+    {
         BookCollectionDTO collection = bCService.getCollectionById(collectionId);
         return ResponseEntity.ok(collection);
     }
 
     @GetMapping("/get/{userId}")
-    public ResponseEntity<List<BookCollectionDTO>> getAllCollectionsByUser(@PathVariable Long userId) {
+    @Operation(summary="Get all collections from a user")
+    public ResponseEntity<List<BookCollectionDTO>> getAllCollectionsByUser(
+        @Parameter(description="Unique ID corresponding to a user", example="1") @PathVariable Long userId) 
+    {
         List<BookCollectionDTO> collections = bCService.getAllFromUser(userId);
         return ResponseEntity.ok(collections);
     }
@@ -51,7 +56,9 @@ public class BookCollectionController {
 
     @DeleteMapping("/{collectionId}")
     @Operation(summary="Delete collection by id")
-    public ResponseEntity<String> deleteCollection(@Parameter(description="Unique ID corresponding to a collection", example="1") @PathVariable Long collectionId) {
+    public ResponseEntity<String> deleteCollection(
+        @Parameter(description="Unique ID corresponding to a collection", example="1") @PathVariable Long collectionId) 
+    {
         bCService.deleteCollection(collectionId);
         return ResponseEntity.ok("Collection with id: " + collectionId + " was deleted");
     }
@@ -61,28 +68,40 @@ public class BookCollectionController {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Book Collection added successfully"),
     })
-    public ResponseEntity<BookCollectionDTO> addCollection(@Parameter(name="userId", description="Unique ID corresponding to a user", example="1") @PathVariable Long userId, @Parameter(name="name", description="What the user wants to name the new collection", example="Favorite Books") @PathVariable String name){
+    public ResponseEntity<BookCollectionDTO> addCollection(
+        @Parameter(description="Unique ID corresponding to a user", example="1") @PathVariable Long userId, 
+        @Parameter(description="What the user wants to name the new collection", example="Favorite Books") @PathVariable String name)
+    {
         BookCollectionDTO collection = bCService.createCollection(userId, name);
         return ResponseEntity.status(HttpStatus.CREATED).body(collection);
     }
 
     @PutMapping("{collectionId}/rename/{newName}")
     @Operation(summary="Rename a collection")
-    public ResponseEntity<BookCollectionDTO> renameCollection(@Parameter(description="Unique ID corresponding to a collection", example="1") @PathVariable Long collectionId, @Parameter(description="What the user wants to rename to collection to", example="Books I've Read") @PathVariable String newName){
+    public ResponseEntity<BookCollectionDTO> renameCollection(
+        @Parameter(description="Unique ID corresponding to a collection", example="1") @PathVariable Long collectionId, 
+        @Parameter(description="What the user wants to rename to collection to", example="Books I've Read") @PathVariable String newName)
+    {
             BookCollectionDTO collection = bCService.renameCollection(collectionId, newName);
             return ResponseEntity.ok(collection);
     }
 
     @PutMapping("{collectionId}/add_book/{bookId}")
     @Operation(summary="Add a book to a collection")
-    public ResponseEntity<BookCollectionDTO> addBook(@Parameter(description="Unique ID corresponding to a collection", example="1") @PathVariable Long collectionId, @Parameter(description="Unique ID corresponding to a book", example="1") @PathVariable Long bookId){
+    public ResponseEntity<BookCollectionDTO> addBook(
+        @Parameter(description="Unique ID corresponding to a collection", example="1") @PathVariable Long collectionId, 
+        @Parameter(description="Unique ID corresponding to a book", example="1") @PathVariable Long bookId)
+    {
         BookCollectionDTO collection = bCService.addBook(collectionId, bookId);
         return ResponseEntity.ok(collection);
     }
 
     @PutMapping("{collectionId}/remove_book/{bookId}")
     @Operation(summary="Remove a book from a collection")
-    public ResponseEntity<BookCollectionDTO> removeBook(@Parameter(description="Unique ID corresponding to a collection", example="1") @PathVariable Long collectionId, @Parameter(description="Unique ID corresponding to a book", example="1") @PathVariable Long bookId){
+    public ResponseEntity<BookCollectionDTO> removeBook(
+        @Parameter(description="Unique ID corresponding to a collection", example="1") @PathVariable Long collectionId, 
+        @Parameter(description="Unique ID corresponding to a book", example="1") @PathVariable Long bookId)
+    {
         BookCollectionDTO collection = bCService.removeBook(collectionId, bookId);
         return ResponseEntity.ok(collection);
     }
