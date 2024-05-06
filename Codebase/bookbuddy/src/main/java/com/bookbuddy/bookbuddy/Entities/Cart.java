@@ -34,8 +34,8 @@ public class Cart {
     private User user;
 
 	
-	 @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
-	 private List<CartItem> cartItems = new ArrayList<>();
+	@OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
+	private List<CartItem> cartItems = new ArrayList<>();
 
 	
 	@Column(name = "total_price")

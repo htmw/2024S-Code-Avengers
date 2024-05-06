@@ -1,5 +1,7 @@
 package com.bookbuddy.bookbuddy.Controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+
 // This is the Book Collection Controller. It is a REST Controller that handles HTTP requests related to book collections.
 // It has endpoints for getting a collection by ID, deleting a collection by ID, adding a new collection, renaming a collection, adding a book to a collection, and removing a book from a collection.
 // Jimmy Karoly
@@ -38,6 +41,13 @@ public class BookCollectionController {
         BookCollectionDTO collection = bCService.getCollectionById(collectionId);
         return ResponseEntity.ok(collection);
     }
+
+    @GetMapping("/get/{userId}")
+    public ResponseEntity<List<BookCollectionDTO>> getAllCollectionsByUser(@PathVariable Long userId) {
+        List<BookCollectionDTO> collections = bCService.getAllFromUser(userId);
+        return ResponseEntity.ok(collections);
+    }
+    
 
     @DeleteMapping("/{collectionId}")
     @Operation(summary="Delete collection by id")

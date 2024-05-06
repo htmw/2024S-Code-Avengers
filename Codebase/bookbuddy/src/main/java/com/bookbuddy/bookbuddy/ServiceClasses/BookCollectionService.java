@@ -1,5 +1,8 @@
 package com.bookbuddy.bookbuddy.ServiceClasses;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -71,6 +74,16 @@ public class BookCollectionService {
     public BookCollectionDTO getCollectionById(Long collectionId) {
         BookCollection collection = bookCollectionRepository.findById(collectionId).orElseThrow(() -> new CollectionNotFoundException(collectionId));
         return BookCollectionDTO.fromEntity(collection);
+    }
+
+    public List<BookCollectionDTO> getAllFromUser(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow( () -> new UserNotFoundException(userId));
+        List<BookCollection> collections = user.getBookCollections();
+        List<BookCollectionDTO> collectionDTOs = new ArrayList<>();
+        for(BookCollection collection : collections){
+            collectionDTOs.add(BookCollectionDTO.fromEntity(collection));
+        }
+        return collectionDTOs;
     }
 
     
