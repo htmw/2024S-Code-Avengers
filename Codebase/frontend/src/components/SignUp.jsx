@@ -1,12 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { auth } from "/src/firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 function SignUp() {
   const [name, setName] = useState("");
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [description, setDescription] = useState("");
   const [genres, setGenres] = useState([]);
-  const [age, setAge] = useState("");
+  const [birthMonth, setBirthMonth] = useState("");
+  const [birthDate, setBirthDate] = useState("");
+  const [birthYear, setBirthYear] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
@@ -23,10 +29,37 @@ function SignUp() {
     "Self-Help",
   ];
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Sign Up:", name, username, description, genres, age, password);
-  };
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+    console.log("User registered successfully:", user);
+
+    if (user) {
+      const dateOfBirth = `${birthYear}/${birthMonth}/${birthDate}`;
+      const response = await fetch('localhost:8080/users/new', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          firstName,
+          lastName,
+          email,
+          dateOfBirth,
+        }),
+      });
+      const userData = await response.json(); 
+      console.log("User data saved on backend:", userData); 
+    }
+  } catch (error) {
+    console.error("Error registering user:", error);
+  }
+};
+
 
   const handleGenreChange = (genre) => {
     if (genres.includes(genre)) {
@@ -86,9 +119,9 @@ function SignUp() {
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="Email"
                 type="email"
-                placeholder="Emal Address"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Email Address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>
@@ -123,20 +156,25 @@ function SignUp() {
             </div>
 
             <div className="mb-4">
-              <label
+              <label 
                 className="block text-gray-700 text-sm font-bold mb-2"
-                htmlFor="age"
+                htmlFor="dateOfBirth"
               >
-                Age
+                What's your date of birth?
               </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="age"
-                type="number"
-                placeholder="Age"
-                value={age}
-                onChange={(e) => setAge(e.target.value)}
-                required
+              <DatePicker
+                selected={
+                  birthYear && birthMonth && birthDate
+                    ? new Date(birthYear, birthMonth - 1, birthDate)
+                    : null
+                }
+                onChange={(date) => {
+                  setBirthYear(date.getFullYear());
+                  setBirthMonth(date.getMonth() + 1);
+                  setBirthDate(date.getDate());
+                }}
+                dateFormat="yyyy-MM-dd"
+                className="w-full rounded-md border border-gray-300 px-4 py-2 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
