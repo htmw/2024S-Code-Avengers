@@ -6,7 +6,6 @@ function GuestCheckout() {
     name: "",
     email: "",
     address: "",
-    paymentMethod: "",
   });
 
   const stripe = useStripe();
@@ -19,14 +18,16 @@ function GuestCheckout() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const cardElement = elements.getElement(CardElement);
+
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
       card: cardElement,
     });
 
     if (!error) {
-      console.log("Processing payment:", paymentMethod);
+      // backend integration here
     }
   };
 
