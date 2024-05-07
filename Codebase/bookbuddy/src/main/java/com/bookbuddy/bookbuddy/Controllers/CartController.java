@@ -2,6 +2,7 @@ package com.bookbuddy.bookbuddy.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +21,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController
 @Tag(name="Cart Controller", description="Endpoint for a User's cart")
 @RequestMapping("/cart")
+@CrossOrigin("*")
 public class CartController {
 
     @Autowired

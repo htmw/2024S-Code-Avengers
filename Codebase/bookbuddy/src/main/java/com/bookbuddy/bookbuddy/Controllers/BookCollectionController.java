@@ -5,15 +5,18 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bookbuddy.bookbuddy.Entities.BookCollectionDTO;
+import com.bookbuddy.bookbuddy.Entities.RecommendedBookDTO;
 import com.bookbuddy.bookbuddy.ServiceClasses.BookCollectionService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,6 +26,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 
+
+
 // This is the Book Collection Controller. It is a REST Controller that handles HTTP requests related to book collections.
 // It has endpoints for getting a collection by ID, deleting a collection by ID, adding a new collection, renaming a collection, adding a book to a collection, and removing a book from a collection.
 // Jimmy Karoly
@@ -30,6 +35,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController
 @Tag(name = "Book Collection Controller", description = "Endpoints for Book Collection")
 @RequestMapping("/collections")
+@CrossOrigin("*")
 public class BookCollectionController {
 
     @Autowired
@@ -105,6 +111,14 @@ public class BookCollectionController {
         BookCollectionDTO collection = bCService.removeBook(collectionId, bookId);
         return ResponseEntity.ok(collection);
     }
+
+    @PostMapping("store-rec/{userId}")
+    public ResponseEntity<?> storeRec(@PathVariable Long userId, @RequestBody List<RecommendedBookDTO> recommendedBooks) {
+        bCService.storeRecommendations(userId, recommendedBooks);
+        return ResponseEntity.ok("Success");
+    }
+    
+    
 
 
     

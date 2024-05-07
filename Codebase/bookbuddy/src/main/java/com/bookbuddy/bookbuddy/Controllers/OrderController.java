@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,6 +24,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController
 @Tag(name="Order Controller", description="Endpoints for Orders")
 @RequestMapping("/orders")
+@CrossOrigin("*")
 public class OrderController {
 
 	@Autowired
