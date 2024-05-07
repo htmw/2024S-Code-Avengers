@@ -42,10 +42,15 @@ public class UserService {
 
     public UserDTO addNewUser(CreateUserDTO newUserDetails) {
         User user = new User(newUserDetails.getFirstName(), newUserDetails.getLastName(), newUserDetails.getEmail(), newUserDetails.getDateOfBirth());
-        userRepository.save(user);
+        user = userRepository.save(user);
+
         Cart newCart = new Cart();
 		newCart.setUser(user);
-		cartRepository.save(newCart);
+        newCart = cartRepository.save(newCart);
+
+        user.setCart(newCart);
+        user = userRepository.save(user);
+        
         return UserDTO.fromEntity(user);
     }
 

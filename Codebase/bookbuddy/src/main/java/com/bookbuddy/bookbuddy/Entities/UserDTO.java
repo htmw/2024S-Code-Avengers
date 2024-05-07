@@ -27,6 +27,9 @@ public class UserDTO {
     @Schema(description = "Date of birth of the user", example = "1990-01-01")
     private LocalDate dateOfBirth;
 
+    @Schema(description = "Unique ID corresponding to a user's cart", example = "1")
+    private Long cartId;
+
     public static UserDTO fromEntity(User user){
         UserDTO userDTO = new UserDTO();
         userDTO.setId(user.getId());
@@ -34,6 +37,7 @@ public class UserDTO {
         userDTO.setLastName(user.getLastName());
         userDTO.setEmail(user.getEmail());
         userDTO.setDateOfBirth(user.getDateOfBirth());
+        userDTO.setCartId(user.getCart().getCartId());
         return userDTO;
     }
 
@@ -75,5 +79,13 @@ public class UserDTO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getCartId() {
+        return cartId;
+    }
+
+    public void setCartId(Long cartId) {
+        this.cartId = cartId;
     }
 }
