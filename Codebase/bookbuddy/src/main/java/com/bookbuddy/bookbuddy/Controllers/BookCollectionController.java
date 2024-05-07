@@ -112,11 +112,11 @@ public class BookCollectionController {
         return ResponseEntity.ok(collection);
     }
 
-    @PostMapping("store-rec/{userId}")
-    public ResponseEntity<?> storeRec(@PathVariable Long userId, @RequestBody List<RecommendedBookDTO> recommendedBooks) {
-        bCService.storeRecommendations(userId, recommendedBooks);
-        return ResponseEntity.ok("Success");
-    }
+    // @PostMapping("store-rec/{userId}")
+    // public ResponseEntity<?> storeRec(@PathVariable Long userId, @RequestBody List<RecommendedBookDTO> recommendedBooks) {
+    //     bCService.storeRecommendations(userId, recommendedBooks);
+    //     return ResponseEntity.ok("Success");
+    // }
     
     
 

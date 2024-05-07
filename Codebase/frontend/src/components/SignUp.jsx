@@ -29,40 +29,43 @@ function SignUp() {
     "Self-Help",
   ];
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  try {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password,
+      );
+      const user = userCredential.user;
+      console.log("User registered successfully:", user);
 
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    const user = userCredential.user;
-    console.log("User registered successfully:", user);
-
-    if (user) {
-      const nameParts = name.split(" ");
-      const firstName = nameParts[0];
-      const lastName = nameParts.length > 1 ? nameParts.slice(1).join(" ") : "";
-      const dateOfBirth = `${birthYear}/${birthMonth}/${birthDate}`;
-      const response = await fetch('localhost:8080/users/new', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          firstName,
-          lastName,
-          email,
-          dateOfBirth,
-        }),
-      });
-      const userData = await response.json(); 
-      console.log("User data saved on backend:", userData); 
+      if (user) {
+        const nameParts = name.split(" ");
+        const firstName = nameParts[0];
+        const lastName =
+          nameParts.length > 1 ? nameParts.slice(1).join(" ") : "";
+        const dateOfBirth = `${birthYear}/${birthMonth}/${birthDate}`;
+        const response = await fetch("http://localhost:8080/users/new", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            firstName,
+            lastName,
+            email,
+            dateOfBirth,
+          }),
+        });
+        const userData = await response.json();
+        console.log("User data saved on backend:", userData);
+      }
+    } catch (error) {
+      console.error("Error registering user:", error);
     }
-  } catch (error) {
-    console.error("Error registering user:", error);
-  }
-};
-
+  };
 
   const handleGenreChange = (genre) => {
     if (genres.includes(genre)) {
@@ -159,7 +162,7 @@ const handleSubmit = async (e) => {
             </div>
 
             <div className="mb-4">
-              <label 
+              <label
                 className="block text-gray-700 text-sm font-bold mb-2"
                 htmlFor="dateOfBirth"
               >

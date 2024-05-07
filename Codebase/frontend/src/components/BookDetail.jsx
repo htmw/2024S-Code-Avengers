@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams, Link } from "react-router-dom";
-import { UserContext } from "./UserProvider"; // Assuming you have a UserProvider that provides the user's authentication status
-
+import { UserContext } from "./UserProvider";
 function BookDetail() {
   const { id } = useParams();
-  const { user } = useContext(UserContext); // Assume user is an object that contains the user's information, including authentication status
-
+  const { user } = useContext(UserContext);
   const [book, setBook] = useState(null);
   const [quantity, setQuantity] = useState(1);
 
@@ -21,10 +19,8 @@ function BookDetail() {
 
   const handleAddToCart = async () => {
     if (user && user.isAuthenticated) {
-      // User is signed in, add to cart logic
       console.log("Adding to cart:", book.title);
     }
-    // No need for else condition as the link will only be rendered if user is not signed in
   };
 
   if (!book) {
@@ -38,7 +34,7 @@ function BookDetail() {
           src="https://demo.publishr.cloud/assets/common/images/edition_placeholder.png"
           alt={book.title}
           className="w-full h-64 object-cover"
-          style={{ objectFit: 'contain' }}
+          style={{ objectFit: "contain" }}
         />
       </div>
       <div className="p-4">
