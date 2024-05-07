@@ -27,8 +27,8 @@ function BookGrid() {
       {books.map((book) => (
         <Link
           key={book.id}
-          to={`/bookdetail/${book.id}`} // Pass the book ID as a parameter in the URL
-          className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer transition-transform duration-300 ease-in-out hover:transform hover:scale-105"
+          to={`/bookdetail/${book.id}`}
+          // className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer transition-transform duration-300 ease-in-out hover:transform hover:scale-105"
         >
           <div
             key={book.id}

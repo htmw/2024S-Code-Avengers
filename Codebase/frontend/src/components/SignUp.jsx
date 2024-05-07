@@ -39,6 +39,9 @@ const handleSubmit = async (e) => {
     console.log("User registered successfully:", user);
 
     if (user) {
+      const nameParts = name.split(" ");
+      const firstName = nameParts[0];
+      const lastName = nameParts.length > 1 ? nameParts.slice(1).join(" ") : "";
       const dateOfBirth = `${birthYear}/${birthMonth}/${birthDate}`;
       const response = await fetch('localhost:8080/users/new', {
         method: 'POST',

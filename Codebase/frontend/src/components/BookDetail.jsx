@@ -45,8 +45,11 @@ function BookDetail() {
         <h3 className="text-lg font-semibold text-gray-800 mb-2">
           {book.title}
         </h3>
-        <p className="text-gray-600 text-sm">{book.author}</p>
-        <p className="text-gray-600">{book.description}</p>
+        <p className="text-gray-600">{book.author}</p>
+        <br />
+        <p className="text-black-600">{book.description}</p>
+        <br />
+        <p className="text-black-600">{book.price}</p>
         {user && user.isAuthenticated ? (
           <button
             className="bg-blue-500 text-white px-4 py-2 rounded-lg mt-4"
@@ -55,7 +58,7 @@ function BookDetail() {
             Add to Cart
           </button>
         ) : (
-          <Link to="/guest-checkout">
+          <Link to="/guestcheckout">
             <button className="bg-blue-500 text-white px-4 py-2 rounded-lg mt-4">
               Proceed to Guest Checkout
             </button>

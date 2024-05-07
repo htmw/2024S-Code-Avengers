@@ -6,6 +6,11 @@ import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
 import BookDetail from "./components/BookDetail";
 import { UserProvider } from "./components/UserProvider";
+import GuestCheckout from "./components/GuestCheckout";
+import { Elements } from "@stripe/react-stripe-js"; 
+import { loadStripe } from "@stripe/stripe-js"; 
+
+const stripePromise = loadStripe("your_stripe_public_key");
 
 function App() {
   return (
@@ -29,6 +34,7 @@ function App() {
               <Route path="/signin" element={<SignIn />} />
               <Route path="/signup" element={<SignUp />} />
               <Route path="/bookdetail/:id" element={<BookDetail />} />
+              <Route path="/guestcheckout" element={<Elements stripe={stripePromise}><GuestCheckout /></Elements>} />
             </Routes>
           </main>
           <footer className="bg-white py-4">
