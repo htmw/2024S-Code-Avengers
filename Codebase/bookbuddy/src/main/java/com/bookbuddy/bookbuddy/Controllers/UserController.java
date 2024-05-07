@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bookbuddy.bookbuddy.Entities.CreateUserDTO;
@@ -73,7 +74,7 @@ public class UserController {
     @GetMapping("/email")
     @Operation(summary="Get user details by email")
     public ResponseEntity<UserDTO> findUserByEmail(
-        @RequestBody String email) 
+        @RequestParam String email) 
     {
         UserDTO user = userService.getUserDetailsWithEmail(email);
         return ResponseEntity.ok(user);

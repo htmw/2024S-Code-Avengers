@@ -8,13 +8,16 @@ import org.springframework.stereotype.Service;
 import com.bookbuddy.bookbuddy.CreatedExceptions.BookNotFoundException;
 import com.bookbuddy.bookbuddy.CreatedExceptions.CartItemNotFoundException;
 import com.bookbuddy.bookbuddy.CreatedExceptions.CartNotFoundException;
+import com.bookbuddy.bookbuddy.CreatedExceptions.UserNotFoundException;
 import com.bookbuddy.bookbuddy.Entities.Book;
 import com.bookbuddy.bookbuddy.Entities.Cart;
 import com.bookbuddy.bookbuddy.Entities.CartDTO;
 import com.bookbuddy.bookbuddy.Entities.CartItem;
+import com.bookbuddy.bookbuddy.Entities.User;
 import com.bookbuddy.bookbuddy.Repository.BookRepository;
 import com.bookbuddy.bookbuddy.Repository.CartItemRepository;
 import com.bookbuddy.bookbuddy.Repository.CartRepository;
+import com.bookbuddy.bookbuddy.Repository.UserRepository;
 
 @Service
 public class CartService {
@@ -25,6 +28,8 @@ public class CartService {
     BookRepository bookRepository;
     @Autowired
     CartItemRepository cartItemRepository;
+	@Autowired
+	UserRepository userRepository;
 
 
     public CartDTO addItemToCart(Long cartId, Long bookId, int quantity) {
@@ -82,8 +87,9 @@ public class CartService {
 		return totalPrice;
 	}
 
-    public CartDTO getCart(Long cartId) {
-        Cart userCart = cartRepository.findById(cartId).orElseThrow(() -> new CartNotFoundException(cartId));
+    public CartDTO getCart(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
+		Cart userCart = user.getCart();
         return CartDTO.fromEntity(userCart);
     }
 

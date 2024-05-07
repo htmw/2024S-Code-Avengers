@@ -57,12 +57,12 @@ public class CartController {
         return ResponseEntity.ok(updatedCart);
     }
 	 
-	@GetMapping("get/{cartId}")
+	@GetMapping("get/{userId}")
 	@Operation(summary="Get a cart by ID")
 	public ResponseEntity<CartDTO> getCart(
-		@Parameter(description="Unique ID corresponding to a Cart", example="001") @PathVariable Long cartId) 
+		@Parameter(description="Unique ID corresponding to a User", example="001") @PathVariable Long userId) 
 	{
-		CartDTO cart = cartService.getCart(cartId);
+		CartDTO cart = cartService.getCart(userId);
 		return ResponseEntity.ok(cart);
 	}
 
