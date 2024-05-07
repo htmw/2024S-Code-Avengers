@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { books } from "./data.js";
+import { Link } from "react-router-dom";
 
 function BookGrid() {
   const handleImageError = (event) => {
@@ -19,33 +19,39 @@ function BookGrid() {
   }, []);
 
   const handleBookClick = (book) => {
-    console.log("Clicked book:", book);
+    
   };
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       {books.map((book) => (
-        <div
+        <Link
           key={book.id}
+          to={`/bookdetail/${book.id}`} // Pass the book ID as a parameter in the URL
           className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer transition-transform duration-300 ease-in-out hover:transform hover:scale-105"
-          onClick={() => handleBookClick(book)}
         >
-          <div className="relative">
-            <img
-              src="https://demo.publishr.cloud/assets/common/images/edition_placeholder.png"
-              alt={book.title}
-              className="w-full h-64 object-cover"
-              onError={handleImageError}
-              style={{ objectFit: 'contain' }}
-            />
+          <div
+            key={book.id}
+            className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer transition-transform duration-300 ease-in-out hover:transform hover:scale-105"
+            onClick={() => handleBookClick(book)}
+          >
+            <div className="relative">
+              <img
+                src="https://demo.publishr.cloud/assets/common/images/edition_placeholder.png"
+                alt={book.title}
+                className="w-full h-64 object-cover"
+                onError={handleImageError}
+                style={{ objectFit: 'contain' }}
+              />
+            </div>
+            <div className="p-4">
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                {book.title}
+              </h3>
+              <p className="text-gray-600 text-sm">{book.author}</p>
+            </div>
           </div>
-          <div className="p-4">
-            <h3 className="text-lg font-semibold text-gray-800 mb-2">
-              {book.title}
-            </h3>
-            <p className="text-gray-600 text-sm">{book.author}</p>
-          </div>
-        </div>
+        </Link>
       ))}
     </div>
   );

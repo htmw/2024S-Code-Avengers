@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import BookGrid from "./components/BookGrid";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
+import BookDetail from "./components/BookDetail";
 import { UserProvider } from "./components/UserProvider";
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
               />
               <Route path="/signin" element={<SignIn />} />
               <Route path="/signup" element={<SignUp />} />
+              <Route path="/bookdetail/:id" element={<BookDetail />} />
             </Routes>
           </main>
           <footer className="bg-white py-4">
