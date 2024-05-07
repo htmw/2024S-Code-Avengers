@@ -74,7 +74,7 @@ function SignIn() {
           </p>
         </div>
         <p className="text-center text-gray-500 text-xs">
-          &copy; 2023 Book Buddy. All rights reserved.
+          &copy; 2024 Book Buddy. All rights reserved.
         </p>
       </div>
     </div>

@@ -10,17 +10,45 @@ function SignUp() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const genresOptions = [
+    "Fiction",
+    "Non-Fiction",
+    "Mystery",
+    "Romance",
+    "Science Fiction",
+    "Fantasy",
+    "Thriller",
+    "Biography",
+    "History",
+    "Self-Help",
+  ];
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Sign Up:", name, username, description, genres, age, password);
   };
 
-  const handleGenreChange = (e) => {
-    const selectedGenres = Array.from(
-      e.target.selectedOptions,
-      (option) => option.value,
-    );
-    setGenres(selectedGenres);
+  const handleGenreChange = (genre) => {
+    if (genres.includes(genre)) {
+      setGenres(genres.filter((g) => g !== genre));
+    } else {
+      setGenres([...genres, genre]);
+    }
+  };
+
+  const renderGenreOptions = () => {
+    return genresOptions.map((genre) => (
+      <div key={genre} className="flex items-center">
+        <input
+          type="checkbox"
+          id={genre}
+          checked={genres.includes(genre)}
+          onChange={() => handleGenreChange(genre)}
+          className="mr-2"
+        />
+        <label htmlFor={genre}>{genre}</label>
+      </div>
+    ));
   };
 
   return (
@@ -37,30 +65,34 @@ function SignUp() {
                 Name
               </label>
               <input
-                className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-blue-500"
-                type="text"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="name"
+                type="text"
+                placeholder="Full Name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
               />
             </div>
+
             <div className="mb-4">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
-                htmlFor="username"
+                htmlFor="Email"
               >
-                Username
+                Email Address
               </label>
               <input
-                className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-blue-500"
-                type="text"
-                id="username"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="Email"
+                type="email"
+                placeholder="Emal Address"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
               />
             </div>
+
             <div className="mb-4">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
@@ -69,14 +101,15 @@ function SignUp() {
                 Description
               </label>
               <textarea
-                className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-blue-500"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="description"
                 rows="3"
+                placeholder="Description what type of book you want to read and like even favorite book."
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                placeholder="Write a brief description about the books you like and why you want to join Book Buddy"
-              ></textarea>
+              />
             </div>
+
             <div className="mb-4">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
@@ -84,25 +117,11 @@ function SignUp() {
               >
                 Favorite Genres
               </label>
-              <select
-                className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-blue-500"
-                id="genres"
-                multiple
-                value={genres}
-                onChange={handleGenreChange}
-              >
-                <option value="fiction">Fiction</option>
-                <option value="non-fiction">Non-Fiction</option>
-                <option value="mystery">Mystery</option>
-                <option value="romance">Romance</option>
-                <option value="sci-fi">Science Fiction</option>
-                <option value="fantasy">Fantasy</option>
-                <option value="thriller">Thriller</option>
-                <option value="biography">Biography</option>
-                <option value="history">History</option>
-                <option value="self-help">Self-Help</option>
-              </select>
+              <div className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                {renderGenreOptions()}
+              </div>
             </div>
+
             <div className="mb-4">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
@@ -111,14 +130,16 @@ function SignUp() {
                 Age
               </label>
               <input
-                className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-blue-500"
-                type="number"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="age"
+                type="number"
+                placeholder="Age"
                 value={age}
                 onChange={(e) => setAge(e.target.value)}
                 required
               />
             </div>
+
             <div className="mb-4">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
@@ -127,14 +148,16 @@ function SignUp() {
                 Password
               </label>
               <input
-                className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-blue-500"
-                type="password"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="password"
+                type="password"
+                placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
             </div>
+
             <div className="mb-6">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
@@ -143,14 +166,16 @@ function SignUp() {
                 Confirm Password
               </label>
               <input
-                className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-blue-500"
-                type="password"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="confirmPassword"
+                type="password"
+                placeholder="Confirm Password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
               />
             </div>
+
             <div className="flex items-center justify-between">
               <button
                 className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
@@ -171,7 +196,7 @@ function SignUp() {
           </p>
         </div>
         <p className="text-center text-gray-500 text-xs">
-          &copy; 2023 Book Buddy. All rights reserved.
+          &copy; 2024 Book Buddy. All rights reserved.
         </p>
       </div>
     </div>
