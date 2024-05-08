@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { auth } from "/src/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { UserContext } from "./UserContext";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function SignIn() {
   const { fetchUserData } = useContext(UserContext);
@@ -13,14 +15,25 @@ function SignIn() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password,
+      );
       console.log("User logged in successfully");
-
       await fetchUserData(email);
-
-      navigate('/UserProfile');
+      toast.success("Sign in successful!");
+      navigate("/UserProfile");
     } catch (error) {
       console.error("Error logging in user:", error);
+      if (
+        error.code === "auth/user-not-found" ||
+        error.code === "auth/wrong-password"
+      ) {
+        toast.error("Invalid email or password. Please try again.");
+      } else {
+        toast.error("An error occurred during sign in. Please try again.");
+      }
     }
   };
 
@@ -91,6 +104,7 @@ function SignIn() {
           &copy; 2024 Book Buddy. All rights reserved.
         </p>
       </div>
+      <ToastContainer />
     </div>
   );
 }
