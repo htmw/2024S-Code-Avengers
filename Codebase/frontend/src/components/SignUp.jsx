@@ -73,6 +73,47 @@ function SignUp() {
       await addDoc(collection(db, "users"), userData);
       console.log("User data saved in Firestore:", userData);
 
+      const response = await fetch(
+        "https://api.openai.com/v1/chat/completions",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer ",
+          },
+          body: JSON.stringify({
+            model: "gpt-4",
+            messages: [
+              {
+                role: "system",
+                content:
+                  "You are a helpful assistant that recommends books based on user preferences.",
+              },
+              {
+                role: "user",
+                content: `Based on the following user description and genres, please recommend 20 books in the format [[bookname1, author1, description1], [bookname2, author2, description2], ...]:
+
+              Description: ${description}
+              Genres: ${genres.join(", ")}`,
+              },
+            ],
+          }),
+        },
+      );
+
+      const data = await response.json();
+      const recommendationsString = data.choices[0].message.content;
+      console.log("Book recommendations:", recommendationsString);
+
+      const recommendations = JSON.parse(recommendationsString);
+
+      const recommendationsData = {
+        userId: user.uid,
+        recommendations,
+      };
+      await addDoc(collection(db, "recommendedBooks"), recommendationsData);
+      console.log("Recommended books saved in Firestore:", recommendationsData);
+
       toast.success("Sign up successful!");
       navigate("/user");
     } catch (error) {
