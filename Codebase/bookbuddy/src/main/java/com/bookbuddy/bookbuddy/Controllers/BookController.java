@@ -63,6 +63,15 @@ public class BookController {
         return ResponseEntity.ok(book);
     }
 
+    @GetMapping("/search/{searchTerm}")
+    @Operation(summary="Search for book by title")
+    public ResponseEntity<Book> searchBook(
+        @Parameter(description="Title of book to search for", example="The Great Gatsby") @PathVariable String bookName)
+    {
+        Book book = bookRepository.findByTitle(bookName);
+        return ResponseEntity.ok(book);
+    }
+
     
     
     

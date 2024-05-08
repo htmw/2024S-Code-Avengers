@@ -10,8 +10,8 @@ import com.bookbuddy.bookbuddy.Entities.Book;
 
 public interface BookRepository extends JpaRepository<Book, Long>{
 
-    @Query("SELECT b FROM Book b WHERE b.title = :title AND b.author = :author")
-    Book findByTitleAndAuthor(String title, String author);
+    @Query("SELECT b FROM Book b WHERE b.title = :title")
+    Book findByTitle(String title);
 
     @Override
     Page<Book> findAll(Pageable pageable);
