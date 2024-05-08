@@ -21,7 +21,19 @@ function BookDetail() {
           `http://127.0.0.1:5001/recommendations/${encodeURIComponent(data.title)}?n=4`,
         );
         const recommendationsData = await recommendationsResponse.json();
-        setRecommendedBooks(recommendationsData);
+        console.log(recommendationsData)
+
+        const recommendedBooksPromises = recommendationsData.map(async (recommendation) => {
+          const bookTitle = recommendation.Book;
+          console.log("Title: ", bookTitle)
+          const encodedBookTitle = encodeURIComponent(bookTitle);
+          const response = await fetch(`http://localhost:8080/books/search/${encodedBookTitle}`);
+          const bookData = await response.json();
+          return bookData;
+        });
+
+        const recommendedBooks = await Promise.all(recommendedBooksPromises);
+        setRecommendedBooks(recommendedBooks);
       } catch (error) {
         console.error("Error fetching book details:", error);
       }
@@ -131,15 +143,15 @@ function BookDetail() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {recommendedBooks.map((book) => (
               <Link
-                key={book.Book}
-                to={`/bookdetail/${book.Book}`}
+                key={book.id}
+                to={`/bookdetail/${book.id}`}
                 className="bg-white shadow-md rounded-lg overflow-hidden cursor-pointer transition-transform duration-300 ease-in-out hover:transform hover:scale-105"
               >
                 <div className="relative">
                   <div className="rounded-lg overflow-hidden">
                     <img
                       src="https://demo.publishr.cloud/assets/common/images/edition_placeholder.png"
-                      alt={book.Book}
+                      alt={book.title}
                       className="w-full h-64 object-cover"
                       style={{ objectFit: "contain" }}
                     />
@@ -147,9 +159,9 @@ function BookDetail() {
                 </div>
                 <div className="p-4">
                   <h3 className="text-lg font-semibold text-black mb-2">
-                    {book.Book}
+                    {book.title}
                   </h3>
-                  <p className="text-gray-600 text-sm">{book.Author}</p>
+                  <p className="text-gray-600 text-sm">{book.author}</p>
                 </div>
               </Link>
             ))}

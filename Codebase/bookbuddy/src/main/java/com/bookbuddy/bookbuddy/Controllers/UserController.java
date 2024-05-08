@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bookbuddy.bookbuddy.Entities.CreateUserDTO;
 import com.bookbuddy.bookbuddy.Entities.UserDTO;
-import com.bookbuddy.bookbuddy.Repository.UserRepository;
 import com.bookbuddy.bookbuddy.ServiceClasses.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -36,8 +35,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name = "User Controller", description = "Endpoints for Users")
 @CrossOrigin("*")
 public class UserController {
-    @Autowired
-    UserRepository uRepository;
     @Autowired
     UserService userService;
 

@@ -63,14 +63,47 @@ public class BookController {
         return ResponseEntity.ok(book);
     }
 
-    @GetMapping("/search/{searchTerm}")
-    @Operation(summary="Search for book by title")
+    // @GetMapping("/search/{bookName}")
+    // @Operation(summary="Search for book by title")
+    // public ResponseEntity<Book> searchBook(
+    //     @Parameter(description="Title of book to search for", example="The Great Gatsby") @PathVariable String bookName)
+    // {
+    //     Book book = bookRepository.findByTitle(bookName);
+    //     return ResponseEntity.ok(book);
+    // }
+    // @GetMapping("/search/{searchTerm}")
+    // @Operation(summary = "Search for book by title")
+    // public ResponseEntity<Book> searchBook(
+    //     @Parameter(name = "searchTerm", description = "Title of book to search for", example = "The Great Gatsby")
+    //     @PathVariable String searchTerm
+    // ) {
+    //     Pageable pageable = PageRequest.of(0, 1);
+    //     Page<Book> bookPage = bookRepository.findDistinctByTitle(searchTerm, pageable);
+    //     Book book = bookPage.getContent().isEmpty() ? null : bookPage.getContent().get(0);
+        
+    //     if (book != null) {
+    //         return ResponseEntity.ok(book);
+    //     } else {
+    //         return ResponseEntity.notFound().build();
+    //     }
+    // }
+
+    @GetMapping("/search/{searchTerm:.+}")
+    @Operation(summary = "Search for book by title")
     public ResponseEntity<Book> searchBook(
-        @Parameter(description="Title of book to search for", example="The Great Gatsby") @PathVariable String bookName)
-    {
-        Book book = bookRepository.findByTitle(bookName);
+        @Parameter(name = "searchTerm", description = "Title of book to search for", example = "The Great Gatsby")
+        @PathVariable("searchTerm") String bookName
+    ) {
+    Pageable pageable = PageRequest.of(0, 1);
+    Page<Book> bookPage = bookRepository.findDistinctByTitle(bookName, pageable);
+    Book book = bookPage.getContent().isEmpty() ? null : bookPage.getContent().get(0);
+    
+    if (book != null) {
         return ResponseEntity.ok(book);
+    } else {
+        return ResponseEntity.notFound().build();
     }
+}
 
     
     

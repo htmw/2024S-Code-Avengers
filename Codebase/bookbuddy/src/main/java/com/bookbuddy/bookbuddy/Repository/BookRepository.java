@@ -10,8 +10,8 @@ import com.bookbuddy.bookbuddy.Entities.Book;
 
 public interface BookRepository extends JpaRepository<Book, Long>{
 
-    @Query("SELECT b FROM Book b WHERE b.title = :title")
-    Book findByTitle(String title);
+    @Query("SELECT DISTINCT b FROM Book b WHERE b.title = :title")
+    Page<Book> findDistinctByTitle(String title, Pageable pageable);
 
     @Override
     Page<Book> findAll(Pageable pageable);
