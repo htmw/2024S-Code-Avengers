@@ -46,7 +46,11 @@ function SignUp() {
         const firstName = nameParts[0];
         const lastName =
           nameParts.length > 1 ? nameParts.slice(1).join(" ") : "";
-        const dateOfBirth = `${birthYear}/${birthMonth}/${birthDate}`;
+
+        const paddedMonth = String(birthMonth).padStart(2, "0");
+        const paddedDate = String(birthDate).padStart(2, "0");
+
+        const dateOfBirth = `${birthYear}-${paddedMonth}-${paddedDate}`;
         const response = await fetch("http://localhost:8080/users/new", {
           method: "POST",
           headers: {
