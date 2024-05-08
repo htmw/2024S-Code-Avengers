@@ -24,6 +24,9 @@ function UserProfile() {
       setCollections(data);
     } catch (error) {
       console.error("Error fetching user collections:", error);
+      // Log additional error details
+      console.error("Error message:", error.message);
+      console.error("Error stack trace:", error.stack);
     }
   };
 

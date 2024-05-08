@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { auth } from "/src/firebase";
+import { auth, db } from "/src/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { collection, addDoc } from "firebase/firestore";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -36,6 +37,11 @@ function SignUp() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match.");
+      return;
+    }
+
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -45,34 +51,30 @@ function SignUp() {
       const user = userCredential.user;
       console.log("User registered successfully:", user);
 
-      if (user) {
-        const nameParts = name.split(" ");
-        const firstName = nameParts[0];
-        const lastName =
-          nameParts.length > 1 ? nameParts.slice(1).join(" ") : "";
+      const nameParts = name.split(" ");
+      const firstName = nameParts[0];
+      const lastName = nameParts.length > 1 ? nameParts.slice(1).join(" ") : "";
 
-        const paddedMonth = String(birthMonth).padStart(2, "0");
-        const paddedDate = String(birthDate).padStart(2, "0");
+      const paddedMonth = String(birthMonth).padStart(2, "0");
+      const paddedDate = String(birthDate).padStart(2, "0");
 
-        const dateOfBirth = `${birthYear}-${paddedMonth}-${paddedDate}`;
-        const response = await fetch("http://localhost:8080/users/new", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            firstName,
-            lastName,
-            email,
-            dateOfBirth,
-          }),
-        });
-        const userData = await response.json();
-        console.log("User data saved on backend:", userData);
+      const dateOfBirth = `${birthYear}-${paddedMonth}-${paddedDate}`;
 
-        toast.success("Sign up successful!");
-        navigate("/user");
-      }
+      const userData = {
+        userId: user.uid,
+        firstName,
+        lastName,
+        email,
+        dateOfBirth,
+        description,
+        genres,
+      };
+
+      await addDoc(collection(db, "users"), userData);
+      console.log("User data saved in Firestore:", userData);
+
+      toast.success("Sign up successful!");
+      navigate("/user");
     } catch (error) {
       console.error("Error registering user:", error);
       if (error.code === "auth/email-already-in-use") {
@@ -160,7 +162,7 @@ function SignUp() {
                 className="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="description"
                 rows="4"
-                placeholder="Description what type of book you want to read and like even favorite book."
+                placeholder="Describe what type of books you want to read and like, including your favorite books."
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               />
