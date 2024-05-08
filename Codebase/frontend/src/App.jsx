@@ -12,6 +12,7 @@ import GuestCheckout from "./components/GuestCheckout";
 import UserProfile from "./components/UserProfile";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import CollectionDetail from "./components/CollectionDetail";
 
 const stripePromise = loadStripe("your_stripe_public_key");
 
@@ -56,6 +57,7 @@ function App() {
                 }
               />
               <Route path="/userprofile" element={<UserProfile />} />
+              <Route path="/collections/:id" element={<CollectionDetail />} />
             </Routes>
           </main>
           <footer className="bg-black py-4">
