@@ -23,7 +23,7 @@ function CollectionDetail() {
     fetchCollection();
   }, [id]);
 
-  const handleDeleteBook = async (bookId) => {
+  const handleRemoveBook = async (bookId) => {
     try {
       const response = await fetch(`http://localhost:8080/collections/${id}/remove_book/${bookId}`, {
         method: 'PUT',
