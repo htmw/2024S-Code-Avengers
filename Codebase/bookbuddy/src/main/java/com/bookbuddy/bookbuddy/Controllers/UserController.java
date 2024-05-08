@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bookbuddy.bookbuddy.Entities.CreateUserDTO;
-import com.bookbuddy.bookbuddy.Entities.User;
 import com.bookbuddy.bookbuddy.Entities.UserDTO;
 import com.bookbuddy.bookbuddy.Repository.UserRepository;
 import com.bookbuddy.bookbuddy.ServiceClasses.UserService;
@@ -45,8 +44,8 @@ public class UserController {
 
     @GetMapping("/all")
     @Operation(summary="Admin route to list all users")
-    public ResponseEntity<List<User>> all(){
-        List<User> users = uRepository.findAll();
+    public ResponseEntity<List<UserDTO>> all(){
+        List<UserDTO> users = userService.getAllUsers();
         return ResponseEntity.ok(users);
     }
 

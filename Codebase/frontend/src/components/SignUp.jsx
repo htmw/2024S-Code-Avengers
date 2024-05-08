@@ -61,19 +61,24 @@ function SignUp() {
       const dateOfBirth = `${birthYear}-${paddedMonth}-${paddedDate}`;
 
       const userData = {
-        userId: user.uid,
         firstName,
         lastName,
         email,
         dateOfBirth,
         description,
-        genres,
+        genres: genres.join(", "),
       };
 
-      await addDoc(collection(db, "users"), userData);
-      console.log("User data saved in Firestore:", userData);
+      const response = await fetch("http://localhost:8080/users/new", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    });
+      console.log("User data saved in Backend:", userData);
 
-      const response = await fetch(
+      const llmresponse = await fetch(
         "https://api.openai.com/v1/chat/completions",
         {
           method: "POST",
@@ -101,7 +106,7 @@ function SignUp() {
         },
       );
 
-      const data = await response.json();
+      const data = await llmresponse.json();
       const recommendationsString = data.choices[0].message.content;
       console.log("Book recommendations:", recommendationsString);
 

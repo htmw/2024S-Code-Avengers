@@ -1,6 +1,8 @@
 package com.bookbuddy.bookbuddy.Entities;
 
 import java.time.LocalDate;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -30,6 +32,12 @@ public class UserDTO {
     @Schema(description = "Unique ID corresponding to a user's cart", example = "1")
     private Long cartId;
 
+    @Schema(description = "Description of the user", example = "I love reading!")
+    private String userDescription;
+
+    @Schema(description = "List of genres that the user is interested in")
+    private Set<GenreDTO> genres;
+
     public static UserDTO fromEntity(User user){
         UserDTO userDTO = new UserDTO();
         userDTO.setId(user.getId());
@@ -38,6 +46,16 @@ public class UserDTO {
         userDTO.setEmail(user.getEmail());
         userDTO.setDateOfBirth(user.getDateOfBirth());
         userDTO.setCartId(user.getCart().getCartId());
+        userDTO.setDescription(user.getUserDescription());
+                Set<GenreDTO> genreDTOs = user.getGenres().stream()
+            .map(genre -> {
+                GenreDTO genreDTO = new GenreDTO();
+                genreDTO.setId(genre.getId());
+                genreDTO.setName(genre.getName());
+                return genreDTO;
+            })
+            .collect(Collectors.toSet());
+        userDTO.setGenres(genreDTOs);
         return userDTO;
     }
 
@@ -87,5 +105,21 @@ public class UserDTO {
 
     public void setCartId(Long cartId) {
         this.cartId = cartId;
+    }
+
+    public String getUserDescription() {
+        return userDescription;
+    }
+
+    public void setDescription(String userDescription) {
+        this.userDescription = userDescription;
+    }
+
+    public Set<GenreDTO> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(Set<GenreDTO> genres) {
+        this.genres = genres;
     }
 }

@@ -6,8 +6,9 @@ const UserProvider = ({ children }) => {
 
   const fetchUserData = async (email) => {
     try {
+      console.log("email:", email);
       const response = await fetch(
-        `https://localhost:8080/users/email/${email}`,
+        `http://localhost:8080/users/email?email=${email}`,
       );
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -22,7 +23,7 @@ const UserProvider = ({ children }) => {
   const addToCart = async (book, quantity) => {
     if (user) {
       try {
-        const response = await fetch("https://localhost:8080/cart", {
+        const response = await fetch("http://localhost:8080/cart", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

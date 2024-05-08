@@ -2,6 +2,7 @@ package com.bookbuddy.bookbuddy.Entities;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -12,6 +13,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -52,6 +56,19 @@ public class User {
     @Schema(description = "Date of birth of the user", example = "1990-01-01")
     @Column(name="date_of_birth")
     private LocalDate dateOfBirth;
+
+    @Schema(description = "Description of the user", example = "I love reading!")
+    @Column(name="user_description")
+    private String userDescription;
+
+    @ManyToMany
+    @Schema(description = "List of favorite genres of the user", example = "[\"Fantasy\", \"Science Fiction\"]")
+    @JoinTable(
+        name = "user_genres",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "genre_id")
+    )
+    private Set<Genre> genres;
 
     @Schema(description = "List of book collections of the user")
     @JsonIgnore
@@ -164,5 +181,21 @@ public class User {
 
     public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getUserDescription() {
+        return userDescription;
+    }
+
+    public void setUserDescription(String userDescription) {
+        this.userDescription = userDescription;
+    }
+
+    public Set<Genre> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(Set<Genre> genres) {
+        this.genres = genres;
     }
 }

@@ -1,6 +1,9 @@
 package com.bookbuddy.bookbuddy.Entities;
 
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -22,6 +25,12 @@ public class CreateUserDTO {
 
     @Schema(description = "Date of birth of the user", example = "1990-01-01")
     private LocalDate dateOfBirth;
+
+    @Schema(description = "Description of the user", example = "I love reading!")
+    private String description;
+
+    @Schema(description = "Comma-separated list of genres the user is interested in", example = "Fiction, Mystery, Thriller")
+    private String genres;
 
     public String getFirstName() {
         return firstName;
@@ -53,5 +62,24 @@ public class CreateUserDTO {
 
     public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public List<String> getGenresList() {
+        return Arrays.stream(genres.split(","))
+                     .map(String::trim)
+                     .filter(g -> !g.isEmpty())
+                     .collect(Collectors.toList());
+    }
+
+    public void setGenres(String genres) {
+        this.genres = genres;
     }
 }

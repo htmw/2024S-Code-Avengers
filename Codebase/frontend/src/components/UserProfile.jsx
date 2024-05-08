@@ -5,26 +5,25 @@ import { auth } from "../firebase";
 import { signOut } from "firebase/auth";
 
 function UserProfile() {
-  const { userId } = useParams();
   const navigate = useNavigate();
   const { user, fetchUserData } = useContext(UserContext);
   const [collections, setCollections] = useState([]);
 
   useEffect(() => {
-    fetchUserData(userId);
-    fetchUserCollections();
-  }, [userId, fetchUserData]);
+    if (user) {
+      fetchUserCollections();
+    }
+  }, [user, fetchUserData]);
 
   const fetchUserCollections = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8080/collections/get/${userId}`,
+        `http://localhost:8080/collections/get/${user.id}`,
       );
       const data = await response.json();
       setCollections(data);
     } catch (error) {
       console.error("Error fetching user collections:", error);
-      // Log additional error details
       console.error("Error message:", error.message);
       console.error("Error stack trace:", error.stack);
     }
@@ -102,7 +101,7 @@ function UserProfile() {
         <p>No collections found.</p>
       )}
       <Link
-        to={`/collections/${userId}/new`}
+        to={`/collections/${user.id}/new`}
         className="mt-4 inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
       >
         Create New Collection
