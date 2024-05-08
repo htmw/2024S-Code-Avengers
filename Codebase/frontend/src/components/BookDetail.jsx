@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams, Link } from "react-router-dom";
 import { UserContext } from "./UserProvider";
+
 function BookDetail() {
   const { id } = useParams();
-  const { user } = useContext(UserContext);
+  const { user, addToCart } = useContext(UserContext);
   const [book, setBook] = useState(null);
   const [quantity, setQuantity] = useState(1);
 
@@ -17,8 +18,9 @@ function BookDetail() {
     fetchBookDetail();
   }, [id]);
 
-  const handleAddToCart = async () => {
-    if (user && user.isAuthenticated) {
+  const handleAddToCart = () => {
+    if (user) {
+      addToCart(book, quantity);
       console.log("Adding to cart:", book.title);
     }
   };
@@ -31,7 +33,10 @@ function BookDetail() {
     <div className="bg-white rounded-lg shadow-md overflow-hidden">
       <div className="relative">
         <img
-          src="https://demo.publishr.cloud/assets/common/images/edition_placeholder.png"
+          src={
+            book.image ||
+            "https://demo.publishr.cloud/assets/common/images/edition_placeholder.png"
+          }
           alt={book.title}
           className="w-full h-64 object-cover"
           style={{ objectFit: "contain" }}
@@ -43,10 +48,23 @@ function BookDetail() {
         </h3>
         <p className="text-gray-600">{book.author}</p>
         <br />
-        <p className="text-black-600">{book.description}</p>
+        <p className="text-gray-800">{book.description}</p>
         <br />
-        <p className="text-black-600">{book.price}</p>
-        {user && user.isAuthenticated ? (
+        <p className="text-gray-800">Price: ${book.price}</p>
+        <div className="mt-4">
+          <label htmlFor="quantity" className="block font-medium text-gray-700">
+            Quantity:
+          </label>
+          <input
+            type="number"
+            id="quantity"
+            min="1"
+            value={quantity}
+            onChange={(e) => setQuantity(parseInt(e.target.value))}
+            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          />
+        </div>
+        {user ? (
           <button
             className="bg-blue-500 text-white px-4 py-2 rounded-lg mt-4"
             onClick={handleAddToCart}

@@ -93,26 +93,27 @@ function SignUp() {
 
   const renderGenreOptions = () => {
     return genresOptions.map((genre) => (
-      <div key={genre} className="flex items-center">
-        <input
-          type="checkbox"
-          id={genre}
-          checked={genres.includes(genre)}
-          onChange={() => handleGenreChange(genre)}
-          className="mr-2"
-        />
-        <label htmlFor={genre}>{genre}</label>
-      </div>
+      <button
+        key={genre}
+        className={`px-4 py-2 rounded-md mr-2 mb-2 ${
+          genres.includes(genre)
+            ? "bg-orange-500 text-white"
+            : "bg-gray-200 text-gray-700"
+        }`}
+        onClick={() => handleGenreChange(genre)}
+      >
+        {genre}
+      </button>
     ));
   };
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md">
-        <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-          <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
+      <div className="w-full max-w-3xl">
+        <div className="bg-white shadow-md rounded px-12 pt-10 pb-12 mb-4">
+          <h2 className="text-3xl font-bold mb-8 text-center">Sign Up</h2>
           <form onSubmit={handleSubmit}>
-            <div className="mb-4">
+            <div className="mb-6">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
                 htmlFor="name"
@@ -120,7 +121,7 @@ function SignUp() {
                 Name
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="name"
                 type="text"
                 placeholder="Full Name"
@@ -130,7 +131,7 @@ function SignUp() {
               />
             </div>
 
-            <div className="mb-4">
+            <div className="mb-6">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
                 htmlFor="Email"
@@ -138,7 +139,7 @@ function SignUp() {
                 Email Address
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="Email"
                 type="email"
                 placeholder="Email Address"
@@ -148,7 +149,7 @@ function SignUp() {
               />
             </div>
 
-            <div className="mb-4">
+            <div className="mb-6">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
                 htmlFor="description"
@@ -156,28 +157,28 @@ function SignUp() {
                 Description
               </label>
               <textarea
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="description"
-                rows="3"
+                rows="4"
                 placeholder="Description what type of book you want to read and like even favorite book."
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               />
             </div>
 
-            <div className="mb-4">
+            <div className="mb-6">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
                 htmlFor="genres"
               >
                 Favorite Genres
               </label>
-              <div className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                {renderGenreOptions()}
+              <div className="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                <div className="flex flex-wrap">{renderGenreOptions()}</div>
               </div>
             </div>
 
-            <div className="mb-4">
+            <div className="mb-6">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
                 htmlFor="dateOfBirth"
@@ -196,11 +197,11 @@ function SignUp() {
                   setBirthDate(date.getDate());
                 }}
                 dateFormat="yyyy-MM-dd"
-                className="w-full rounded-md border border-gray-300 px-4 py-2 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full rounded-md border border-gray-300 px-4 py-3 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500"
               />
             </div>
 
-            <div className="mb-4">
+            <div className="mb-6">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
                 htmlFor="password"
@@ -208,7 +209,7 @@ function SignUp() {
                 Password
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="password"
                 type="password"
                 placeholder="Password"
@@ -218,7 +219,7 @@ function SignUp() {
               />
             </div>
 
-            <div className="mb-6">
+            <div className="mb-8">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
                 htmlFor="confirmPassword"
@@ -226,7 +227,7 @@ function SignUp() {
                 Confirm Password
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="confirmPassword"
                 type="password"
                 placeholder="Confirm Password"
@@ -238,24 +239,24 @@ function SignUp() {
 
             <div className="flex items-center justify-between">
               <button
-                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-lg focus:outline-none focus:shadow-outline"
                 type="submit"
               >
                 Sign Up
               </button>
             </div>
           </form>
-          <p className="text-center text-gray-500 text-sm mt-4">
+          <p className="text-center text-gray-600 text-base mt-6">
             Already have an account?{" "}
             <Link
               to="/signin"
-              className="text-blue-500 hover:text-blue-600 font-bold"
+              className="text-orange-500 hover:text-orange-600 font-bold"
             >
               Sign In
             </Link>
           </p>
         </div>
-        <p className="text-center text-gray-500 text-xs">
+        <p className="text-center text-gray-500 text-sm">
           &copy; 2024 Book Buddy. All rights reserved.
         </p>
       </div>

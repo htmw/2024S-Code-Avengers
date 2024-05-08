@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "/src/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { UserContext } from "./UserContext";
+import UserContext from "./UserContext";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -42,6 +42,7 @@ function SignIn() {
       <div className="w-full max-w-md">
         <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
           <h2 className="text-2xl font-bold mb-6 text-center">Sign In</h2>
+
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label

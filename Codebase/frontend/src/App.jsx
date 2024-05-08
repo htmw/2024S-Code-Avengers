@@ -5,7 +5,7 @@ import BookGrid from "./components/BookGrid";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
 import BookDetail from "./components/BookDetail";
-import { UserProvider } from "./components/UserProvider";
+import UserProvider from "./components/UserProvider";
 import GuestCheckout from "./components/GuestCheckout";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
