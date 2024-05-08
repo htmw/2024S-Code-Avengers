@@ -79,12 +79,6 @@ function UserProfile() {
       <div className="bg-gray-900 text-white rounded-lg shadow-lg p-8">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold">User Profile</h1>
-          <button
-            className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded transition duration-300 ease-in-out"
-            onClick={handleLogout}
-          >
-            Logout
-          </button>
         </div>
         <div className="mb-8">
           <p>
