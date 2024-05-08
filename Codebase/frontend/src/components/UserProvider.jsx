@@ -33,11 +33,9 @@ const UserProvider = ({ children }) => {
             quantity: quantity,
           }),
         });
-
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-
         const data = await response.json();
         console.log("Book added to cart:", data);
       } catch (error) {
@@ -53,4 +51,5 @@ const UserProvider = ({ children }) => {
   );
 };
 
+export { UserContext };
 export default UserProvider;

@@ -14,7 +14,6 @@ function BookDetail() {
       const data = await response.json();
       setBook(data);
     };
-
     fetchBookDetail();
   }, [id]);
 
