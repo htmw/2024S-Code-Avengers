@@ -34,7 +34,7 @@ public class CartController {
 		@Parameter(description="Unique ID corresponding to a Book", example="001") @PathVariable long bookId,
 		@Parameter(description="Quantity of the book the user wants to add to the cart", example="001") @RequestParam int quantity) 
 	{
-		CartDTO updatedCart = cartService.addItemToCart(cartId, bookId, quantity);
+		CartDTO updatedCart = cartService.addItemToCart(cartId, bookId);
 		return ResponseEntity.ok(updatedCart);
 	}
 
@@ -47,17 +47,6 @@ public class CartController {
 		CartDTO updatedCart = cartService.removeItemFromCart(cartId, cartItemId);
 		return ResponseEntity.ok(updatedCart);
 	}
-
-	@PutMapping("/change_quantity/{cartId}/{cartItemId}")
-    @Operation(summary="Change the quantity of an item in the cart")
-    public ResponseEntity<CartDTO> changeCartItemQuantity(
-		@Parameter(description="Unique ID corresponding to a Cart", example="1") @PathVariable Long cartId,
-		@Parameter(description="Unique ID corresponding to a CartItem", example="1") @PathVariable Long cartItemId,
-		@Parameter(description="Quantity of the book user wants to add to cart", example="1") @RequestParam int newQuantity)
-	{
-        CartDTO updatedCart = cartService.updateCartItemQuantity(cartId, cartItemId, newQuantity);
-        return ResponseEntity.ok(updatedCart);
-    }
 	 
 	@GetMapping("get/{userId}")
 	@Operation(summary="Get a cart by ID")

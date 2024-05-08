@@ -57,7 +57,7 @@ public class OrderService {
         BigDecimal totalPrice = BigDecimal.ZERO;
         List<OrderItem> items = new ArrayList<>();
         for(CartItem item : cart.getCartItems()){
-            OrderItem newItem = new OrderItem(newOrder, item.getBook(), item.getQuantity(), item.getItemPrice());
+            OrderItem newItem = new OrderItem(newOrder, item.getBook(), item.getItemPrice());
             items.add(newItem);
             totalPrice = totalPrice.add(newItem.getItemPrice());
         }

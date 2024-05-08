@@ -32,11 +32,11 @@ public class CartService {
 	UserRepository userRepository;
 
 
-    public CartDTO addItemToCart(Long cartId, Long bookId, int quantity) {
+    public CartDTO addItemToCart(Long cartId, Long bookId) {
         Book bookToAdd = bookRepository.findById(bookId).orElseThrow(() -> new BookNotFoundException(bookId));
         Cart userCart = cartRepository.findById(cartId).orElseThrow(() -> new CartNotFoundException(cartId));
 
-        CartItem itemToAdd = new CartItem(userCart, bookToAdd, quantity, bookToAdd.getPrice());
+        CartItem itemToAdd = new CartItem(userCart, bookToAdd, bookToAdd.getPrice());
         userCart.getCartItems().add(itemToAdd);
         userCart.setTotalPrice(calculateTotalPrice(userCart));
         cartItemRepository.save(itemToAdd);
@@ -56,24 +56,7 @@ public class CartService {
 		BigDecimal totalPrice = calculateTotalPrice(cartToUpdate);
 		cartToUpdate.setTotalPrice(totalPrice);
 
-		cartRepository.save(cartToUpdate);
-		return CartDTO.fromEntity(cartToUpdate);
-	}
-
-	public CartDTO updateCartItemQuantity(Long cartId, Long cartItemId, int newQuantity) {
-		Cart cartToUpdate = cartRepository.findById(cartId).orElseThrow(() -> new CartNotFoundException(cartId));
-
-		CartItem itemToUpdate = cartToUpdate.getCartItems().stream()
-		.filter(item -> item.getCartItemId().equals(cartItemId))
-		.findFirst()
-		.orElseThrow(() -> new CartItemNotFoundException(cartItemId));
-
-		itemToUpdate.setQuantity(newQuantity);
-		BigDecimal totalItemPrice = calculateTotalPrice(cartToUpdate);
-		cartToUpdate.setTotalPrice(totalItemPrice);
-
-		cartRepository.save(cartToUpdate);
-
+		cartToUpdate = cartRepository.save(cartToUpdate);
 		return CartDTO.fromEntity(cartToUpdate);
 	}
 
@@ -81,8 +64,7 @@ public class CartService {
 		BigDecimal totalPrice = BigDecimal.ZERO;
 
 		for(CartItem item : cart.getCartItems()){
-			BigDecimal itemPrice = item.getBook().getPrice().multiply(BigDecimal.valueOf((double)item.getQuantity()));
-			totalPrice = totalPrice.add(itemPrice);
+			totalPrice = totalPrice.add(item.getItemPrice());
 		}
 		return totalPrice;
 	}

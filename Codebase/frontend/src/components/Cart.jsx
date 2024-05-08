@@ -1,66 +1,61 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from 'react';
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { UserContext } from "./UserContext";
 
 const Cart = () => {
-  const [cart, setCart] = useState({
-    id: "",
-    userId: "",
-    items: [],
-    totalPrice: 0,
-  });
-  const { user } = useContext(UserContext);
+  const [cart, setCart] = useState(null);
+  const { user, fetchUserData } = useContext(UserContext);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetchCart();
-  }, []);
-
-  const fetchCart = async () => {
-    try {
-      const response = await fetch(`http://localhost:8080/cart/get/${user.id}`);
-      if (response.ok) {
+    const fetchCart = async () => {
+      try {
+        const response = await fetch(`http://localhost:8080/cart/get/${user.id}`);
         const data = await response.json();
         setCart(data);
-      } else {
-        console.error("Error fetching cart:", response.statusText);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching cart:', error);
+        setLoading(false);
       }
+    };
+
+    fetchCart();
+  }, [user.id]);
+
+  const removeItemFromCart = async (cartId, cartItemId) => {
+    try {
+      const response = await fetch(`http://localhost:8080/cart/remove-item/${cartId}/${cartItemId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      if (!response.ok) {
+        throw new Error('Failed to remove item from cart');
+      }
+      const data = await response.json();
+      setCart(data);
     } catch (error) {
-      console.error("Error fetching cart:", error);
+      console.error('Error removing item from cart:', error);
     }
   };
 
-  const handleRemoveFromCart = async (cartId, cartItemId) => {
-    try {
-      const response = await fetch(
-        `http://localhost:8080/cart/remove-item/${cartId}/${cartItemId}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        },
-      );
-      if (response.ok) {
-        fetchCart();
-      } else {
-        console.error("Error removing item from cart:", response.statusText);
-      }
-    } catch (error) {
-      console.error("Error removing item from cart:", error);
-    }
-  };
+  if (loading) return <p>Loading...</p>;
+  if (!cart) return <p>Cart not found</p>;
 
   return (
-    <div className="cart-page">
-      <h1>Your Cart</h1>
-      {cart.map((item) => (
-        <div key={item.id}>
-          <p>{item.name}</p>
-          <p>Quantity: {item.quantity}</p>
-          <button onClick={() => handleRemoveFromCart(cart.id, item.id)}>
-            Remove from cart
-          </button>
-        </div>
-      ))}
+    <div>
+      <h2>Cart</h2>
+      <ul>
+        {cart.items.map(item => (
+          <li key={item.id}>
+            {item.book.title}
+            <button onClick={() => removeItemFromCart(cart.cartId, item.cartItemId)}>Remove</button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

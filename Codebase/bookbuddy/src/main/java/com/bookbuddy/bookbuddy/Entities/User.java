@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.CascadeType;
@@ -62,6 +63,7 @@ public class User {
     private String userDescription;
 
     @ManyToMany
+    @JsonIgnoreProperties("users")
     @Schema(description = "List of favorite genres of the user", example = "[\"Fantasy\", \"Science Fiction\"]")
     @JoinTable(
         name = "user_genres",

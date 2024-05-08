@@ -13,6 +13,7 @@ import UserProfile from "./components/UserProfile";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CollectionDetail from "./components/CollectionDetail";
+import Cart from "./components/Cart";
 
 const stripePromise = loadStripe("your_stripe_public_key");
 
@@ -58,6 +59,7 @@ function App() {
               />
               <Route path="/userprofile" element={<UserProfile />} />
               <Route path="/collections/:id" element={<CollectionDetail />} />
+              <Route path="/cart/:userId" element={<Cart />} />
             </Routes>
           </main>
           <footer className="bg-black py-4">

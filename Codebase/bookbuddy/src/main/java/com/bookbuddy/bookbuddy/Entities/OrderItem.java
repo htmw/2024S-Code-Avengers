@@ -17,10 +17,9 @@ import jakarta.persistence.Table;
 @Table(name = "order_items")
 public class OrderItem {
 
-	public OrderItem(Order order, Book book, int quantity, BigDecimal itemPrice){
+	public OrderItem(Order order, Book book, BigDecimal itemPrice){
 		this.order = order;
 		this.book = book;
-		this.quantity = quantity;
 		this.itemPrice = itemPrice;
 	}
 
@@ -39,10 +38,6 @@ public class OrderItem {
 	@Schema(description = "id of the book",example = "00089")
 	@JoinColumn(name = "book_id")
 	private Book book;
-
-	@Schema(description = "quantity of items in the order",example = "4")
-	@Column(name = "quantity")
-	private int quantity;
 	
 	@Schema(description = "price of the item",example = "$5.99")
 	@Column(name = "itemPrice")
@@ -62,14 +57,6 @@ public class OrderItem {
 
 	public void setBook(Book book) {
 		this.book = book;
-	}
-
-	public int getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
 	}
 
 	public BigDecimal getItemPrice() {
