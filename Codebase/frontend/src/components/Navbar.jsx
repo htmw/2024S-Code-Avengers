@@ -1,7 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { auth } from "../firebase";
+import { signOut } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 function Navbar({ isAuthenticated }) {
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      navigate("/signin");
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
+  };
+
   return (
     <nav className="bg-black shadow">
       <div className="container mx-auto px-4">
@@ -17,12 +31,20 @@ function Navbar({ isAuthenticated }) {
           </div>
           <div className="flex items-center">
             {isAuthenticated ? (
-              <Link
-                to="/UserProfile"
-                className="text-white hover:text-gray-200 font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out"
-              >
-                Profile
-              </Link>
+              <>
+                <Link
+                  to="/UserProfile"
+                  className="text-white hover:text-gray-200 font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out"
+                >
+                  Profile
+                </Link>
+                <button
+                  className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md ml-4 transition duration-300 ease-in-out"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>
+              </>
             ) : (
               <>
                 <Link

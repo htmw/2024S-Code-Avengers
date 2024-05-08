@@ -9,6 +9,7 @@ import SignUp from "./components/SignUp";
 import BookDetail from "./components/BookDetail";
 import UserProvider from "./components/UserProvider";
 import GuestCheckout from "./components/GuestCheckout";
+import UserProfile from "./components/UserProfile";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 
@@ -54,6 +55,7 @@ function App() {
                   </Elements>
                 }
               />
+              <Route path="/userprofile" element={<UserProfile />} />
             </Routes>
           </main>
           <footer className="bg-black py-4">
