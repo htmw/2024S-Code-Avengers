@@ -1,26 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
+import { UserContext } from "./UserContext";
 
-function ProfileScreen() {
+function UserProfile() {
   const { userId } = useParams();
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
+  const { user, fetchUserData } = useContext(UserContext);
   const [collections, setCollections] = useState([]);
 
   useEffect(() => {
-    fetchUserProfile();
+    fetchUserData(userId);
     fetchUserCollections();
-  }, [userId]);
-
-  const fetchUserProfile = async () => {
-    try {
-      const response = await fetch(`http://localhost:8080/users/${userId}`);
-      const data = await response.json();
-      setUser(data);
-    } catch (error) {
-      console.error("Error fetching user profile:", error);
-    }
-  };
+  }, [userId, fetchUserData]);
 
   const fetchUserCollections = async () => {
     try {
@@ -69,16 +60,13 @@ function ProfileScreen() {
       </div>
       <div className="mb-8">
         <p>
-          <strong>Name:</strong> {user.name}
+          <strong>Name:</strong> {user.firstName} {user.lastName}
         </p>
         <p>
           <strong>Email:</strong> {user.email}
         </p>
         <p>
-          <strong>Description:</strong> {user.description}
-        </p>
-        <p>
-          <strong>Favorite Genres:</strong> {user.favoriteGenres.join(", ")}
+          <strong>Date of Birth:</strong> {user.dateOfBirth}
         </p>
       </div>
       <h2 className="text-2xl font-bold mb-4">Book Collections</h2>
@@ -114,4 +102,4 @@ function ProfileScreen() {
   );
 }
 
-export default ProfileScreen;
+export default UserProfile;
