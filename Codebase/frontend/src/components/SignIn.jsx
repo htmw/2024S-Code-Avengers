@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { auth } from "/src/firebase";
+import { auth } from "../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import UserContext from "./UserContext";
 import { ToastContainer, toast } from "react-toastify";
@@ -25,7 +25,7 @@ function SignIn() {
 
       await fetchUserData(email);
       toast.success("Sign in successful!");
-      navigate("/UserProfile");
+      navigate("/");
     } catch (error) {
       console.error("Error logging in user:", error);
       if (
