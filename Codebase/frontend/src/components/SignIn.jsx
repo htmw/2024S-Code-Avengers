@@ -14,6 +14,7 @@ function SignIn() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       const userCredential = await signInWithEmailAndPassword(
         auth,
@@ -21,6 +22,7 @@ function SignIn() {
         password,
       );
       console.log("User logged in successfully");
+
       await fetchUserData(email);
       toast.success("Sign in successful!");
       navigate("/UserProfile");
@@ -38,22 +40,20 @@ function SignIn() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-900">
+    <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md">
-        <div className="bg-gray-800 shadow-md rounded px-8 pt-6 pb-8 mb-4">
-          <h2 className="text-2xl font-bold mb-6 text-center text-white">
-            Sign In
-          </h2>
+        <div className="bg-white shadow-md rounded px-12 pt-10 pb-12 mb-4">
+          <h2 className="text-3xl font-bold mb-8 text-center">Sign In</h2>
           <form onSubmit={handleSubmit}>
-            <div className="mb-4">
+            <div className="mb-6">
               <label
-                className="block text-white text-sm font-bold mb-2"
+                className="block text-gray-700 text-sm font-bold mb-2"
                 htmlFor="email"
               >
                 Email
               </label>
               <input
-                className="w-full px-3 py-2 text-white bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:border-orange-500"
+                className="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 type="email"
                 id="email"
                 value={email}
@@ -61,15 +61,16 @@ function SignIn() {
                 required
               />
             </div>
-            <div className="mb-6">
+
+            <div className="mb-8">
               <label
-                className="block text-white text-sm font-bold mb-2"
+                className="block text-gray-700 text-sm font-bold mb-2"
                 htmlFor="password"
               >
                 Password
               </label>
               <input
-                className="w-full px-3 py-2 text-white bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:border-orange-500"
+                className="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 type="password"
                 id="password"
                 value={password}
@@ -77,9 +78,10 @@ function SignIn() {
                 required
               />
             </div>
+
             <div className="flex items-center justify-between">
               <button
-                className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-lg focus:outline-none focus:shadow-outline"
                 type="submit"
               >
                 Sign In
@@ -92,7 +94,7 @@ function SignIn() {
               </Link>
             </div>
           </form>
-          <p className="text-center text-gray-400 text-sm mt-4">
+          <p className="text-center text-gray-600 text-base mt-6">
             Don't have an account?{" "}
             <Link
               to="/signup"
@@ -102,7 +104,7 @@ function SignIn() {
             </Link>
           </p>
         </div>
-        <p className="text-center text-gray-400 text-xs">
+        <p className="text-center text-gray-500 text-sm">
           &copy; 2024 Book Buddy. All rights reserved.
         </p>
       </div>
