@@ -46,18 +46,24 @@ const Cart = () => {
   if (!cart) return <p>Cart not found</p>;
 
   return (
-    <div>
-      <h2>Cart</h2>
+    <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      <h2 className="text-2xl font-bold mb-4">Cart</h2>
       <ul>
         {cart.items.map(item => (
-          <li key={item.id}>
-            {item.book.title}
-            <button onClick={() => removeItemFromCart(cart.cartId, item.cartItemId)}>Remove</button>
+          <li key={item.id} className="flex items-center justify-between border-b-2 border-gray-200 py-2">
+            <span className="text-lg">{item.book.title}</span>
+            <button
+              onClick={() => removeItemFromCart(cart.cartId, item.cartItemId)}
+              className="text-sm text-red-500 hover:text-red-700"
+            >
+              Remove
+            </button>
           </li>
         ))}
       </ul>
     </div>
   );
+  
 };
 
 export default Cart;

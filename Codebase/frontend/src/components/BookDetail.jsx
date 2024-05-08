@@ -104,10 +104,17 @@ function BookDetail() {
     fetchBookDetail();
   }, [id]);
 
-  const handleAddToCart = () => {
-    if (user) {
-      addToCart(book, quantity);
-      console.log("Adding to cart:", book.title);
+  const handleAddToCart = async () => {
+    try {
+      const response = await fetch(`http://localhost:8080/cart/add-item/${user.cartId}/${id}`, {
+        method: 'POST',
+      });
+      if (!response.ok) {
+        throw new Error('Failed to add item to cart');
+      }
+      const data = await response.json();
+    } catch (error) {
+      console.error('Error adding item to cart:', error);
     }
   };
 

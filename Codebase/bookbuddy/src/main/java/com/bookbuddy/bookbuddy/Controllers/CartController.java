@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bookbuddy.bookbuddy.Entities.CartDTO;
@@ -31,8 +30,7 @@ public class CartController {
 	@Operation(summary="Add an item to a cart")
 	public ResponseEntity<CartDTO> addItemToCart(
 		@Parameter(description="Unique ID corresponding to a Cart", example="001") @PathVariable Long cartId,
-		@Parameter(description="Unique ID corresponding to a Book", example="001") @PathVariable long bookId,
-		@Parameter(description="Quantity of the book the user wants to add to the cart", example="001") @RequestParam int quantity) 
+		@Parameter(description="Unique ID corresponding to a Book", example="001") @PathVariable long bookId)
 	{
 		CartDTO updatedCart = cartService.addItemToCart(cartId, bookId);
 		return ResponseEntity.ok(updatedCart);
