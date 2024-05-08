@@ -4,6 +4,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { auth } from "/src/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function SignUp() {
   const [name, setName] = useState("");
@@ -68,10 +70,16 @@ function SignUp() {
         const userData = await response.json();
         console.log("User data saved on backend:", userData);
 
+        toast.success("Sign up successful!");
         navigate("/user");
       }
     } catch (error) {
       console.error("Error registering user:", error);
+      if (error.code === "auth/email-already-in-use") {
+        toast.error("An account with this email already exists.");
+      } else {
+        toast.error("An error occurred during sign up. Please try again.");
+      }
     }
   };
 
@@ -251,6 +259,7 @@ function SignUp() {
           &copy; 2024 Book Buddy. All rights reserved.
         </p>
       </div>
+      <ToastContainer />
     </div>
   );
 }
