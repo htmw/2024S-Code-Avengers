@@ -1,5 +1,5 @@
-import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { auth } from "/src/firebase";
@@ -15,6 +15,8 @@ function SignUp() {
   const [birthYear, setBirthYear] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  const navigate = useNavigate();
 
   const genresOptions = [
     "Fiction",
@@ -65,6 +67,8 @@ function SignUp() {
         });
         const userData = await response.json();
         console.log("User data saved on backend:", userData);
+
+        navigate("/user");
       }
     } catch (error) {
       console.error("Error registering user:", error);
