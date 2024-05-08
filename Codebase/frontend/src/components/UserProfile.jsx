@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { UserContext } from "./UserContext";
+import { auth } from "../firebase";
+import { signOut } from "firebase/auth";
 
 function UserProfile() {
   const { userId } = useParams();
@@ -38,9 +40,13 @@ function UserProfile() {
     }
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/login");
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      navigate("/signin");
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
   };
 
   if (!user) {
@@ -52,7 +58,7 @@ function UserProfile() {
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold">User Profile</h1>
         <button
-          className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+          className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded"
           onClick={handleLogout}
         >
           Logout

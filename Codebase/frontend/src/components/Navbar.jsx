@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function Navbar() {
+function Navbar({ isAuthenticated }) {
   return (
     <nav className="bg-black shadow">
       <div className="container mx-auto px-4">
@@ -16,18 +16,29 @@ function Navbar() {
             </Link>
           </div>
           <div className="flex items-center">
-            <Link
-              to="/signin"
-              className="text-white hover:text-gray-200 font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out"
-            >
-              Sign In
-            </Link>
-            <Link
-              to="/signup"
-              className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md ml-4 transition duration-300 ease-in-out"
-            >
-              Sign Up
-            </Link>
+            {isAuthenticated ? (
+              <Link
+                to="/UserProfile"
+                className="text-white hover:text-gray-200 font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out"
+              >
+                Profile
+              </Link>
+            ) : (
+              <>
+                <Link
+                  to="/signin"
+                  className="text-white hover:text-gray-200 font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out"
+                >
+                  Sign In
+                </Link>
+                <Link
+                  to="/signup"
+                  className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md ml-4 transition duration-300 ease-in-out"
+                >
+                  Sign Up
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </div>

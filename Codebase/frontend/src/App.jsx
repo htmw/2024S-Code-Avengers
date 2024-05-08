@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { auth } from "./firebase";
+import { onAuthStateChanged } from "firebase/auth";
 import Navbar from "./components/Navbar";
 import BookGrid from "./components/BookGrid";
 import SignIn from "./components/SignIn";
@@ -13,11 +15,21 @@ import { loadStripe } from "@stripe/stripe-js";
 const stripePromise = loadStripe("your_stripe_public_key");
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setIsAuthenticated(user !== null);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   return (
     <UserProvider>
       <Router>
         <div className="min-h-screen bg-gray-100">
-          <Navbar />
+          <Navbar isAuthenticated={isAuthenticated} />
           <main className="container mx-auto px-4 py-8">
             <Routes>
               <Route
