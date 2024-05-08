@@ -1,3 +1,12 @@
 .vscode/
 **/.DS_Store
 node_modules/
+Codebase/Machine learning/api/api/bin/activate.fish
+Codebase/Machine learning/api/api/bin/Activate.ps1
+Codebase/Machine learning/api/api/bin/pip
+Codebase/Machine learning/api/api/bin/pip3
+Codebase/Machine learning/api/api/bin/pip3.12
+Codebase/Machine learning/api/api/bin/python
+Codebase/Machine learning/api/api/bin/python3
+Codebase/Machine learning/api/api/bin/python3.12
+Codebase/Machine learning/api/api/pyvenv.cfg
