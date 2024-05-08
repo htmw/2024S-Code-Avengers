@@ -51,15 +51,20 @@ public class BookCollectionService {
         return BookCollectionDTO.fromEntity(bookCollection);
     }
 
-    public BookCollectionDTO addBook(Long collectionId, Long bookId){
-        BookCollection bookCollection = bookCollectionRepository.findById(collectionId).orElseThrow(() -> new CollectionNotFoundException(collectionId));
+    public BookCollectionDTO addBook(Long userId, String collectionName, Long bookId){
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
+        
+        BookCollection bookCollection = bookCollectionRepository.findByUserAndCollectionName(user, collectionName);
+    
         Book bookToAdd = bookRepository.findById(bookId).orElseThrow(() -> new BookNotFoundException(bookId));
+    
 
         bookCollection.addBook(bookToAdd);
         bookCollectionRepository.save(bookCollection);
-
+    
         return BookCollectionDTO.fromEntity(bookCollection);
     }
+    
 
     public BookCollectionDTO removeBook(Long collectionId, Long bookId){
         BookCollection bookCollection = bookCollectionRepository.findById(collectionId).orElseThrow(() -> new CollectionNotFoundException(collectionId));
@@ -86,5 +91,4 @@ public class BookCollectionService {
         return collectionDTOs;
     }
 
-    
 }

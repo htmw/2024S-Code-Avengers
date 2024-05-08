@@ -144,18 +144,18 @@ function UserProfile() {
     }
   };
 
-  // const handleDeleteCollection = async (collectionId) => {
-  //   try {
-  //     await fetch(`http://localhost:8080/collections/${collectionId}`, {
-  //       method: "DELETE",
-  //     });
-  //     setCollections(
-  //       collections.filter((collection) => collection.id !== collectionId),
-  //     );
-  //   } catch (error) {
-  //     console.error("Error deleting collection:", error);
-  //   }
-  // };
+  const handleDeleteCollection = async (collectionId) => {
+    try {
+      await fetch(`http://localhost:8080/collections/${collectionId}`, {
+        method: "DELETE",
+      });
+      setCollections(
+        collections.filter((collection) => collection.id !== collectionId),
+      );
+    } catch (error) {
+      console.error("Error deleting collection:", error);
+    }
+  };
 
   const handleLogout = async () => {
     try {
@@ -223,6 +223,12 @@ function UserProfile() {
               <Link to={`/collections/${collection.id}`}>
                 {collection.collectionName}
               </Link>
+              <button
+                onClick={() => handleDeleteCollection(collection.id)}
+                className="ml-2 p-2 bg-red-500 hover:bg-red-600 text-white font-bold rounded"
+              >
+                Delete
+              </button>
             </li>
           ))}
         </ul>

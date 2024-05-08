@@ -90,15 +90,24 @@ public class BookCollectionController {
             return ResponseEntity.ok(collection);
     }
 
-    @PutMapping("{collectionId}/add_book/{bookId}")
+    @PutMapping("{userId}/{collectionName}/add_book/{bookId}")
     @Operation(summary="Add a book to a collection")
     public ResponseEntity<BookCollectionDTO> addBook(
-        @Parameter(description="Unique ID corresponding to a collection", example="1") @PathVariable Long collectionId, 
+        @Parameter(description="Unique ID corresponding to a user", example="1") @PathVariable Long userId,
+        @Parameter(description="Name of the collection") @PathVariable String collectionName, 
         @Parameter(description="Unique ID corresponding to a book", example="1") @PathVariable Long bookId)
     {
-        BookCollectionDTO collection = bCService.addBook(collectionId, bookId);
+    try {
+        BookCollectionDTO collection = bCService.addBook(userId, collectionName, bookId);
+        if (collection == null) {
+            return ResponseEntity.notFound().build();
+        }
         return ResponseEntity.ok(collection);
+    } catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
+}
+
 
     @PutMapping("{collectionId}/remove_book/{bookId}")
     @Operation(summary="Remove a book from a collection")
@@ -109,12 +118,6 @@ public class BookCollectionController {
         BookCollectionDTO collection = bCService.removeBook(collectionId, bookId);
         return ResponseEntity.ok(collection);
     }
-
-    // @PostMapping("store-rec/{userId}")
-    // public ResponseEntity<?> storeRec(@PathVariable Long userId, @RequestBody List<RecommendedBookDTO> recommendedBooks) {
-    //     bCService.storeRecommendations(userId, recommendedBooks);
-    //     return ResponseEntity.ok("Success");
-    // }
     
     
 
