@@ -1,15 +1,17 @@
 import React, { useState } from "react";
-import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import { useLocation } from "react-router-dom";
 
 function GuestCheckout() {
+  const location = useLocation();
+  const { book } = location.state;
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     address: "",
+    cardNumber: "",
+    cardExpiry: "",
+    cardCVV: "",
   });
-
-  const stripe = useStripe();
-  const elements = useElements();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,16 +20,18 @@ function GuestCheckout() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const cardElement = elements.getElement(CardElement);
-
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
-      type: "card",
-      card: cardElement,
-    });
-
-    if (!error) {
-      // backend integration here
+    try {
+      const response = await fetch("/api/checkout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await response.json();
+      setPrice(data.price);
+    } catch (error) {
+      console.error("Error:", error);
     }
   };
 
@@ -36,12 +40,11 @@ function GuestCheckout() {
       <h2 className="text-2xl font-semibold text-gray-800 mb-4">
         Guest Checkout
       </h2>
+      <p className="mb-4">Book: {book.title}</p>
+      <p className="mb-4">Price: ${book.price}</p>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
-          <label
-            htmlFor="name"
-            className="block text-gray-700 font-semibold mb-2"
-          >
+          <label htmlFor="name" className="block text-gray-700 font-semibold mb-2">
             Name
           </label>
           <input
@@ -55,10 +58,7 @@ function GuestCheckout() {
           />
         </div>
         <div className="mb-4">
-          <label
-            htmlFor="email"
-            className="block text-gray-700 font-semibold mb-2"
-          >
+          <label htmlFor="email" className="block text-gray-700 font-semibold mb-2">
             Email
           </label>
           <input
@@ -71,10 +71,7 @@ function GuestCheckout() {
           />
         </div>
         <div className="mb-4">
-          <label
-            htmlFor="address"
-            className="block text-gray-700 font-semibold mb-2"
-          >
+          <label htmlFor="address" className="block text-gray-700 font-semibold mb-2">
             Address
           </label>
           <textarea
@@ -87,27 +84,57 @@ function GuestCheckout() {
           />
         </div>
         <div className="mb-4">
-          <label
-            htmlFor="card-details"
-            className="block text-gray-700 font-semibold mb-2"
-          >
-            Card Details
+          <label htmlFor="cardNumber" className="block text-gray-700 font-semibold mb-2">
+            Card Number
           </label>
-          <div
-            id="card-details"
-            className="border border-gray-300 rounded-md p-3"
-          >
-            <CardElement />
-          </div>
+          <input
+            type="text"
+            id="cardNumber"
+            name="cardNumber"
+            value={formData.cardNumber}
+            onChange={handleChange}
+            required
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+        <div className="mb-4">
+          <label htmlFor="cardExpiry" className="block text-gray-700 font-semibold mb-2">
+            Expiration Date
+          </label>
+          <input
+            type="text"
+            id="cardExpiry"
+            name="cardExpiry"
+            value={formData.cardExpiry}
+            onChange={handleChange}
+            required
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+        <div className="mb-4">
+          <label htmlFor="cardCVV" className="block text-gray-700 font-semibold mb-2">
+            CVV
+          </label>
+          <input
+            type="text"
+            id="cardCVV"
+            name="cardCVV"
+            value={formData.cardCVV}
+            onChange={handleChange}
+            required
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
         </div>
         <button
           type="submit"
-          disabled={!stripe}
           className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           Complete Purchase
         </button>
       </form>
+      {price > 0 && (
+        <p className="mt-4 text-lg font-semibold">Price: ${price.toFixed(2)}</p>
+      )}
     </div>
   );
 }

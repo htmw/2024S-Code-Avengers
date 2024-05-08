@@ -20,6 +20,19 @@ const UserProvider = ({ children }) => {
     }
   };
 
+  const handleSignUpSuccess = async (newUserData) => {
+    try {
+      const response = await fetch(`http://localhost:8080/users/email?email=${newUserData.email}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const userData = await response.json();
+      setUser(userData);
+    } catch (error) {
+      console.error("Failed to fetch user data after sign-up:", error);
+    }
+  };
+
   const addToCart = async (book, quantity) => {
     if (user) {
       try {
@@ -46,7 +59,7 @@ const UserProvider = ({ children }) => {
   };
 
   return (
-    <UserContext.Provider value={{ user, fetchUserData, addToCart }}>
+    <UserContext.Provider value={{ user, fetchUserData, addToCart, handleSignUpSuccess }}>
       {children}
     </UserContext.Provider>
   );

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { UserContext } from "./UserProvider";
 
 function BookDetail() {
@@ -9,6 +9,7 @@ function BookDetail() {
   const [quantity, setQuantity] = useState(1);
   const [collectionName, setCollectionName] = useState("");
   const [recommendedBooks, setRecommendedBooks] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchBookDetail = async () => {
@@ -127,11 +128,12 @@ function BookDetail() {
             </button>
           </>
         ) : (
-          <Link to="/guestcheckout">
-            <button className="bg-blue-500 text-white px-4 py-2 rounded-lg mt-4">
-              Proceed to Guest Checkout
-            </button>
-          </Link>
+          <button
+            className="bg-blue-500 text-white px-4 py-2 rounded-lg mt-4"
+            onClick={() => navigate("/guestcheckout", { state: { book } })}
+          >
+            Proceed to Guest Checkout
+          </button>
         )}
       </div>
 

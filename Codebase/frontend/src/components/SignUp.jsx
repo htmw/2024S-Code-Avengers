@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { auth, db } from "/src/firebase";
+import { auth } from "/src/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { collection, addDoc } from "firebase/firestore";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { UserContext } from "./UserContext";
 
 function SignUp() {
   const [name, setName] = useState("");
@@ -20,6 +20,7 @@ function SignUp() {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const navigate = useNavigate();
+  const { handleSignUpSuccess } = useContext(UserContext);
 
   const genresOptions = [
     "Fiction",
@@ -78,49 +79,9 @@ function SignUp() {
     });
       console.log("User data saved in Backend:", userData);
 
-      const llmresponse = await fetch(
-        "https://api.openai.com/v1/chat/completions",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer ",
-          },
-          body: JSON.stringify({
-            model: "gpt-4",
-            messages: [
-              {
-                role: "system",
-                content:
-                  "You are a helpful assistant that recommends books based on user preferences.",
-              },
-              {
-                role: "user",
-                content: `Based on the following user description and genres, please recommend 20 books in the format [[bookname1, author1, description1], [bookname2, author2, description2], ...]:
-
-              Description: ${description}
-              Genres: ${genres.join(", ")}`,
-              },
-            ],
-          }),
-        },
-      );
-
-      const data = await llmresponse.json();
-      const recommendationsString = data.choices[0].message.content;
-      console.log("Book recommendations:", recommendationsString);
-
-      const recommendations = JSON.parse(recommendationsString);
-
-      const recommendationsData = {
-        userId: user.uid,
-        recommendations,
-      };
-      await addDoc(collection(db, "recommendedBooks"), recommendationsData);
-      console.log("Recommended books saved in Firestore:", recommendationsData);
-
       toast.success("Sign up successful!");
-      navigate("/user");
+      await handleSignUpSuccess(userData);
+      navigate("/userprofile");
     } catch (error) {
       console.error("Error registering user:", error);
       if (error.code === "auth/email-already-in-use") {
