@@ -7,8 +7,8 @@ import SignUp from "./components/SignUp";
 import BookDetail from "./components/BookDetail";
 import { UserProvider } from "./components/UserProvider";
 import GuestCheckout from "./components/GuestCheckout";
-import { Elements } from "@stripe/react-stripe-js"; 
-import { loadStripe } from "@stripe/stripe-js"; 
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 
 const stripePromise = loadStripe("your_stripe_public_key");
 
@@ -34,12 +34,19 @@ function App() {
               <Route path="/signin" element={<SignIn />} />
               <Route path="/signup" element={<SignUp />} />
               <Route path="/bookdetail/:id" element={<BookDetail />} />
-              <Route path="/guestcheckout" element={<Elements stripe={stripePromise}><GuestCheckout /></Elements>} />
+              <Route
+                path="/guestcheckout"
+                element={
+                  <Elements stripe={stripePromise}>
+                    <GuestCheckout />
+                  </Elements>
+                }
+              />
             </Routes>
           </main>
-          <footer className="bg-white py-4">
+          <footer className="bg-black py-4">
             <div className="container mx-auto px-4 text-center">
-              <p className="text-gray-600">
+              <p className="text-white">
                 &copy; 2024 Book Buddy. All rights reserved.
               </p>
             </div>

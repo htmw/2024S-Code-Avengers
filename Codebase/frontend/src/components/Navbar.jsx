@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 
 function Navbar() {
   return (
-    <nav className="bg-white shadow">
+    <nav className="bg-black shadow">
       <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center py-6">
+        <div className="flex justify-between items-center py-4">
           <div>
             <Link to="/">
               <img
@@ -18,13 +18,13 @@ function Navbar() {
           <div className="flex items-center">
             <Link
               to="/signin"
-              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out"
+              className="text-white hover:text-gray-200 font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out"
             >
               Sign In
             </Link>
             <Link
               to="/signup"
-              className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md ml-4 transition duration-300 ease-in-out"
+              className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md ml-4 transition duration-300 ease-in-out"
             >
               Sign Up
             </Link>
