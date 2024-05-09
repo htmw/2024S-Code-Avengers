@@ -36,7 +36,7 @@ public class OrderController {
 		@Parameter(description="Unique ID corresponding to a Cart", example="1") @PathVariable Long cartId,
 		@Parameter(description="Payment token created by Frontend with payment information") @RequestBody String paymentToken) 
 	{
-		OrderDTO order = orderService.createOrder(cartId, paymentToken);
+		OrderDTO order = orderService.createOrder(cartId);
 		return ResponseEntity.ok(order);
 	}
 
