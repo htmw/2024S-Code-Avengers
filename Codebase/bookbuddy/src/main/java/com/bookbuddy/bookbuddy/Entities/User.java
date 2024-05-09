@@ -82,10 +82,6 @@ public class User {
     @OneToOne(mappedBy = "user" )
     private Cart cart;
 
-    @Schema(description = "List of orders of the user")
-	@OneToMany(mappedBy = "user"  )
-    private List<Order> orders;
-
     public Cart getCart() {
 		return cart;
 	}
@@ -168,14 +164,6 @@ public class User {
 	// 			+ ", email=" + email + ", dateOfBirth=" + dateOfBirth + ", bookCollections=" + bookCollections
 	// 			+ ", cart=" + cart + "]";
 	// }
-
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
-    }
 
     public LocalDate getDateOfBirth() {
         return dateOfBirth;
