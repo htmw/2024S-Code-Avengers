@@ -1,5 +1,3 @@
-Sure, here's a formatted version of the directory structure and file explanations:
-
 ### 2024S-Code-Avengers Project
 
 #### File Structure
