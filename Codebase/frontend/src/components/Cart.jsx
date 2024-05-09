@@ -42,6 +42,10 @@ const Cart = () => {
     }
   };
 
+  const handleCheckout = () => {
+    navigate('/usercheckout', { state: { cart } });
+  };
+
   if (loading) return <p>Loading...</p>;
   if (!cart) return <p>Cart not found</p>;
 
@@ -52,18 +56,20 @@ const Cart = () => {
         {cart.items.map(item => (
           <li key={item.id} className="flex items-center justify-between border-b-2 border-gray-200 py-2">
             <span className="text-lg">{item.book.title}</span>
-            <button
-              onClick={() => removeItemFromCart(cart.cartId, item.cartItemId)}
-              className="text-sm text-red-500 hover:text-red-700"
-            >
+            <button onClick={() => removeItemFromCart(cart.cartId, item.cartItemId)} className="text-sm text-red-500 hover:text-red-700">
               Remove
             </button>
           </li>
         ))}
       </ul>
+      <button
+        onClick={handleCheckout}
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+      >
+        Proceed to Checkout
+      </button>
     </div>
   );
-  
 };
 
 export default Cart;

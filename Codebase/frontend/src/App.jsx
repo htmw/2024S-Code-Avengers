@@ -14,6 +14,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CollectionDetail from "./components/CollectionDetail";
 import Cart from "./components/Cart";
+import UserCheckout from "./components/UserCheckout";
 
 const stripePromise = loadStripe("your_stripe_public_key");
 
@@ -58,6 +59,7 @@ function App() {
                 }
               />
               <Route path="/userprofile" element={<UserProfile />} />
+              <Route path="/usercheckout" element={<UserCheckout />} />
               <Route path="/collections/:id" element={<CollectionDetail />} />
               <Route path="/cart/:userId" element={<Cart />} />
             </Routes>
