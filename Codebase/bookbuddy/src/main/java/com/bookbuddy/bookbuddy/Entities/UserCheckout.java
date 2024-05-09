@@ -27,11 +27,13 @@ public class UserCheckout {
 
     private BigDecimal totalPrice;
 
-    private String shippingAddress;
+    private String address;
 
-    private String billingAddress;
+    private String cardNumber;
 
-    private String paymentMethod;
+    private String cardExpiry;
+
+    private String cardCVV;
 
 
     public BigDecimal getTotalPrice() {
@@ -58,14 +60,6 @@ public class UserCheckout {
         this.id = id;
     }
 
-    public String getShippingAddress() {
-        return shippingAddress;
-    }
-
-    public void setShippingAddress(String shippingAddress) {
-        this.shippingAddress = shippingAddress;
-    }
-
     public List<CartItem> getCartItems() {
         return cartItems;
     }
@@ -74,19 +68,35 @@ public class UserCheckout {
         this.cartItems = cartItems;
     }
 
-    public String getBillingAddress() {
-        return billingAddress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setBillingAddress(String billingAddress) {
-        this.billingAddress = billingAddress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public String getPaymentMethod() {
-        return paymentMethod;
+    public String getCardNumber() {
+        return cardNumber;
     }
 
-    public void setPaymentMethod(String paymentMethod) {
-        this.paymentMethod = paymentMethod;
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
+    }
+
+    public String getCardExpiry() {
+        return cardExpiry;
+    }
+
+    public void setCardExpiry(String cardExpiry) {
+        this.cardExpiry = cardExpiry;
+    }
+
+    public String getCardCVV() {
+        return cardCVV;
+    }
+
+    public void setCardCVV(String cardCVV) {
+        this.cardCVV = cardCVV;
     }
 }

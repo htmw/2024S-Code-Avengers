@@ -41,7 +41,9 @@ const UserCheckout = () => {
         cart: cart,
         shippingAddress: formData.address,
         billingAddress: formData.address,
-        paymentMethod: formData.cardNumber,
+        cardNumber: formData.cardNumber,
+        cardExpiry: formData.cardExpiry,
+        cardCVV: formData.cardCVV,
       };
 
       const response = await fetch('http://localhost:8080/user-checkout', {
